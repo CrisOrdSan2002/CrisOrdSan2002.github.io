@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Aesthetic App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #9c88ff;
+            --secondary: #8c7ae6;
+            --accent: #e84118;
+            --light: #f5f6fa;
+            --dark: #2f3640;
+            --text: #353b48;
+            --bg-dark: #1e272e;
+            --bg-light: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            min-height: 100vh;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark);
+            color: #f5f6fa;
+            --light: #2f3640;
+            --text: #f5f6fa;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+        
+        body.dark-mode header {
+            background-color: var(--bg-dark);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin-left: 40px;
+        }
+        
+        .nav-tab {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nav-tab.active {
+            color: var(--primary);
+        }
+        
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .user-info:hover .user-avatar {
+            transform: scale(1.1);
+        }
+        
+        /* Menú de usuario */
+        .user-menu {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 30px;
+            overflow-y: auto;
+            transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        body.dark-mode .user-menu {
+            background-color: var(--bg-dark);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .user-menu.active {
+            right: 0;
+        }
+        
+        .user-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .user-menu-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+        
+        .menu-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text);
+        }
+        
+        body.dark-mode .menu-item {
+            border-bottom: 1px solid #444;
+        }
+        
+        .menu-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        .menu-item:hover {
+            color: var(--primary);
+        }
+        
+        .submenu {
+            padding-left: 34px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .submenu.active {
+            max-height: 500px;
+        }
+        
+        .submenu-item {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text);
+        }
+        
+        .submenu-item:hover {
+            color: var(--primary);
+        }
+        
+        /* Modal de confirmación */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        body.dark-mode .modal {
+            background-color: var(--bg-dark);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .modal-content {
+            margin-bottom: 25px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .modal-btn-cancel {
+            background-color: #f5f6fa;
+            color: var(--text);
+        }
+        
+        body.dark-mode .modal-btn-cancel {
+            background-color: #353b48;
+        }
+        
+        .modal-btn-confirm {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .modal-btn-confirm:hover {
+            background-color: #c23616;
+        }
+        
+        /* Motivos de eliminación */
+        .reason-item {
+            margin-bottom: 10px;
+        }
+        
+        .reason-radio {
+            margin-right: 10px;
+        }
+        
+        .reason-text {
+            padding: 10px;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        body.dark-mode .reason-text {
+            background-color: #353b48;
+            border-color: #555;
+            color: white;
+        }
+        
+        /* Barra de búsqueda con IA */
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: white;
+        }
+        
+        body.dark-mode .search-bar {
+            background-color: #353b48;
+            border-color: #555;
+            color: white;
+        }
+        
+        .search-bar:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(156, 136, 255, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        /* Clima */
+        .weather-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 15px;
+        }
+        
+        .weather-card {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .weather-card {
+            background-color: rgba(47, 54, 64, 0.8);
+        }
+        
+        .weather-location {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .weather-icon {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+        
+        .weather-temp {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .weather-details {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .weather-detail {
+            margin-top: 5px;
+        }
+        
+        /* Resto de estilos (manteniendo los anteriores) */
+        main {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .welcome {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--dark);
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo claro por defecto */
+    transition: all 0.3s ease;
+}
+        
+body.dark-mode .welcome {
+    color: #f5f6fa; /* Texto claro en modo oscuro */
+    background-color: rgba(47, 54, 64, 0.9); /* Fondo oscuro diferente */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        body.dark-mode .card {
+            background-color: var(--bg-dark);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        #map-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .route-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 280px;
+        }
+        
+        body.dark-mode .route-controls {
+            background-color: var(--bg-dark);
+        }
+        
+        .route-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .route-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .route-btn.active {
+            background-color: var(--secondary);
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .route-info {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    max-height: 300px; /* Limita la altura si es necesario */
+    overflow-y: auto; /* Añade scroll si el contenido es muy largo */
+}
+        
+        body.dark-mode .route-info {
+            background-color: #353b48;
+            border-color: #555;
+        }
+        
+        .route-info h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .info-item {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-label {
+            font-weight: 500;
+            display: inline-block;
+            width: 80px;
+            color: var(--text);
+        }
+        
+        .info-value {
+            color: var(--dark);
+        }
+        
+        body.dark-mode .info-value {
+            color: #f5f6fa;
+        }
+        
+        /* Personalizar controles del mapa */
+        .leaflet-control-container .leaflet-top {
+            top: auto;
+            bottom: 20px;
+        }
+        
+        .leaflet-control-zoom {
+            margin-bottom: 10px;
+            border: none;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .leaflet-control-zoom a {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            color: var(--text);
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+        
+        body.dark-mode .leaflet-control-zoom a {
+            background-color: var(--bg-dark);
+            border-bottom: 1px solid #555;
+            color: #f5f6fa;
+        }
+        
+        .leaflet-control-zoom a:hover {
+            background-color: #f5f5f5;
+            color: var(--primary);
+        }
+        
+        body.dark-mode .leaflet-control-zoom a:hover {
+            background-color: #353b48;
+        }
+        
+        .leaflet-control-zoom a:last-child {
+            border-bottom: none;
+        }
+        
+        .leaflet-bar a.leaflet-disabled {
+            color: #ccc;
+        }
+        
+        /* Control de geolocalización */
+        .leaflet-control-geolocation {
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        body.dark-mode .leaflet-control-geolocation {
+            background-color: var(--bg-dark);
+        }
+        
+        .leaflet-control-geolocation i {
+            color: var(--primary);
+            font-size: 18px;
+            padding: 5px;
+            transition: all 0.3s;
+        }
+        
+        .leaflet-control-geolocation:hover i {
+            color: var(--secondary);
+        }
+        
+        /* Marcador personalizado */
+        .custom-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        /* Sección Comunidad con scroll interno */
+        .community-container {
+            width: 100%;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .community-feed {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f1f1;
+        }
+        
+        .community-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .community-feed::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .community-feed::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: sticky;
+            top: 0;
+            background-color: var(--light);
+            padding: 10px 0;
+            z-index: 1;
+        }
+        
+        /* Estilos para posts */
+        .post {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        body.dark-mode .post {
+            background-color: var(--bg-dark);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .user-avatar-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+        }
+        
+        .username {
+            font-weight: 500;
+        }
+        
+        .post-meta {
+            font-size: 0.8rem;
+            color: #777;
+        }
+        
+        body.dark-mode .post-meta {
+            color: #aaa;
+        }
+        
+        .post-options {
+            position: relative;
+        }
+        
+        .post-options i {
+            cursor: pointer;
+        }
+        
+        .options-menu {
+            position: absolute;
+            right: 0;
+            top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            width: 180px;
+            display: none;
+            z-index: 10;
+        }
+        
+        body.dark-mode .options-menu {
+            background-color: var(--bg-dark);
+        }
+        
+        .post-options:hover .options-menu {
+            display: block;
+        }
+        
+        .option-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        body.dark-mode .option-item:hover {
+            background-color: #353b48;
+        }
+        
+        .post-content {
+            margin-bottom: 10px;
+        }
+        
+        .urgent-tag {
+            background-color: #ff4757;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        /* Estilos para la barra de búsqueda y calendario de rutas */
+.route-search-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.route-search-bar {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: white;
+}
+
+.route-date-picker {
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+}
+
+body.dark-mode .route-search-bar,
+body.dark-mode .route-date-picker {
+    background-color: #353b48;
+    border-color: #555;
+    color: white;
+}
+
+.route-search-bar:focus,
+.route-date-picker:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(156, 136, 255, 0.2);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">aesthetic</div>
+        <nav class="nav-tabs">
+            <button class="nav-tab active" id="routesTab">Rutas</button>
+            <button class="nav-tab" id="communityTab">Comunidad</button>
+        </nav>
+        <div class="user-info" id="userMenuBtn">
+            <span>Bienvenido, <strong id="username">Usuario</strong></span>
+            <div class="user-avatar" id="avatar">U</div>
+        </div>
+    </header>
+    
+    <!-- Menú de usuario -->
+    <div class="user-menu" id="userMenu">
+        <div class="user-menu-header">
+            <div class="user-menu-title">Mi Cuenta</div>
+            <button class="close-menu" id="closeMenuBtn">&times;</button>
+        </div>
+        
+        <div class="menu-item" id="profileBtn">
+            <i class="fas fa-user"></i>
+            <span>Perfil</span>
+        </div>
+        
+        <div class="menu-item" id="editProfileBtn">
+            <i class="fas fa-edit"></i>
+            <span>Editar perfil</span>
+            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+        </div>
+        
+        <div class="submenu" id="editProfileSubmenu">
+            <div class="submenu-item">
+                <i class="fas fa-signature"></i>
+                <span>Editar nombre</span>
+            </div>
+            <div class="submenu-item">
+                <i class="fas fa-birthday-cake"></i>
+                <span>Editar fecha de nacimiento</span>
+            </div>
+            <div class="submenu-item">
+                <i class="fas fa-book"></i>
+                <span>Agregar biografía</span>
+            </div>
+        </div>
+        
+        <div class="menu-item" id="settingsBtn">
+            <i class="fas fa-cog"></i>
+            <span>Configuración</span>
+            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+        </div>
+        
+        <div class="submenu" id="settingsSubmenu">
+            <div class="submenu-item" id="languageBtn">
+                <i class="fas fa-language"></i>
+                <span>Cambiar idioma</span>
+            </div>
+            <div class="submenu-item" id="themeBtn">
+                <i class="fas fa-moon"></i>
+                <span>Modo oscuro</span>
+            </div>
+        </div>
+        
+        <div class="menu-item" id="downloadDataBtn">
+            <i class="fas fa-download"></i>
+            <span>Descargar información</span>
+        </div>
+        
+        <div class="menu-item" id="deleteAccountBtn">
+            <i class="fas fa-trash-alt"></i>
+            <span>Eliminar cuenta</span>
+        </div>
+        
+        <div class="menu-item" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar sesión</span>
+        </div>
+    </div>
+    
+    <!-- Modal de confirmación para eliminar cuenta -->
+    <div class="modal-overlay" id="deleteAccountModal">
+        <div class="modal">
+            <h3 class="modal-title">Eliminar cuenta</h3>
+            <div class="modal-content">
+                <p>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" id="cancelDeleteBtn">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" id="confirmDeleteBtn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de motivos para eliminar cuenta -->
+    <div class="modal-overlay" id="deleteReasonsModal">
+        <div class="modal">
+            <h3 class="modal-title">Motivo de eliminación</h3>
+            <div class="modal-content">
+                <p>Por favor, indícanos el motivo por el que deseas eliminar tu cuenta:</p>
+                
+                <div class="reason-item">
+                    <input type="radio" name="reason" id="reason1" class="reason-radio" value="No uso la aplicación">
+                    <label for="reason1">No uso la aplicación</label>
+                </div>
+                
+                <div class="reason-item">
+                    <input type="radio" name="reason" id="reason2" class="reason-radio" value="Problemas técnicos">
+                    <label for="reason2">Problemas técnicos</label>
+                </div>
+                
+                <div class="reason-item">
+                    <input type="radio" name="reason" id="reason3" class="reason-radio" value="Privacidad de datos">
+                    <label for="reason3">Privacidad de datos</label>
+                </div>
+                
+                <div class="reason-item">
+                    <input type="radio" name="reason" id="reason4" class="reason-radio" value="No encuentro lo que necesito">
+                    <label for="reason4">No encuentro lo que necesito</label>
+                </div>
+                
+                <div class="reason-item">
+                    <input type="radio" name="reason" id="reason5" class="reason-radio" value="Otro motivo">
+                    <label for="reason5">Otro motivo</label>
+                </div>
+                
+                <textarea class="reason-text" id="customReason" placeholder="Por favor, describe tu motivo..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" id="cancelReasonBtn">Cancelar</button>
+                <button class="modal-btn modal-btn-confirm" id="submitReasonBtn">Enviar</button>
+            </div>
+        </div>
+    </div>
+    
+    <main>
+        <h1 class="welcome">¡Bienvenido a tus Rutas!</h1>
+        
+        <!-- Barra de búsqueda con IA -->
+        <div class="search-container">
+            <input type="text" class="search-bar" id="aiSearch" placeholder="¿Qué ruta puedo usar para llegar a...?">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        
+        <!-- Sección Rutas (Mapa) -->
+<div class="card" id="routesSection">
+    <h2 class="card-title">Rutas en Veracruz</h2>
+    
+    <!-- Barra de búsqueda y calendario -->
+    <div class="route-search-container">
+        <input type="text" class="route-search-bar" id="routeSearch" placeholder="Buscar rutas...">
+        <input type="date" class="route-date-picker" id="routeDatePicker">
+    </div>
+    
+    <div id="map-container">
+        <div class="route-controls">
+            <button class="route-btn active" onclick="showRoute(0)">Poza Rica → Veracruz</button>
+            <button class="route-btn" onclick="showRoute(1)">Xalapa → Coatzacoalcos</button>
+            <button class="route-btn" onclick="showRoute(2)">Córdoba → Orizaba</button>
+            <button class="route-btn" onclick="showRoute(3)">Poza Rica → Coatzintla</button>
+            
+            <div class="route-info" id="routeInfo">
+                <h3>Información de Ruta</h3>
+                <div class="info-item">
+                    <span class="info-label">Ruta:</span>
+                    <span class="info-value" id="routeName">Poza Rica → Veracruz</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Fecha:</span>
+                    <span class="info-value" id="routeDate">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Salida:</span>
+                    <span class="info-value" id="routeDeparture">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Llegada:</span>
+                    <span class="info-value" id="routeArrival">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Distancia:</span>
+                    <span class="info-value" id="routeDistance">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Duración:</span>
+                    <span class="info-value" id="routeDuration">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Pasaje:</span>
+                    <span class="info-value" id="routePrice">$350 MXN</span>
+                </div>
+                
+                <!-- Información del clima -->
+                <div class="weather-container">
+                    <div class="weather-card" id="originWeather">
+                        <div class="weather-location">Poza Rica</div>
+                        <div class="weather-icon">🌤️</div>
+                        <div class="weather-temp">28°C</div>
+                        <div class="weather-details">
+                            <div class="weather-detail">Viento: 12 km/h</div>
+                            <div class="weather-detail">Humedad: 65%</div>
+                            <div class="weather-detail">Lluvia: 10%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-card" id="destinationWeather">
+                        <div class="weather-location">Veracruz</div>
+                        <div class="weather-icon">☀️</div>
+                        <div class="weather-temp">32°C</div>
+                        <div class="weather-details">
+                            <div class="weather-detail">Viento: 15 km/h</div>
+                            <div class="weather-detail">Humedad: 70%</div>
+                            <div class="weather-detail">Lluvia: 5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+    </div>
+</div>
+        
+        <!-- Sección Comunidad con scroll interno -->
+        <div class="community-container" id="communitySection">
+            <h2 class="section-title">Comunidad</h2>
+            
+            <div class="community-feed" id="communityFeed">
+                <!-- Posts generados dinámicamente con JS -->
+            </div>
+        </div>
+        
+        <!-- Sección de rutas favoritas -->
+        <div class="card">
+            <h2 class="card-title">Tus rutas favoritas</h2>
+            <p>Aquí puedes ver tus rutas guardadas y frecuentes.</p>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    
+    <script>
+    // Obtener el nombre de usuario de la URL (simulación)
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('user') || 'Usuario';
+    
+    // Mostrar el nombre de usuario
+    document.getElementById('username').textContent = username;
+    document.getElementById('avatar').textContent = username.charAt(0).toUpperCase();
+    
+    // Configuración del mapa
+    let map;
+    let currentRoute = null;
+    let currentRouteIndex = null;
+    let userMarker = null;
+    let watchId = null;
+    let selectedDate = new Date();
+    
+    // Definición de rutas CON PRECIOS INCLUIDOS
+    const routes = [
+        {
+            name: "Poza Rica → Veracruz",
+            origin: [20.533015, -97.459457],
+            originName: "Poza Rica",
+            destination: [19.190277, -96.153333],
+            destinationName: "Veracruz",
+            color: "#9c88ff", // Color primario
+            price: "$350 MXN",
+            originWeather: { icon: "🌤️", temp: "28°C", wind: "12 km/h", humidity: "65%", rain: "10%" },
+            destinationWeather: { icon: "☀️", temp: "32°C", wind: "15 km/h", humidity: "70%", rain: "5%" }
+        },
+        {
+            name: "Xalapa → Coatzacoalcos",
+            origin: [19.540049, -96.927526],
+            originName: "Xalapa",
+            destination: [18.144049, -94.415741],
+            destinationName: "Coatzacoalcos",
+            color: "#8c7ae6", // Color secundario
+            price: "$420 MXN",
+            originWeather: { icon: "🌧️", temp: "22°C", wind: "10 km/h", humidity: "85%", rain: "60%" },
+            destinationWeather: { icon: "⛅", temp: "30°C", wind: "18 km/h", humidity: "75%", rain: "20%" }
+        },
+        {
+            name: "Córdoba → Orizaba",
+            origin: [18.884202, -96.925388],
+            originName: "Córdoba",
+            destination: [18.852259, -97.099434],
+            destinationName: "Orizaba",
+            color: "#e84118", // Color acento
+            price: "$120 MXN",
+            originWeather: { icon: "☀️", temp: "26°C", wind: "8 km/h", humidity: "60%", rain: "0%" },
+            destinationWeather: { icon: "🌤️", temp: "24°C", wind: "10 km/h", humidity: "65%", rain: "5%" }
+        },
+        {
+            name: "Poza Rica → Coatzintla",
+            origin: [20.53315, -97.45946],
+            originName: "Poza Rica",
+            destination: [20.482363333333, -97.460781944444],
+            destinationName: "Coatzintla",
+            color: "#7f8fa6", // Gris azulado
+            price: "$50 MXN",
+            originWeather: { icon: "🌤️", temp: "28°C", wind: "12 km/h", humidity: "65%", rain: "10%" },
+            destinationWeather: { icon: "⛅", temp: "27°C", wind: "10 km/h", humidity: "70%", rain: "15%" }
+        }
+    ];
+    
+    // Función para convertir minutos a formato HH:MM
+    function formatDuration(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const mins = Math.round(minutes % 60);
+        return `${hours}:${mins.toString().padStart(2, '0')} horas`;
+    }
+    
+    // Función para formatear fecha
+    function formatDate(date) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('es-ES', options);
+    }
+    
+    // Función para formatear hora
+    function formatTime(date) {
+        return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+    }
+    
+    // Función para actualizar la información de fecha y hora de la ruta
+    function updateRouteSchedule(routeIndex, durationMinutes) {
+        const route = routes[routeIndex];
+        const departureTime = new Date(selectedDate);
+        
+        // Establecer una hora de salida aleatoria entre 6:00 y 20:00
+        const randomHour = 6 + Math.floor(Math.random() * 14);
+        departureTime.setHours(randomHour, Math.floor(Math.random() * 60), 0, 0);
+        
+        // Calcular hora de llegada sumando la duración
+        const arrivalTime = new Date(departureTime.getTime() + durationMinutes * 60000);
+        
+        // Actualizar la UI
+        document.getElementById('routeDate').textContent = formatDate(departureTime);
+        document.getElementById('routeDeparture').textContent = formatTime(departureTime);
+        document.getElementById('routeArrival').textContent = formatTime(arrivalTime);
+    }
+    
+    // Función para ubicar al usuario
+    function locateUser() {
+        if (navigator.geolocation) {
+            // Detener cualquier seguimiento previo
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+            }
+            
+            // Eliminar marcador anterior si existe
+            if (userMarker) {
+                map.removeLayer(userMarker);
+            }
+            
+            // Icono personalizado para la ubicación del usuario
+            const userIcon = L.divIcon({
+                className: 'user-location-icon',
+                html: '<i class="fas fa-circle" style="color: #e84118; font-size: 20px;"></i>',
+                iconSize: [20, 20]
+            });
+            
+            // Obtener ubicación actual
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const userLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    
+                    // Añadir marcador en la ubicación del usuario
+                    userMarker = L.marker([userLocation.lat, userLocation.lng], {
+                        icon: userIcon
+                    }).addTo(map)
+                    .bindPopup("Tu ubicación actual").openPopup();
+                    
+                    // Centrar el mapa en la ubicación del usuario
+                    map.setView([userLocation.lat, userLocation.lng], 15);
+                    
+                    // Iniciar seguimiento continuo de la ubicación
+                    watchId = navigator.geolocation.watchPosition(
+                        function(position) {
+                            const newLocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            userMarker.setLatLng([newLocation.lat, newLocation.lng]);
+                        },
+                        function(error) {
+                            console.error("Error en seguimiento de ubicación: ", error);
+                        },
+                        { enableHighAccuracy: true }
+                    );
+                },
+                function(error) {
+                    alert("Error al obtener tu ubicación: " + error.message);
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        } else {
+            alert("Tu navegador no soporta geolocalización");
+        }
+    }
+    
+    // Función para actualizar la información del clima
+    function updateWeatherInfo(routeIndex) {
+        const route = routes[routeIndex];
+        const originWeather = route.originWeather;
+        const destinationWeather = route.destinationWeather;
+        
+        // Actualizar clima origen
+        document.querySelector('#originWeather .weather-location').textContent = route.originName;
+        document.querySelector('#originWeather .weather-icon').textContent = originWeather.icon;
+        document.querySelector('#originWeather .weather-temp').textContent = originWeather.temp;
+        document.querySelector('#originWeather .weather-details').innerHTML = `
+            <div class="weather-detail">Viento: ${originWeather.wind}</div>
+            <div class="weather-detail">Humedad: ${originWeather.humidity}</div>
+            <div class="weather-detail">Lluvia: ${originWeather.rain}</div>
+        `;
+        
+        // Actualizar clima destino
+        document.querySelector('#destinationWeather .weather-location').textContent = route.destinationName;
+        document.querySelector('#destinationWeather .weather-icon').textContent = destinationWeather.icon;
+        document.querySelector('#destinationWeather .weather-temp').textContent = destinationWeather.temp;
+        document.querySelector('#destinationWeather .weather-details').innerHTML = `
+            <div class="weather-detail">Viento: ${destinationWeather.wind}</div>
+            <div class="weather-detail">Humedad: ${destinationWeather.humidity}</div>
+            <div class="weather-detail">Lluvia: ${destinationWeather.rain}</div>
+        `;
+    }
+    
+    // Inicializar el mapa
+    function initMap() {
+        // Crear mapa centrado en Veracruz
+        map = L.map('map').setView([19.173773, -96.134224], 8);
+        
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Añadir control de geolocalización personalizado
+        const geolocationControl = L.control({ position: 'bottomright' });
+        geolocationControl.onAdd = function(map) {
+            const div = L.DomUtil.create('div', 'leaflet-control-geolocation');
+            div.innerHTML = '<i class="fas fa-location-arrow" title="Ubicar mi posición"></i>';
+            div.onclick = locateUser;
+            return div;
+        };
+        geolocationControl.addTo(map);
+        
+        // Mostrar la primera ruta por defecto
+        showRoute(0);
+    }
+    
+    // Función para mostrar una ruta
+    function showRoute(index) {
+        // Eliminar ruta anterior si existe
+        if (currentRoute) {
+            map.removeControl(currentRoute);
+        }
+        
+        // Actualizar botones activos
+        document.querySelectorAll('.route-btn').forEach((btn, i) => {
+            if (i === index) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        const route = routes[index];
+        currentRouteIndex = index;
+        
+        // Actualizar información de la ruta (incluyendo precio)
+        document.getElementById('routeName').textContent = route.name;
+        document.getElementById('routePrice').textContent = route.price;
+        document.getElementById('routeDistance').textContent = '-';
+        document.getElementById('routeDuration').textContent = '-';
+        document.getElementById('routeDate').textContent = '-';
+        document.getElementById('routeDeparture').textContent = '-';
+        document.getElementById('routeArrival').textContent = '-';
+        
+        // Actualizar información del clima
+        updateWeatherInfo(index);
+        
+        // Crear y mostrar nueva ruta
+        currentRoute = L.Routing.control({
+            waypoints: [
+                L.latLng(route.origin),
+                L.latLng(route.destination)
+            ],
+            routeWhileDragging: false,
+            showAlternatives: false,
+            lineOptions: {
+                styles: [{ color: route.color, opacity: 0.7, weight: 5 }]
+            },
+            createMarker: function(i, waypoint) {
+                return L.marker(waypoint.latLng, {
+                    draggable: false,
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="background-color:${route.color};color:white;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;font-size:12px;">${i+1}</div>`,
+                        iconSize: [24, 24]
+                    })
+                }).bindPopup(i === 0 ? "Origen: " + route.name.split('→')[0].trim() : "Destino: " + route.name.split('→')[1].trim());
+            },
+            altLineOptions: {
+                styles: [
+                    { color: 'black', opacity: 0.15, weight: 9 },
+                    { color: 'white', opacity: 0.8, weight: 6 },
+                    { color: route.color, opacity: 1, weight: 2 }
+                ]
+            }
+        }).addTo(map);
+        
+        // Escuchar evento cuando la ruta se calcula
+        currentRoute.on('routesfound', function(e) {
+            const routes = e.routes;
+            const route = routes[0];
+            
+            // Mostrar información de distancia y duración (formateada)
+            const distance = (route.summary.totalDistance / 1000).toFixed(1) + ' km';
+            const durationMinutes = route.summary.totalTime / 60;
+            const durationFormatted = formatDuration(durationMinutes);
+            
+            document.getElementById('routeDistance').textContent = distance;
+            document.getElementById('routeDuration').textContent = durationFormatted;
+            
+            // Actualizar horarios basados en la duración
+            updateRouteSchedule(index, durationMinutes);
+            
+            // Guardar la duración en la ruta para futuras actualizaciones
+            routes[index].durationMinutes = durationMinutes;
+        });
+        
+        // Ajustar el zoom para mostrar toda la ruta
+        const bounds = L.latLngBounds([route.origin, route.destination]);
+        map.fitBounds(bounds, { padding: [50, 50] });
+    }
+    
+    // Generar posts aleatorios para la comunidad
+    function generateRandomPosts() {
+        const users = ["Ana", "Carlos", "Mario", "Luisa", "Pedro", "Sofía"];
+        const locations = ["Poza Rica", "Xalapa", "Veracruz", "Coatzacoalcos", "Orizaba", "Córdoba"];
+        const messages = [
+            "¡Retén en la carretera! 🚓 Procedan con precaución.",
+            "Accidente en el km 45. Carriles izquierdos bloqueados.",
+            "Tráfico fluido en la ruta 180 sin contratiempos.",
+            "Desvío por obras viales en el centro de Xalapa.",
+            "Lluvia intensa en Coatzacoalcos, manejen con cuidado 🌧️"
+        ];
+        
+        const communityFeed = document.getElementById('communityFeed');
+        
+        for (let i = 0; i < 10; i++) {
+            const user = users[Math.floor(Math.random() * users.length)];
+            const location = locations[Math.floor(Math.random() * locations.length)];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            const isUrgent = Math.random() > 0.7;
+            const time = `${Math.floor(Math.random() * 12) + 1}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`;
+            
+            communityFeed.innerHTML += `
+                <div class="post">
+                    <div class="post-header">
+                        <div class="user-avatar-small">${user.charAt(0)}</div>
+                        <div class="user-info">
+                            <span class="username">${user}</span>
+                            <span class="post-meta">Hoy · ${time} · <i class="fas fa-map-marker-alt"></i> ${location}</span>
+                        </div>
+                        <div class="post-options">
+                            <i class="fas fa-ellipsis-v"></i>
+                            <div class="options-menu">
+                                <div class="option-item"><i class="fas fa-flag"></i> Reportar</div>
+                                <div class="option-item"><i class="fas fa-bookmark"></i> Guardar</div>
+                                <div class="option-item"><i class="fas fa-directions"></i> Cómo llegar</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>${message}</p>
+                        ${isUrgent ? '<span class="urgent-tag"><i class="fas fa-exclamation-triangle"></i> Información Urgente</span>' : ''}
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn"><i class="far fa-heart"></i> Like</button>
+                        <button class="action-btn"><i class="far fa-comment"></i> Comentar</button>
+                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Funcionalidad del menú de usuario
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const closeMenuBtn = document.getElementById('closeMenuBtn');
+    const userMenu = document.getElementById('userMenu');
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const editProfileSubmenu = document.getElementById('editProfileSubmenu');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsSubmenu = document.getElementById('settingsSubmenu');
+    const themeBtn = document.getElementById('themeBtn');
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const deleteAccountModal = document.getElementById('deleteAccountModal');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const deleteReasonsModal = document.getElementById('deleteReasonsModal');
+    const cancelReasonBtn = document.getElementById('cancelReasonBtn');
+    const submitReasonBtn = document.getElementById('submitReasonBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const aiSearch = document.getElementById('aiSearch');
+    const routesTab = document.getElementById('routesTab');
+    const communityTab = document.getElementById('communityTab');
+    const routeSearchInput = document.getElementById('routeSearch');
+    const routeDatePicker = document.getElementById('routeDatePicker');
+    
+    // Configurar el date picker con la fecha actual
+    routeDatePicker.valueAsDate = selectedDate;
+    routeDatePicker.min = new Date().toISOString().split('T')[0];
+    
+    // Evento para cambiar la fecha
+    routeDatePicker.addEventListener('change', function() {
+        selectedDate = new Date(this.value);
+        if (currentRouteIndex !== null) {
+            // Si hay una ruta mostrada, actualizar sus horarios
+            const route = routes[currentRouteIndex];
+            const duration = route.durationMinutes || 180; // Valor por defecto si no hay duración calculada
+            updateRouteSchedule(currentRouteIndex, duration);
+        }
+    });
+    
+    // Evento para filtrar rutas
+    routeSearchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        document.querySelectorAll('.route-btn').forEach(btn => {
+            const routeName = btn.textContent.toLowerCase();
+            btn.style.display = routeName.includes(searchTerm) ? 'block' : 'none';
+        });
+    });
+    
+    // Abrir/cerrar menú de usuario
+    userMenuBtn.addEventListener('click', () => {
+        userMenu.classList.add('active');
+    });
+    
+    closeMenuBtn.addEventListener('click', () => {
+        userMenu.classList.remove('active');
+    });
+    
+    // Submenús
+    editProfileBtn.addEventListener('click', () => {
+        editProfileSubmenu.classList.toggle('active');
+        editProfileBtn.querySelector('.fa-chevron-down').classList.toggle('fa-chevron-up');
+    });
+    
+    settingsBtn.addEventListener('click', () => {
+        settingsSubmenu.classList.toggle('active');
+        settingsBtn.querySelector('.fa-chevron-down').classList.toggle('fa-chevron-up');
+    });
+    
+    // Cambiar tema oscuro/claro
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        themeBtn.querySelector('span').textContent = isDarkMode ? 'Modo claro' : 'Modo oscuro';
+        themeBtn.querySelector('i').className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+        
+        // Guardar preferencia en localStorage
+        localStorage.setItem('darkMode', isDarkMode);
+    });
+    
+    // Cargar preferencia de tema
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        themeBtn.querySelector('span').textContent = 'Modo claro';
+        themeBtn.querySelector('i').className = 'fas fa-sun';
+    }
+    
+    // Eliminar cuenta - flujo de confirmación
+    deleteAccountBtn.addEventListener('click', () => {
+        deleteAccountModal.classList.add('active');
+        userMenu.classList.remove('active');
+    });
+    
+    cancelDeleteBtn.addEventListener('click', () => {
+        deleteAccountModal.classList.remove('active');
+    });
+    
+    confirmDeleteBtn.addEventListener('click', () => {
+        deleteAccountModal.classList.remove('active');
+        deleteReasonsModal.classList.add('active');
+    });
+    
+    cancelReasonBtn.addEventListener('click', () => {
+        deleteReasonsModal.classList.remove('active');
+    });
+    
+    submitReasonBtn.addEventListener('click', () => {
+        const selectedReason = document.querySelector('input[name="reason"]:checked');
+        const customReason = document.getElementById('customReason').value;
+        
+        if (selectedReason || customReason) {
+            alert('Gracias por tu feedback. Tu cuenta será eliminada.');
+            // Aquí iría la lógica para eliminar la cuenta
+            deleteReasonsModal.classList.remove('active');
+            // Redirigir al login
+            window.location.href = 'index.html';
+        } else {
+            alert('Por favor selecciona un motivo o escribe uno personalizado.');
+        }
+    });
+    
+    // Cerrar sesión
+    logoutBtn.addEventListener('click', () => {
+        if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+            window.location.href = 'index.html';
+        }
+    });
+    
+    // Búsqueda con IA (simulación)
+    aiSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = aiSearch.value.toLowerCase();
+            
+            // Simular búsqueda inteligente
+            if (query.includes('veracruz')) {
+                showRoute(0);
+            } else if (query.includes('coatzacoalcos')) {
+                showRoute(1);
+            } else if (query.includes('orizaba')) {
+                showRoute(2);
+            } else if (query.includes('coatzintla')) {
+                showRoute(3);
+            } else {
+                alert('No encontré una ruta específica para "' + query + '". Mostrando todas las rutas disponibles.');
+            }
+        }
+    });
+    
+    // Navegación entre pestañas
+    routesTab.addEventListener('click', () => {
+        document.getElementById('routesSection').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.nav-tab.active').classList.remove('active');
+        routesTab.classList.add('active');
+    });
+    
+    communityTab.addEventListener('click', () => {
+        document.getElementById('communitySection').scrollIntoView({ behavior: 'smooth' });
+        document.querySelector('.nav-tab.active').classList.remove('active');
+        communityTab.classList.add('active');
+    });
+    
+    // Inicializar el mapa y generar posts al cargar la página
+    window.onload = function() {
+        initMap();
+        generateRandomPosts();
+    };
+</script>
+</body>
+</html>
