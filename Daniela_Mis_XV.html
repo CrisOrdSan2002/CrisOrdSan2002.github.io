@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV Años - Daniela</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Iconos -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Animaciones AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Configuraciones Generales - Paleta Azul/Morado Mágico */
+        :root {
+            --primary-blue: #1e3a8a; /* Azul profundo */
+            --primary-purple: #581c87; /* Morado intenso */
+            --accent-silver: #e2e8f0; /* Plateado para detalles */
+            --text-highlight: #c7d2fe; /* Azul claro para destacados */
+            --text-body: #f1f5f9; /* Blanco azulado para texto */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #020617; /* Fondo de respaldo muy oscuro */
+            color: var(--text-body);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, .fancy-text {
+            font-family: 'Great Vibes', cursive;
+            color: var(--text-highlight);
+        }
+
+        h3, .title-font {
+            font-family: 'Cinzel', serif;
+        }
+        
+        /* SOLUCIÓN FONDO INFINITO:
+           Usamos background-attachment: fixed para que la imagen no se mueva al hacer scroll.
+           Esto evita que se "corte" la imagen.
+        */
+        #forest-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            /* Imagen de bosque más misterioso/nocturno */
+            background-image: url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2574&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center bottom;
+            background-attachment: fixed; /* CLAVE: El fondo se queda fijo */
+            filter: brightness(0.8) contrast(1.2); /* Ajustes para que se vea más mágico */
+        }
+        
+        /* Capa superpuesta CSS para teñir el bosque de azul/morado */
+        #bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Degradado mágico de azul a morado con transparencia */
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(30, 58, 138, 0.6), rgba(88, 28, 135, 0.7), rgba(2, 6, 23, 0.9));
+            pointer-events: none;
+        }
+
+        /* Fondo de partículas/mariposas */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Detrás del contenido, frente al fondo */
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+            animation: float-butterfly linear infinite;
+        }
+
+        @keyframes float-butterfly {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(var(--moveX), var(--moveY)) rotate(var(--rotation)); opacity: 0; }
+        }
+
+        /* Estilos de botones brillantes - Adaptados a Azul/Morado/Plata */
+        .glow-btn {
+            background: rgba(30, 58, 138, 0.4); /* Azul transparente */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(199, 210, 254, 0.3); /* Borde plateado/azul claro */
+            box-shadow: 0 0 15px rgba(88, 28, 135, 0.5); /* Sombra morada */
+            transition: all 0.3s ease;
+            color: var(--text-body);
+        }
+
+        .glow-btn:hover {
+            background: rgba(88, 28, 135, 0.5); /* Morado al pasar el mouse */
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.7); /* Brillo azul claro */
+        }
+
+        /* Pantalla de carga / Libro */
+        #opener {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #020617; /* Fondo oscuro */
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+            perspective: 1000px;
+        }
+
+        .hidden-opener {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Estilos del Libro - Ahora Azul/Morado */
+        .book-container {
+            position: relative;
+            width: 220px;
+            height: 300px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
+        }
+        
+        .book-open {
+            transform: rotateY(-110deg);
+        }
+
+        .book-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-blue);
+            /* Textura y degradado azul/morado */
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png'), linear-gradient(to right bottom, #1e3a8a, #581c87);
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.6), inset -5px 0 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+            z-index: 2;
+            backface-visibility: hidden;
+            border: 2px solid var(--accent-silver); /* Borde plateado */
+        }
+        
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 2px solid var(--accent-silver);
+            border-radius: 3px 12px 12px 3px;
+            opacity: 0.5;
+        }
+
+        /* Páginas internas del libro (Plateadas/Azuladas) */
+        .book-pages {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 98%;
+            height: 96%;
+            background-color: #f1f5f9; /* Blanco plateado */
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border-radius: 5px 12px 12px 5px;
+            box-shadow: inset -5px 0 10px rgba(0,0,0,0.1);
+            z-index: 1;
+            transform-origin: left;
+            transition: transform 1s ease-in-out;
+             display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-blue); /* Texto azul oscuro */
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            opacity: 0;
+        }
+
+        .book-open .book-pages {
+            opacity: 1;
+            transition-delay: 0.3s;
+        }
+
+        .click-instruction {
+            margin-top: 2rem;
+            color: var(--text-highlight);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+
+        /* Decoración de brillos - Plateados/Azules */
+        .sparkle {
+            animation: twinkle 4s infinite ease-in-out;
+            color: var(--text-highlight);
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        .location-image-container {
+             border: 2px solid var(--accent-silver);
+             box-shadow: 0 0 20px rgba(88, 28, 135, 0.5);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Música de fondo -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_51dcc60431.mp3?filename=piano-moment-11617.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Fondo de Bosque Fijo -->
+    <div id="forest-bg"></div>
+    <!-- Capa Superpuesta Azul/Morada -->
+    <div id="bg-overlay"></div>
+
+    <!-- Contenedor para mariposas -->
+    <div id="canvas-container"></div>
+
+    <!-- Pantalla Inicial (Libro Mágico Azul) -->
+    <div id="opener">
+        <div class="book-container" onclick="openInvitation()">
+            <!-- Portada del Libro -->
+            <div class="book-cover">
+                <i data-lucide="book-heart" class="w-16 h-16 text-blue-200 mb-4 opacity-90"></i>
+                <p class="text-blue-100 tracking-[0.2em] text-xs mb-2 uppercase title-font">Mis XV Años</p>
+                <h1 class="text-5xl text-white mb-4 sparkle" style="text-shadow: 0 0 15px rgba(199, 210, 254, 0.8);">Daniela</h1>
+                <div class="h-px w-16 bg-blue-200/50 mx-auto my-2"></div>
+                <p class="text-blue-100 text-sm italic">Un Cuento de Hadas</p>
+            </div>
+            <!-- Páginas Internas -->
+            <div class="book-pages">
+                <p>¡Bienvenido!</p>
+            </div>
+        </div>
+        <p class="click-instruction title-font">Haz clic en el libro para abrir</p>
+    </div>
+
+    <!-- Contenido Principal -->
+    <main class="relative z-10 pb-20">
+        
+        <!-- Control de Música -->
+        <button onclick="toggleMusic()" class="fixed top-4 right-4 z-50 bg-indigo-950/50 p-3 rounded-full backdrop-blur-md border border-blue-400/30 text-blue-100 hover:bg-purple-900/60 transition shadow-lg">
+            <i id="music-icon" data-lucide="volume-2"></i>
+        </button>
+
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+            <!-- Decorative circle behind - Azul/Morado -->
+            <div class="absolute w-64 h-64 bg-purple-600 rounded-full blur-[120px] opacity-40 animate-pulse mix-blend-screen leading-relaxed"></div>
+            
+            <p class="text-lg tracking-[0.3em] text-blue-200 mb-2 title-font" data-aos="fade-down" data-aos-duration="1500">MIS XV AÑOS</p>
+            <h1 class="text-7xl md:text-9xl text-white mb-4 sparkle" data-aos="zoom-in" data-aos-duration="2000" style="text-shadow: 0 0 35px rgba(167, 139, 250, 0.8);">Daniela</h1>
+            
+            <div class="h-px w-32 bg-gradient-to-r from-transparent via-blue-400 to-transparent my-8"></div>
+            
+            <p class="text-xl md:text-2xl text-blue-100 italic font-light max-w-lg mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="500" style="text-shadow: 0 1px 3px rgba(0,0,0,0.5);">
+                "Como una mariposa que despliega sus alas en el bosque encantado, hoy comienzo a volar hacia mis sueños."
+            </p>
+
+            <div class="mt-16 animate-bounce">
+                <i data-lucide="chevron-down" class="text-blue-200 w-10 h-10 opacity-80"></i>
+            </div>
+        </section>
+
+        <!-- Fecha y Cuenta Regresiva -->
+        <section class="py-20 px-4 text-center">
+            <div class="max-w-4xl mx-auto glow-btn rounded-3xl p-8 md:p-12 relative overflow-hidden" data-aos="fade-up">
+                <!-- Borde superior azulado -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-70"></div>
+                
+                <h2 class="text-4xl md:text-5xl mb-2 text-white">Sábado</h2>
+                <div class="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-400 title-font my-6 drop-shadow-md">
+                    27
+                </div>
+                <h3 class="text-2xl md:text-3xl uppercase tracking-[0.2em] text-blue-200 mb-10 title-font">Diciembre 2025</h3>
+
+                <!-- Contador -->
+                <div id="countdown" class="grid grid-cols-4 gap-3 md:gap-6 max-w-xl mx-auto text-blue-50">
+                    <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
+                        <span id="days" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Días</span>
+                    </div>
+                    <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
+                        <span id="hours" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Hrs</span>
+                    </div>
+                    <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
+                        <span id="minutes" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Min</span>
+                    </div>
+                    <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
+                        <span id="seconds" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Seg</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detalles del Evento -->
+        <section class="py-16 px-4 relative">
+             <div class="max-w-2xl mx-auto text-center" data-aos="fade-up">
+                <div class="inline-block p-5 rounded-full border-2 border-blue-400/40 mb-8 bg-indigo-900/30 backdrop-blur shadow-[0_0_20px_rgba(96,165,250,0.3)]">
+                    <i data-lucide="clock" class="w-10 h-10 text-blue-300 mx-auto"></i>
+                </div>
+                <h2 class="text-5xl mb-8 text-white">Recepción</h2>
+                
+                <div class="space-y-8 text-lg text-blue-100">
+                    <p class="text-3xl font-semibold text-blue-200 title-font">4:00 PM</p>
+                    <p class="italic opacity-90 max-w-md mx-auto leading-relaxed font-light">
+                        Celebraremos juntos en una tarde mágica, rodeados de la belleza y el misterio de nuestro bosque encantado.
+                    </p>
+                    <div class="w-32 h-px bg-blue-400/40 mx-auto my-8"></div>
+                    
+                    <!-- Notas importantes -->
+                    <div class="bg-indigo-950/60 p-8 rounded-2xl border border-blue-500/30 shadow-lg backdrop-blur-sm">
+                        <p class="mb-4 flex items-center justify-center gap-2 text-blue-300 font-semibold">
+                            <i data-lucide="info" class="w-5 h-5"></i> Nota Importante
+                        </p>
+                        <p class="text-sm uppercase tracking-wide opacity-90 text-white font-medium">No habrá ceremonia religiosa (Misa)</p>
+                        <p class="text-sm uppercase tracking-wide opacity-90 mt-2 text-white">Recepción directa en el lugar del evento</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Ubicación - Con Foto del Lugar y Filtro Azulado -->
+        <section class="py-20 px-4">
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center" data-aos="fade-right">
+                <div class="text-center md:text-left order-2 md:order-1">
+                    <h2 class="text-4xl md:text-5xl mb-6 text-white">Lugar Mágico</h2>
+                    <p class="mb-8 text-blue-100 leading-relaxed text-lg font-light">
+                        Te espero para compartir este momento inolvidable en un entorno de ensueño.<br><br>
+                        Sigue el mapa para llegar a nuestro bosque encantado en el <strong>Hotel San Miguel Mecapalapa</strong>.
+                    </p>
+                    <a href="https://maps.app.goo.gl/yMEMc2SvTvxXcDGa6?g_st=iwb" target="_blank" class="glow-btn inline-flex items-center gap-3 px-8 py-4 rounded-full text-white font-semibold text-sm tracking-wider uppercase hover:text-blue-200 transition-colors">
+                        <i data-lucide="map-pin" class="text-blue-300"></i> Ver Ubicación en Maps
+                    </a>
+                </div>
+                <!-- Contenedor de la Imagen del Lugar (Slideshow) -->
+                <div class="order-1 md:order-2 relative group location-image-container rounded-2xl overflow-hidden">
+                    <div class="absolute inset-0 bg-indigo-600 blur-xl opacity-30 group-hover:opacity-50 transition duration-700 z-0"></div>
+                    
+                    <!-- Contenedor de diapositivas -->
+                    <div id="location-slideshow" class="relative h-80 md:h-96 bg-indigo-950/50 flex items-center justify-center overflow-hidden rounded-2xl z-10">
+                       <!-- Las imágenes se alternarán automáticamente mediante CSS/JS -->
+                       <img src="https://i.postimg.cc/8P7HxpWr/hsmm_1.jpg" class="location-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-100 mix-blend-overlay contrast-125">
+                       <img src="https://i.postimg.cc/fTVK1zXc/hsmm_2.jpg" class="location-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 mix-blend-overlay contrast-125">
+                       <img src="https://i.postimg.cc/vHCzsJL1/hsmm_3.jpg" class="location-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 mix-blend-overlay contrast-125">
+                       <img src="https://i.postimg.cc/vH4zCY9W/hsmm_4.jpg" class="location-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 mix-blend-overlay contrast-125">
+                       <img src="https://i.postimg.cc/hPNrBkbz/hsmm_5.jpg" class="location-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0 mix-blend-overlay contrast-125">
+                       
+                       <!-- Overlay con Icono y Texto -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-indigo-950/90 via-indigo-900/40 to-transparent flex flex-col justify-end p-6 z-20 pointer-events-none">
+                            <div class="flex items-center gap-3 text-white">
+                                <i data-lucide="map" class="w-8 h-8 text-blue-300"></i>
+                                <span class="text-lg font-semibold title-font">Hotel San Miguel Mecapalapa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regalos -->
+        <section class="py-20 px-4 mb-16 relative overflow-hidden">
+             <!-- Decoración de fondo para regalos - Azul/Morado -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-20 pointer-events-none mix-blend-screen"></div>
+
+            <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="zoom-in">
+                <h2 class="text-5xl mb-8 text-white">Mesa de Regalos</h2>
+                <div class="inline-block p-4 rounded-full bg-indigo-900/30 border border-blue-400/30 mb-8 shadow-md">
+                    <i data-lucide="gift" class="w-12 h-12 text-purple-300 mx-auto"></i>
+                </div>
+                <p class="text-blue-100 mb-10 max-w-lg mx-auto text-lg leading-relaxed font-light">
+                    Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo, he seleccionado algunas opciones que me encantan para esta nueva etapa.
+                </p>
+                
+                <!-- Botón de Liverpool -->
+                <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51856824" target="_blank" class="group relative inline-flex items-center gap-4 px-10 py-5 rounded-full bg-[#e10098] hover:bg-[#c00080] text-white font-bold tracking-wider uppercase shadow-[0_0_25px_rgba(225,0,152,0.5)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(225,0,152,0.7)] overflow-hidden">
+                    <!-- Brillo interno en el botón -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+                    <i data-lucide="shopping-bag" class="w-6 h-6 transition-transform group-hover:-rotate-12"></i>
+                    <span>Ver en Liverpool</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-12 opacity-70 relative z-10">
+            <div class="h-px w-fullmax-w-xs mx-auto bg-gradient-to-r from-transparent via-blue-400/30 to-transparent mb-6"></div>
+            <p class="font-great-vibes text-4xl mb-3 text-blue-200">Daniela</p>
+            <p class="text-xs tracking-[0.3em] uppercase text-blue-100">27 . Diciembre . 2025</p>
+            <p class="text-[10px] mt-4 opacity-60 text-blue-300">Hecho con magia para un día especial</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        lucide.createIcons();
+        AOS.init({
+            once: false,
+            mirror: true,
+            offset: 80,
+            duration: 1000,
+            easing: 'ease-out-cubic'
+        });
+        
+        // Lógica de Slideshow para las fotos del lugar
+        function startSlideshow() {
+            const slides = document.querySelectorAll('.location-slide');
+            let currentSlide = 0;
+            
+            // Cambiar imagen cada 3.5 segundos
+            setInterval(() => {
+                // Ocultar slide actual
+                slides[currentSlide].classList.remove('opacity-100');
+                slides[currentSlide].classList.add('opacity-0');
+                
+                // Calcular siguiente slide
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Mostrar siguiente slide
+                slides[currentSlide].classList.remove('opacity-0');
+                slides[currentSlide].classList.add('opacity-100');
+            }, 3500);
+        }
+
+        // Lógica de apertura del Libro
+        function openInvitation() {
+            const opener = document.getElementById('opener');
+            const bookContainer = document.querySelector('.book-container');
+            const clickInstruction = document.querySelector('.click-instruction');
+            const audio = document.getElementById('bg-music');
+            
+            bookContainer.classList.add('book-open');
+            clickInstruction.style.opacity = '0';
+
+            audio.volume = 0.4;
+            audio.play().catch(e => console.log("Auto-play bloqueado"));
+            
+            setTimeout(() => {
+                opener.classList.add('hidden-opener');
+                initButterflies();
+                startSlideshow(); // Iniciar el carrusel de fotos cuando se abre la invitación
+            }, 1200);
+        }
+
+        // Control de música
+        let isPlaying = true;
+        function toggleMusic() {
+            const audio = document.getElementById('bg-music');
+            const icon = document.getElementById('music-icon');
+            
+            if (isPlaying) {
+                audio.pause();
+                icon.setAttribute('data-lucide', 'volume-x');
+                icon.classList.add('opacity-50');
+            } else {
+                audio.play();
+                icon.setAttribute('data-lucide', 'volume-2');
+                icon.classList.remove('opacity-50');
+            }
+            lucide.createIcons();
+            isPlaying = !isPlaying;
+        }
+
+        // Sistema de Mariposas (Partículas) - Colores Azul/Morado
+        function initButterflies() {
+            const container = document.getElementById('canvas-container');
+            // Volvemos a los colores originales de Daniela
+            const colors = ['#60a5fa', '#a78bfa', '#818cf8', '#c084fc', '#e9d5ff']; 
+            
+            for (let i = 0; i < 20; i++) {
+                createButterfly(container, colors);
+            }
+        }
+
+        function createButterfly(container, colors) {
+            const butterfly = document.createElement('div');
+            butterfly.classList.add('butterfly');
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            butterfly.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="${color}" stroke="none" filter="drop-shadow(0 0 5px ${color})">
+                    <path d="M12 2C12 2 13 5 15 5C17 5 21 3 21 8C21 13 15 15 12 12C9 15 3 13 3 8C3 3 7 5 9 5C11 5 12 2 12 2Z" />
+                    <path d="M12 12C12 12 13 16 16 16C19 16 22 14 22 18C22 21 16 22 12 18C8 22 2 21 2 18C2 14 5 16 8 16C11 16 12 12 12 12Z" opacity="0.8"/>
+                </svg>
+            `;
+
+            const startX = Math.random() * 100;
+            const startY = Math.random() * 100 + 100;
+            const moveX = (Math.random() - 0.5) * 250 + 'px';
+            const moveY = -(Math.random() * 120 + 100) + 'vh';
+            const rotation = (Math.random() - 0.5) * 240 + 'deg';
+            const duration = (Math.random() * 15 + 12) + 's';
+            const delay = Math.random() * 8 + 's';
+            const scale = Math.random() * 0.6 + 0.7;
+
+            butterfly.style.left = startX + 'vw';
+            butterfly.style.top = startY + 'vh';
+            butterfly.style.transform = `scale(${scale})`;
+            butterfly.style.setProperty('--moveX', moveX);
+            butterfly.style.setProperty('--moveY', moveY);
+            butterfly.style.setProperty('--rotation', rotation);
+            butterfly.style.animationDuration = duration;
+            butterfly.style.animationDelay = delay;
+
+            container.appendChild(butterfly);
+
+            butterfly.addEventListener('animationiteration', () => {
+                butterfly.style.left = Math.random() * 100 + 'vw';
+                 const newScale = Math.random() * 0.6 + 0.7;
+                 butterfly.style.transform = `scale(${newScale})`;
+            });
+        }
+
+        // Cuenta Regresiva
+        const eventDate = new Date('December 27, 2025 16:00:00').getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? '0'+days : days;
+            document.getElementById("hours").innerText = hours < 10 ? '0'+hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? '0'+minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? '0'+seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("countdown").innerHTML = "<div class='text-3xl font-bold text-purple-300 col-span-4 sparkle'>¡Es hoy!</div>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
