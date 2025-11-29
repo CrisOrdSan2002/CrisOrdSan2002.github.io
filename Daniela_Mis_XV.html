@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>XV Años - Daniela</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,12 +25,22 @@
             --text-body: #f1f5f9; /* Blanco azulado para texto */
         }
 
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #020617; /* Fondo de respaldo muy oscuro */
             color: var(--text-body);
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         h1, h2, .fancy-text {
@@ -42,10 +52,7 @@
             font-family: 'Cinzel', serif;
         }
         
-        /* SOLUCIÓN FONDO INFINITO:
-           Usamos background-attachment: fixed para que la imagen no se mueva al hacer scroll.
-           Esto evita que se "corte" la imagen.
-        */
+        /* FONDO OPTIMIZADO PARA MÓVILES */
         #forest-bg {
             position: fixed;
             top: 0;
@@ -53,12 +60,13 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            /* Imagen de bosque más misterioso/nocturno */
             background-image: url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=2574&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center bottom;
-            background-attachment: fixed; /* CLAVE: El fondo se queda fijo */
-            filter: brightness(0.8) contrast(1.2); /* Ajustes para que se vea más mágico */
+            background-attachment: scroll; /* Cambiado para mejor rendimiento en móviles */
+            background-repeat: no-repeat;
+            filter: brightness(0.8) contrast(1.2);
+            transform: translateZ(0); /* Aceleración GPU */
         }
         
         /* Capa superpuesta CSS para teñir el bosque de azul/morado */
@@ -69,9 +77,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Degradado mágico de azul a morado con transparencia */
             background: linear-gradient(to bottom, rgba(2, 6, 23, 0.8), rgba(30, 58, 138, 0.6), rgba(88, 28, 135, 0.7), rgba(2, 6, 23, 0.9));
             pointer-events: none;
+            transform: translateZ(0); /* Aceleración GPU */
         }
 
         /* Fondo de partículas/mariposas */
@@ -81,9 +89,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Detrás del contenido, frente al fondo */
+            z-index: 0;
             pointer-events: none;
             overflow: hidden;
+            transform: translateZ(0); /* Aceleración GPU */
         }
 
         .butterfly {
@@ -92,6 +101,7 @@
             height: 20px;
             opacity: 0.8;
             animation: float-butterfly linear infinite;
+            will-change: transform, opacity; /* Optimización de animación */
         }
 
         @keyframes float-butterfly {
@@ -103,18 +113,18 @@
 
         /* Estilos de botones brillantes - Adaptados a Azul/Morado/Plata */
         .glow-btn {
-            background: rgba(30, 58, 138, 0.4); /* Azul transparente */
+            background: rgba(30, 58, 138, 0.4);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(199, 210, 254, 0.3); /* Borde plateado/azul claro */
-            box-shadow: 0 0 15px rgba(88, 28, 135, 0.5); /* Sombra morada */
+            border: 1px solid rgba(199, 210, 254, 0.3);
+            box-shadow: 0 0 15px rgba(88, 28, 135, 0.5);
             transition: all 0.3s ease;
             color: var(--text-body);
         }
 
         .glow-btn:hover {
-            background: rgba(88, 28, 135, 0.5); /* Morado al pasar el mouse */
+            background: rgba(88, 28, 135, 0.5);
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(96, 165, 250, 0.7); /* Brillo azul claro */
+            box-shadow: 0 0 25px rgba(96, 165, 250, 0.7);
         }
 
         /* Botón de WhatsApp */
@@ -140,7 +150,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #020617; /* Fondo oscuro */
+            background: #020617;
             z-index: 100;
             display: flex;
             flex-direction: column;
@@ -176,7 +186,6 @@
             width: 100%;
             height: 100%;
             background-color: var(--primary-blue);
-            /* Textura y degradado azul/morado */
             background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png'), linear-gradient(to right bottom, #1e3a8a, #581c87);
             border-radius: 5px 15px 15px 5px;
             box-shadow: 10px 10px 30px rgba(0,0,0,0.6), inset -5px 0 10px rgba(0,0,0,0.3);
@@ -190,7 +199,7 @@
             transition: transform 1s ease-in-out;
             z-index: 2;
             backface-visibility: hidden;
-            border: 2px solid var(--accent-silver); /* Borde plateado */
+            border: 2px solid var(--accent-silver);
         }
         
         .book-cover::before {
@@ -209,17 +218,17 @@
             left: 0;
             width: 98%;
             height: 96%;
-            background-color: #f1f5f9; /* Blanco plateado */
+            background-color: #f1f5f9;
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
             border-radius: 5px 12px 12px 5px;
             box-shadow: inset -5px 0 10px rgba(0,0,0,0.1);
             z-index: 1;
             transform-origin: left;
             transition: transform 1s ease-in-out;
-             display: flex;
+            display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--primary-blue); /* Texto azul oscuro */
+            color: var(--primary-blue);
             font-family: 'Cinzel', serif;
             font-size: 1.2rem;
             font-weight: bold;
@@ -255,20 +264,67 @@
         }
         
         .location-image-container {
-             border: 2px solid var(--accent-silver);
-             box-shadow: 0 0 20px rgba(88, 28, 135, 0.5);
+            border: 2px solid var(--accent-silver);
+            box-shadow: 0 0 20px rgba(88, 28, 135, 0.5);
         }
 
+        /* Optimizaciones para móviles */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 4.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 3rem !important;
+            }
+            
+            .countdown-number {
+                font-size: 2.5rem !important;
+            }
+            
+            .glow-btn {
+                padding: 1rem 1.5rem;
+            }
+            
+            .book-container {
+                width: 180px;
+                height: 250px;
+            }
+            
+            .location-slide {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 3.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .countdown-number {
+                font-size: 1.8rem !important;
+            }
+            
+            .countdown-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .parents-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Música de fondo -->
-    <!-- 
-        AQUÍ ESTÁ LA LÍNEA DONDE PUEDES CAMBIAR LA RUTA DE LA MÚSICA:
-        Reemplaza el valor del atributo "src" con la ruta de tu archivo de música
-    -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop preload="metadata">
         <source src="Harry James & His Orchestra - It's Been A Long, Long Time (Audio).mp3" type="audio/mpeg">
     </audio>
     
@@ -313,7 +369,7 @@
             <div class="absolute w-64 h-64 bg-purple-600 rounded-full blur-[120px] opacity-40 animate-pulse mix-blend-screen leading-relaxed"></div>
             
             <p class="text-lg tracking-[0.3em] text-blue-200 mb-2 title-font" data-aos="fade-down" data-aos-duration="1500">MIS XV AÑOS</p>
-            <h1 class="text-7xl md:text-9xl text-white mb-4 sparkle" data-aos="zoom-in" data-aos-duration="2000" style="text-shadow: 0 0 35px rgba(167, 139, 250, 0.8);">Daniela</h1>
+            <h1 class="hero-title text-7xl md:text-9xl text-white mb-4 sparkle" data-aos="zoom-in" data-aos-duration="2000" style="text-shadow: 0 0 35px rgba(167, 139, 250, 0.8);">Daniela</h1>
             
             <div class="h-px w-32 bg-gradient-to-r from-transparent via-blue-400 to-transparent my-8"></div>
             
@@ -332,28 +388,28 @@
                 <!-- Borde superior azulado -->
                 <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-70"></div>
                 
-                <h2 class="text-4xl md:text-5xl mb-2 text-white">Sábado</h2>
+                <h2 class="section-title text-4xl md:text-5xl mb-2 text-white">Sábado</h2>
                 <div class="text-6xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-400 title-font my-6 drop-shadow-md">
                     27
                 </div>
                 <h3 class="text-2xl md:text-3xl uppercase tracking-[0.2em] text-blue-200 mb-10 title-font">Diciembre 2025</h3>
 
                 <!-- Contador -->
-                <div id="countdown" class="grid grid-cols-4 gap-3 md:gap-6 max-w-xl mx-auto text-blue-50">
+                <div id="countdown" class="countdown-container grid grid-cols-4 gap-3 md:gap-6 max-w-xl mx-auto text-blue-50">
                     <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
-                        <span id="days" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span id="days" class="countdown-number block text-3xl md:text-5xl font-bold title-font text-white">00</span>
                         <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Días</span>
                     </div>
                     <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
-                        <span id="hours" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span id="hours" class="countdown-number block text-3xl md:text-5xl font-bold title-font text-white">00</span>
                         <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Hrs</span>
                     </div>
                     <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
-                        <span id="minutes" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span id="minutes" class="countdown-number block text-3xl md:text-5xl font-bold title-font text-white">00</span>
                         <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Min</span>
                     </div>
                     <div class="bg-indigo-950/40 rounded-xl p-3 backdrop-blur-sm border border-blue-400/20 shadow-inner">
-                        <span id="seconds" class="block text-3xl md:text-5xl font-bold title-font text-white">00</span>
+                        <span id="seconds" class="countdown-number block text-3xl md:text-5xl font-bold title-font text-white">00</span>
                         <span class="text-xs md:text-sm uppercase opacity-80 tracking-wider">Seg</span>
                     </div>
                 </div>
@@ -366,7 +422,7 @@
                 <div class="inline-block p-5 rounded-full border-2 border-blue-400/40 mb-8 bg-indigo-900/30 backdrop-blur shadow-[0_0_20px_rgba(96,165,250,0.3)]">
                     <i data-lucide="clock" class="w-10 h-10 text-blue-300 mx-auto"></i>
                 </div>
-                <h2 class="text-5xl mb-8 text-white">Recepción</h2>
+                <h2 class="section-title text-5xl mb-8 text-white">Recepción</h2>
                 
                 <div class="space-y-8 text-lg text-blue-100">
                     <p class="text-3xl font-semibold text-blue-200 title-font">4:00 PM</p>
@@ -393,9 +449,9 @@
                 <div class="inline-block p-5 rounded-full border-2 border-blue-400/40 mb-8 bg-indigo-900/30 backdrop-blur shadow-[0_0_20px_rgba(96,165,250,0.3)]">
                     <i data-lucide="users" class="w-10 h-10 text-blue-300 mx-auto"></i>
                 </div>
-                <h2 class="text-5xl mb-8 text-white">Con la bendición de mis padres</h2>
+                <h2 class="section-title text-5xl mb-8 text-white">Con la bendición de mis padres</h2>
                 
-                <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="parents-container grid md:grid-cols-2 gap-8 mt-12">
                     <div class="glow-btn rounded-2xl p-8 backdrop-blur-sm" data-aos="fade-right">
                         <h3 class="text-2xl md:text-3xl text-white mb-2 title-font">José Miguel</h3>
                         <p class="text-xl text-blue-200 mb-2 title-font">Vaquier Solis</p>
@@ -417,7 +473,7 @@
         <section class="py-20 px-4">
             <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center" data-aos="fade-right">
                 <div class="text-center md:text-left order-2 md:order-1">
-                    <h2 class="text-4xl md:text-5xl mb-6 text-white">Lugar Mágico</h2>
+                    <h2 class="section-title text-4xl md:text-5xl mb-6 text-white">Lugar Mágico</h2>
                     <p class="mb-8 text-blue-100 leading-relaxed text-lg font-light">
                         Te espero para compartir este momento inolvidable en un entorno de ensueño.<br><br>
                         Sigue el mapa para llegar a nuestro bosque encantado en el <strong>Hotel San Miguel Mecapalapa</strong>.
@@ -457,7 +513,7 @@
                 <div class="inline-block p-5 rounded-full border-2 border-green-400/40 mb-8 bg-green-900/20 backdrop-blur shadow-[0_0_20px_rgba(34,197,94,0.3)]">
                     <i data-lucide="message-circle" class="w-10 h-10 text-green-300 mx-auto"></i>
                 </div>
-                <h2 class="text-5xl mb-8 text-white">Confirma tu Asistencia</h2>
+                <h2 class="section-title text-5xl mb-8 text-white">Confirma tu Asistencia</h2>
                 
                 <p class="text-blue-100 mb-10 max-w-lg mx-auto text-lg leading-relaxed font-light">
                     Para poder organizar mejor este día tan especial, te pedimos confirmes tu asistencia a través de WhatsApp.
@@ -480,7 +536,7 @@
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600 rounded-full blur-[150px] opacity-20 pointer-events-none mix-blend-screen"></div>
 
             <div class="max-w-3xl mx-auto text-center relative z-10" data-aos="zoom-in">
-                <h2 class="text-5xl mb-8 text-white">Mesa de Regalos</h2>
+                <h2 class="section-title text-5xl mb-8 text-white">Mesa de Regalos</h2>
                 <div class="inline-block p-4 rounded-full bg-indigo-900/30 border border-blue-400/30 mb-8 shadow-md">
                     <i data-lucide="gift" class="w-12 h-12 text-purple-300 mx-auto"></i>
                 </div>
@@ -511,15 +567,19 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        lucide.createIcons();
-        AOS.init({
-            once: false,
-            mirror: true,
-            offset: 80,
-            duration: 1000,
-            easing: 'ease-out-cubic'
+        // Inicialización de componentes
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            AOS.init({
+                once: false,
+                mirror: true,
+                offset: 80,
+                duration: 1000,
+                easing: 'ease-out-cubic',
+                disable: window.innerWidth < 768 // Desactivar AOS en móviles si es necesario
+            });
         });
-        
+
         // Lógica de Slideshow para las fotos del lugar
         function startSlideshow() {
             const slides = document.querySelectorAll('.location-slide');
@@ -550,13 +610,20 @@
             bookContainer.classList.add('book-open');
             clickInstruction.style.opacity = '0';
 
+            // Reproducir música con manejo de errores
             audio.volume = 0.4;
-            audio.play().catch(e => console.log("Auto-play bloqueado"));
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    console.log("Auto-play bloqueado, el usuario debe interactuar primero");
+                });
+            }
             
             setTimeout(() => {
                 opener.classList.add('hidden-opener');
                 initButterflies();
-                startSlideshow(); // Iniciar el carrusel de fotos cuando se abre la invitación
+                startSlideshow();
             }, 1200);
         }
 
@@ -571,7 +638,9 @@
                 icon.setAttribute('data-lucide', 'volume-x');
                 icon.classList.add('opacity-50');
             } else {
-                audio.play();
+                audio.play().catch(e => {
+                    console.log("Error al reproducir música");
+                });
                 icon.setAttribute('data-lucide', 'volume-2');
                 icon.classList.remove('opacity-50');
             }
@@ -590,10 +659,12 @@
         // Sistema de Mariposas (Partículas) - Colores Azul/Morado
         function initButterflies() {
             const container = document.getElementById('canvas-container');
-            // Volvemos a los colores originales de Daniela
             const colors = ['#60a5fa', '#a78bfa', '#818cf8', '#c084fc', '#e9d5ff']; 
             
-            for (let i = 0; i < 20; i++) {
+            // Reducir número de mariposas en móviles para mejor rendimiento
+            const butterflyCount = window.innerWidth < 768 ? 12 : 20;
+            
+            for (let i = 0; i < butterflyCount; i++) {
                 createButterfly(container, colors);
             }
         }
@@ -659,6 +730,9 @@
                 document.getElementById("countdown").innerHTML = "<div class='text-3xl font-bold text-purple-300 col-span-4 sparkle'>¡Es hoy!</div>";
             }
         }, 1000);
+
+        // Prevenir zoom en inputs en iOS
+        document.addEventListener('touchstart', function() {}, {passive: true});
     </script>
 </body>
 </html>
