@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constructora Horizonte</title>
+    <style>
+        /* ===== RESET Y VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #212529; /* gris muy oscuro */
+            background-color: #f8f9fa; /* casi blanco */
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* ===== COLORES NEUTROS ===== */
+        :root {
+            --color-bg: #f8f9fa;
+            --color-surface: #ffffff;
+            --color-text: #212529;
+            --color-text-light: #6c757d;
+            --color-border: #dee2e6;
+            --color-accent: #6c757d;      /* gris medio */
+            --color-accent-light: #adb5bd;
+            --color-shadow: rgba(0, 0, 0, 0.05);
+        }
+
+        /* ===== ANIMACIONES GLOBALES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.8s ease-out both;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #495057;
+            transform: scale(1.02);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background-color: var(--color-surface);
+            box-shadow: 0 2px 10px var(--color-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--color-text);
+        }
+
+        .logo span {
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-text-light);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--color-text);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(rgba(33, 37, 41, 0.6), rgba(33, 37, 41, 0.6)), 
+                        url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 8rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #e9ecef;
+        }
+
+        /* ===== SECCIONES ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: var(--color-text);
+        }
+
+        .section-title span {
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--color-text-light);
+            margin-bottom: 1rem;
+        }
+
+        .about-image img {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--color-shadow);
+        }
+
+        /* Servicios */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px var(--color-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .service-card p {
+            color: var(--color-text-light);
+        }
+
+        /* Proyectos */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--color-surface);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--color-shadow);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover img {
+            opacity: 0.9;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .project-info p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Contacto */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            color: var(--color-text-light);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-family: inherit;
+            background-color: white;
+        }
+
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            align-self: flex-start;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #212529;
+            color: #adb5bd;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo"><span>HORIZONTE</span> CONSTRUCTORA</div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO -->
+        <section id="inicio" class="hero">
+            <div class="container">
+                <h1>Construimos el futuro con solidez</h1>
+                <p>Más de 20 años de experiencia en construcción residencial, comercial e industrial.</p>
+                <a href="#contacto" class="btn">Solicita información</a>
+            </div>
+        </section>
+
+        <!-- NOSOTROS -->
+        <section id="nosotros">
+            <div class="container">
+                <h2 class="section-title">Sobre <span>Nosotros</span></h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>En Horizonte Constructora nos especializamos en crear espacios que combinan funcionalidad, estética y durabilidad. Nuestro equipo de arquitectos, ingenieros y técnicos trabajan de la mano para garantizar la excelencia en cada proyecto.</p>
+                        <p>Utilizamos materiales de primera calidad y técnicas innovadoras para asegurar resultados que superan las expectativas de nuestros clientes. Cada obra es un compromiso con la calidad y los plazos acordados.</p>
+                        <a href="#contacto" class="btn">Conócenos</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Arquitectos trabajando en planos">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios" style="background-color: #e9ecef;">
+            <div class="container">
+                <h2 class="section-title">Nuestros <span>Servicios</span></h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🏗️</div>
+                        <h3>Construcción en seco</h3>
+                        <p>Sistemas livianos de acero y yeso para proyectos rápidos y eficientes.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏠</div>
+                        <h3>Viviendas unifamiliares</h3>
+                        <p>Diseño y construcción de casas personalizadas, desde el concepto hasta la entrega.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏢</div>
+                        <h3>Edificios comerciales</h3>
+                        <p>Oficinas, locales comerciales y naves industriales con altos estándares.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🔨</div>
+                        <h3>Remodelaciones</h3>
+                        <p>Renovación y ampliación de espacios, manteniendo la esencia del lugar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROYECTOS -->
+        <section id="proyectos">
+            <div class="container">
+                <h2 class="section-title">Proyectos <span>Destacados</span></h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Casa moderna">
+                        <div class="project-info">
+                            <h3>Residencia Los Pinos</h3>
+                            <p>Vivienda unifamiliar con diseño contemporáneo y materiales sostenibles.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Edificio de oficinas">
+                        <div class="project-info">
+                            <h3>Torre Corporativa Centro</h3>
+                            <p>Edificio de 12 pisos con fachada ventilada y eficiencia energética.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Nave industrial">
+                        <div class="project-info">
+                            <h3>Planta Logística Norte</h3>
+                            <p>Nave industrial de 5000m² con entrepiso técnico y muelles de carga.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" style="background-color: #e9ecef;">
+            <div class="container">
+                <h2 class="section-title">Contáctanos</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p><strong>Dirección:</strong> Av. Constructores 123, Ciudad</p>
+                        <p><strong>Teléfono:</strong> +34 123 456 789</p>
+                        <p><strong>Email:</strong> info@horizonteconstructora.com</p>
+                        <p><strong>Horario:</strong> Lunes a Viernes, 9:00 - 18:00</p>
+                    </div>
+                    <form class="contact-form">
+                        <input type="text" placeholder="Nombre" required>
+                        <input type="email" placeholder="Email" required>
+                        <input type="tel" placeholder="Teléfono">
+                        <textarea placeholder="Mensaje" required></textarea>
+                        <button type="submit" class="btn">Enviar mensaje</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Horizonte Constructora. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Pequeño script para smooth scroll y animación adicional -->
+    <script>
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Animación de aparición al hacer scroll (opcional, mejora la experiencia)
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease-out both';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
