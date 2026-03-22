@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>KISLEV | Construcción y Examinación Industrial</title>
     <style>
         /* ===== RESET Y VARIABLES ===== */
@@ -16,7 +16,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #1e2b37;
-            background-color: #f5f7fa;
+            background-color: #ffffff;
+            overflow-x: hidden;
         }
 
         img {
@@ -24,18 +25,18 @@
             display: block;
         }
 
-        /* ===== COLORES INDUSTRIALES ===== */
+        /* ===== PALETA DE COLORES ACTUALIZADA ===== */
         :root {
-            --color-primary: #2c3e50;      /* azul grisáceo oscuro */
-            --color-primary-light: #3a4e62;
-            --color-secondary: #5d6d7e;     /* gris azulado */
-            --color-accent: #e67e22;         /* naranja industrial (detalles) */
-            --color-bg: #f5f7fa;
-            --color-surface: #ffffff;
+            --color-primary: #00234d;       /* Azul principal */
+            --color-primary-dark: #001a3a;
+            --color-accent: #f8c200;        /* Amarillo */
+            --color-accent-dark: #e0ae00;
+            --color-white: #ffffff;
+            --color-gray-light: #e9e9e9;    /* Gris claro */
             --color-text: #1e2b37;
             --color-text-light: #5a6b7a;
-            --color-border: #d0d7de;
-            --color-shadow: rgba(0, 20, 30, 0.1);
+            --color-border: #e0e0e0;
+            --color-shadow: rgba(0, 35, 77, 0.1);
         }
 
         /* ===== ANIMACIONES ===== */
@@ -66,22 +67,23 @@
         .btn {
             display: inline-block;
             background-color: var(--color-accent);
-            color: white;
+            color: var(--color-primary);
             padding: 0.8rem 2rem;
             text-decoration: none;
             border-radius: 4px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.9rem;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s;
         }
 
         .btn:hover {
-            background-color: #d35400;
+            background-color: var(--color-accent-dark);
             transform: scale(1.02);
+            color: var(--color-primary);
         }
 
         .btn-outline {
@@ -92,79 +94,179 @@
 
         .btn-outline:hover {
             background: var(--color-accent);
+            color: var(--color-primary);
+        }
+
+        /* Botón WhatsApp */
+        .btn-wa {
+            background-color: #25D366;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-wa:hover {
+            background-color: #128C7E;
+            transform: scale(1.02);
             color: white;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER FIJO CON HAMBURGUESA ===== */
         header {
             background-color: var(--color-primary);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        }
-
-        .header-scrolled {
-            padding: 0.3rem 0;
-            background-color: rgba(44, 62, 80, 0.95);
-            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
         }
 
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            flex-wrap: wrap;
-            transition: padding 0.3s;
+            padding: 0.8rem 2rem;
         }
 
-        .header-scrolled .header-container {
-            padding: 0.5rem 0;
-        }
-
+        /* Logo */
         .logo {
-            color: white;
-            font-size: 1.4rem;
-            font-weight: 300;
-            line-height: 1.3;
-            border-left: 4px solid var(--color-accent);
-            padding-left: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .logo strong {
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .brand {
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--color-accent);
-        }
-
-        .logo span {
-            font-size: 0.9rem;
-            display: block;
-            color: #b0c4d9;
-            font-weight: 300;
             letter-spacing: 1px;
         }
 
-        nav ul {
+        .logo-text .sub {
+            font-size: 0.7rem;
+            color: #b0c4de;
+            letter-spacing: 0.5px;
+        }
+
+        /* Botón menú hamburguesa */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--color-accent);
+            margin: 5px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* Menú desktop */
+        .nav-menu {
+            display: flex;
+        }
+
+        .nav-menu ul {
             display: flex;
             gap: 2rem;
             list-style: none;
         }
 
-        nav a {
+        .nav-menu a {
             text-decoration: none;
             color: #e0e7ef;
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: color 0.3s;
         }
 
-        nav a:hover {
+        .nav-menu a:hover {
             color: var(--color-accent);
+        }
+
+        /* ===== MENÚ LATERAL MÓVIL (OFF-CANVAS) ===== */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -280px;
+                width: 280px;
+                height: 100vh;
+                background-color: var(--color-primary);
+                box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+                transition: left 0.3s ease;
+                z-index: 1000;
+                padding: 80px 2rem 2rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-menu a {
+                font-size: 1.1rem;
+                display: block;
+                padding: 0.5rem 0;
+                color: white;
+            }
+
+            /* Overlay cuando menú está abierto */
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 999;
+                display: none;
+            }
+
+            .menu-overlay.active {
+                display: block;
+            }
+
+            /* Animación hamburguesa a X */
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+                background-color: var(--color-accent);
+            }
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -6px);
+                background-color: var(--color-accent);
+            }
         }
 
         /* ===== HERO CON CARRUSEL ===== */
@@ -189,28 +291,28 @@
         }
 
         .carousel-slide:nth-child(1) {
-            background-image: linear-gradient(rgba(28, 40, 51, 0.8), rgba(28, 40, 51, 0.8)), 
-                            url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
+                            url('https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             animation-delay: 0s;
         }
 
         .carousel-slide:nth-child(2) {
-            background-image: linear-gradient(rgba(28, 40, 51, 0.8), rgba(28, 40, 51, 0.8)), 
-                            url('https://images.unsplash.com/photo-1565008447742-97f6b38c985c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
+                            url('https://i.postimg.cc/zXwDZX9d/equipo-de-perforacion.jpg');
             animation-delay: 4s;
         }
 
         .carousel-slide:nth-child(3) {
-            background-image: linear-gradient(rgba(28, 40, 51, 0.8), rgba(28, 40, 51, 0.8)), 
-                            url('https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
+                            url('https://i.postimg.cc/7LHky3gJ/Tuberias-Industriales.jpg');
             animation-delay: 8s;
         }
 
         .carousel-slide:nth-child(4) {
-            background-image: linear-gradient(rgba(28, 40, 51, 0.8), rgba(28, 40, 51, 0.8)), 
-                            url('https://images.unsplash.com/photo-1581092335871-4c7b86e3d84f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            animation-delay: 12s;
-        }
+    background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
+                    url('https://i.postimg.cc/CxWqPKD4/estructuras-metalicas-1.png');
+    animation-delay: 12s;
+}
 
         .hero-content {
             position: relative;
@@ -307,7 +409,7 @@
             box-shadow: 0 10px 30px var(--color-shadow);
         }
 
-        /* Servicios - GRID MÁS GRANDE */
+        /* Servicios */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -315,7 +417,7 @@
         }
 
         .service-card {
-            background: var(--color-surface);
+            background: var(--color-white);
             padding: 2.5rem 2rem;
             border-radius: 8px;
             text-align: left;
@@ -377,7 +479,7 @@
         }
 
         .project-card {
-            background: var(--color-surface);
+            background: var(--color-white);
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 20px var(--color-shadow);
@@ -463,13 +565,25 @@
             min-height: 150px;
         }
 
+        .whatsapp-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+        }
+
         /* Footer */
         footer {
             background-color: var(--color-primary);
-            color: #b0c4d9;
+            color: #b0c4de;
             text-align: center;
             padding: 3rem 0;
             border-top: 4px solid var(--color-accent);
+        }
+
+        /* Fondo de secciones alternas */
+        .bg-gray {
+            background-color: var(--color-gray-light);
         }
 
         /* ===== RESPONSIVE ===== */
@@ -489,23 +603,10 @@
         }
 
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 0.8rem;
+            .container {
+                padding: 2.5rem 0;
             }
-
-            nav ul {
-                gap: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .logo {
-                text-align: center;
-                border-left: none;
-                padding-left: 0;
-            }
-
+            
             .hero h1 {
                 font-size: 2rem;
             }
@@ -513,17 +614,34 @@
             .section-title {
                 font-size: 2rem;
             }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            .logo-text .brand {
+                font-size: 1rem;
+            }
+
+            .logo-text .sub {
+                font-size: 0.6rem;
+            }
         }
     </style>
 </head>
 <body>
     <header id="main-header">
-        <div class="container header-container">
+        <div class="header-container">
             <div class="logo">
-                <strong>KISLEV</strong> Construcción y Examinación Industrial
-                <span>Soluciones integrales para la industria</span>
+                <img class="logo-img" src="https://i.postimg.cc/FRShH9n6/LOGO_KISLEV_AMARILLO_BLANCO-1.png" alt="KISLEV Logo">
+                
             </div>
-            <nav>
+            <button class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
@@ -531,8 +649,9 @@
                     <li><a href="#proyectos">Proyectos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
                 </ul>
-            </nav>
+            </div>
         </div>
+        <div class="menu-overlay" id="menu-overlay"></div>
     </header>
 
     <main>
@@ -550,7 +669,7 @@
             </div>
         </section>
 
-        <!-- NOSOTROS con certificación API 4G -->
+        <!-- NOSOTROS -->
         <section id="nosotros">
             <div class="container">
                 <h2 class="section-title">Sobre <span>KISLEV</span></h2>
@@ -567,100 +686,36 @@
                         </div>
                     </div>
                     <div class="about-image">
-                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plataforma industrial">
-                        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Trabajo en altura">
+                        <img src="https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plataforma industrial">
+                        <img src="https://i.postimg.cc/76NXrznN/American-Petroleum-Institute-Individual-Certification-Programs-API.png?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Trabajo en altura">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SERVICIOS (los 20 que mencionaste) -->
-        <section id="servicios" style="background-color: #e9ecef;">
+        <!-- SERVICIOS (fondo gris claro) -->
+        <section id="servicios" class="bg-gray">
             <div class="container">
                 <h2 class="section-title">Nuestros <span>Servicios</span></h2>
                 <p class="section-subtitle">Soluciones integrales para cada etapa de tu proyecto industrial</p>
                 
                 <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">🔩</div>
-                        <h3>Estructuras metálicas</h3>
-                        <p>Fabricación y montaje de estructuras para naves industriales, plataformas y soportería.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">⛽</div>
-                        <h3>Tanques industriales</h3>
-                        <p>Fabricación y montaje de tanques para almacenamiento de agua, combustible y productos químicos.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🔧</div>
-                        <h3>Tuberías de proceso</h3>
-                        <p>Prefabricado y montaje de tuberías para procesos industriales, alta presión y temperatura.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">💧</div>
-                        <h3>Pruebas de hermeticidad</h3>
-                        <p>Pruebas neumáticas, hidrostáticas y de fuga para garantizar la estanqueidad de sistemas.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">⚙️</div>
-                        <h3>Mantenimiento industrial</h3>
-                        <p>Mantenimiento preventivo y correctivo a equipos e instalaciones industriales.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">⚡</div>
-                        <h3>Instalaciones eléctricas</h3>
-                        <p>Instalación y pruebas en obra eléctrica para proyectos industriales.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">📊</div>
-                        <h3>Instrumentación industrial</h3>
-                        <p>Calibración e instalación de instrumentos para control de procesos.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🏗️</div>
-                        <h3>Estructuras de concreto</h3>
-                        <p>Construcción de cimentaciones, losas y elementos de concreto reforzado.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🔧</div>
-                        <h3>Aplicación de torque</h3>
-                        <p>Operación y control de torque en uniones atornilladas críticas.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🔥</div>
-                        <h3>Aislamiento térmico</h3>
-                        <p>Instalación de aislamiento para tuberías y equipos industriales.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🎨</div>
-                        <h3>Recubrimiento anticorrosivo</h3>
-                        <p>Aplicación de pinturas y recubrimientos para protección contra corrosión.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🛠️</div>
-                        <h3>Reparación estructural</h3>
-                        <p>Reparación y reforzamiento de estructuras metálicas existentes.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🚀</div>
-                        <h3>Comisionamiento</h3>
-                        <p>Puesta en marcha y arranque de instalaciones industriales.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🔍</div>
-                        <h3>Pruebas no destructivas</h3>
-                        <p>Inspección mediante ultrasonido, partículas magnéticas, tintes penetrantes y más.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">📋</div>
-                        <h3>Procedimientos y manuales</h3>
-                        <p>Elaboración de documentación técnica, procedimientos de calidad y manuales de operación.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">👨‍🏫</div>
-                        <h3>Capacitación</h3>
-                        <p>Formación de inspectores de calidad y personal técnico especializado.</p>
-                    </div>
+                    <div class="service-card"><div class="service-icon">🔩</div><h3>Estructuras metálicas</h3><p>Fabricación y montaje de estructuras para naves industriales, plataformas y soportería.</p></div>
+                    <div class="service-card"><div class="service-icon">⛽</div><h3>Tanques industriales</h3><p>Fabricación y montaje de tanques para almacenamiento de agua, combustible y productos químicos.</p></div>
+                    <div class="service-card"><div class="service-icon">🔧</div><h3>Tuberías de proceso</h3><p>Prefabricado y montaje de tuberías para procesos industriales, alta presión y temperatura.</p></div>
+                    <div class="service-card"><div class="service-icon">💧</div><h3>Pruebas de hermeticidad</h3><p>Pruebas neumáticas, hidrostáticas y de fuga para garantizar la estanqueidad de sistemas.</p></div>
+                    <div class="service-card"><div class="service-icon">⚙️</div><h3>Mantenimiento industrial</h3><p>Mantenimiento preventivo y correctivo a equipos e instalaciones industriales.</p></div>
+                    <div class="service-card"><div class="service-icon">⚡</div><h3>Instalaciones eléctricas</h3><p>Instalación y pruebas en obra eléctrica para proyectos industriales.</p></div>
+                    <div class="service-card"><div class="service-icon">📊</div><h3>Instrumentación industrial</h3><p>Calibración e instalación de instrumentos para control de procesos.</p></div>
+                    <div class="service-card"><div class="service-icon">🏗️</div><h3>Estructuras de concreto</h3><p>Construcción de cimentaciones, losas y elementos de concreto reforzado.</p></div>
+                    <div class="service-card"><div class="service-icon">🔧</div><h3>Aplicación de torque</h3><p>Operación y control de torque en uniones atornilladas críticas.</p></div>
+                    <div class="service-card"><div class="service-icon">🔥</div><h3>Aislamiento térmico</h3><p>Instalación de aislamiento para tuberías y equipos industriales.</p></div>
+                    <div class="service-card"><div class="service-icon">🎨</div><h3>Recubrimiento anticorrosivo</h3><p>Aplicación de pinturas y recubrimientos para protección contra corrosión.</p></div>
+                    <div class="service-card"><div class="service-icon">🛠️</div><h3>Reparación estructural</h3><p>Reparación y reforzamiento de estructuras metálicas existentes.</p></div>
+                    <div class="service-card"><div class="service-icon">🚀</div><h3>Comisionamiento</h3><p>Puesta en marcha y arranque de instalaciones industriales.</p></div>
+                    <div class="service-card"><div class="service-icon">🔍</div><h3>Pruebas no destructivas</h3><p>Inspección mediante ultrasonido, partículas magnéticas, tintes penetrantes y más.</p></div>
+                    <div class="service-card"><div class="service-icon">📋</div><h3>Procedimientos y manuales</h3><p>Elaboración de documentación técnica, procedimientos de calidad y manuales de operación.</p></div>
+                    <div class="service-card"><div class="service-icon">👨‍🏫</div><h3>Capacitación</h3><p>Formación de inspectores de calidad y personal técnico especializado.</p></div>
                 </div>
 
                 <div class="cert-badge">
@@ -678,7 +733,7 @@
                 
                 <div class="projects-grid">
                     <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plataforma de perforación">
+                        <img src="https://i.postimg.cc/zXwDZX9d/equipo-de-perforacion.jpg" alt="Plataforma de perforación">
                         <div class="project-info">
                             <div class="project-tag">Certificación API 4G</div>
                             <h3>Remodelación de plataforma de perforación</h3>
@@ -686,7 +741,7 @@
                         </div>
                     </div>
                     <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Montaje de tuberías">
+                        <img src="https://i.postimg.cc/7LHky3gJ/Tuberias-Industriales.jpg" alt="Montaje de tuberías">
                         <div class="project-info">
                             <div class="project-tag">Proceso industrial</div>
                             <h3>Prefabricado de tuberías para planta química</h3>
@@ -694,7 +749,7 @@
                         </div>
                     </div>
                     <div class="project-card">
-                        <img src="https://images.unsplash.com/photo-1581092335871-4c7b86e3d84f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Estructura metálica">
+                        <img src="https://i.postimg.cc/CxWqPKD4/estructuras-metalicas-1.png" alt="Estructura metálica">
                         <div class="project-info">
                             <div class="project-tag">Estructuras metálicas</div>
                             <h3>Nave industrial para almacenamiento</h3>
@@ -705,8 +760,8 @@
             </div>
         </section>
 
-        <!-- CONTACTO -->
-        <section id="contacto" style="background-color: #e9ecef;">
+        <!-- CONTACTO (fondo gris claro) -->
+        <section id="contacto" class="bg-gray">
             <div class="container">
                 <h2 class="section-title">Contacto <span>Profesional</span></h2>
                 <p class="section-subtitle">Solicita una entrevista para conocer tus necesidades y presentar nuestras soluciones</p>
@@ -715,12 +770,12 @@
                     <div class="contact-info">
                         <h3>Hablemos de tu proyecto</h3>
                         <p><strong>📍 Dirección:</strong> Av. Industrias 1500, Parque Industrial, Ciudad</p>
-                        <p><strong>📞 Teléfono:</strong> +52 123 456 7890</p>
+                        <p><strong>📞 Teléfono:</strong> +52 783 135 3057</p>
                         <p><strong>📧 Email:</strong> proyectos@kislevindustrial.com</p>
                         <p><strong>🕒 Horario:</strong> Lunes a Viernes, 8:00 - 18:00</p>
                         <p style="margin-top: 2rem; font-style: italic;">"Buscamos entrevistas personalizadas para entender a fondo tus requerimientos y ofrecer soluciones a la medida"</p>
                     </div>
-                    <form class="contact-form">
+                    <form class="contact-form" id="contactForm">
                         <input type="text" placeholder="Nombre completo" required>
                         <input type="text" placeholder="Empresa">
                         <input type="email" placeholder="Email corporativo" required>
@@ -737,29 +792,61 @@
                         <button type="submit" class="btn">Solicitar entrevista</button>
                     </form>
                 </div>
+                
+                <!-- Botón WhatsApp Ejecutivo -->
+                <div class="whatsapp-section">
+                    <a href="https://wa.me/527831353057?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20KISLEV%20Construcci%C3%B3n%20y%20Examinaci%C3%B3n%20Industrial.%20Me%20gustar%C3%ADa%20agendar%20una%20entrevista%20para%20conocer%20m%C3%A1s%20sobre%20sus%20soluciones." 
+                       class="btn btn-wa" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        📱 Contactar por WhatsApp
+                    </a>
+                    <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--color-text-light);">Respuesta en menos de 24 horas</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2025 KISLEV Construcción y Examinación Industrial - Todos los derechos reservados</p>
+            <p>© 2026 KISLEV Construcción y Examinación Industrial - Todos los derechos reservados</p>
             <p style="margin-top: 1rem; font-size: 0.9rem;">Soluciones integrales para la industria con certificación API 4G</p>
         </div>
     </footer>
 
     <script>
-        // HEADER QUE SE REDUCE AL HACER SCROLL
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('main-header');
-            if (window.scrollY > 50) {
-                header.classList.add('header-scrolled');
+        // MENÚ LATERAL MÓVIL
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+
+        function openMenu() {
+            navMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuToggle.classList.add('active');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
             } else {
-                header.classList.remove('header-scrolled');
+                openMenu();
             }
         });
 
-        // SMOOTH SCROLL PARA ENLACES INTERNOS
+        menuOverlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // SMOOTH SCROLL
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -770,7 +857,7 @@
             });
         });
 
-        // ANIMACIÓN DE APARICIÓN AL HACER SCROLL
+        // ANIMACIÓN DE APARICIÓN
         const sections = document.querySelectorAll('section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -783,6 +870,16 @@
         sections.forEach(section => {
             observer.observe(section);
         });
+
+        // FORMULARIO
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Gracias por tu mensaje. Pronto nos pondremos en contacto contigo. Mientras tanto, puedes escribirnos por WhatsApp.');
+                contactForm.reset();
+            });
+        }
     </script>
 </body>
 </html>
