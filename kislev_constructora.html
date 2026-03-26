@@ -25,14 +25,14 @@
             display: block;
         }
 
-        /* ===== PALETA DE COLORES ACTUALIZADA ===== */
+        /* ===== PALETA DE COLORES ===== */
         :root {
-            --color-primary: #00234d;       /* Azul principal */
+            --color-primary: #00234d;
             --color-primary-dark: #001a3a;
-            --color-accent: #f8c200;        /* Amarillo */
+            --color-accent: #f8c200;
             --color-accent-dark: #e0ae00;
             --color-white: #ffffff;
-            --color-gray-light: #e9e9e9;    /* Gris claro */
+            --color-gray-light: #e9e9e9;
             --color-text: #1e2b37;
             --color-text-light: #5a6b7a;
             --color-border: #e0e0e0;
@@ -97,7 +97,6 @@
             color: var(--color-primary);
         }
 
-        /* Botón WhatsApp */
         .btn-wa {
             background-color: #25D366;
             color: white;
@@ -112,7 +111,7 @@
             color: white;
         }
 
-        /* ===== HEADER FIJO CON HAMBURGUESA ===== */
+        /* ===== HEADER FIJO ===== */
         header {
             background-color: var(--color-primary);
             position: fixed;
@@ -129,7 +128,6 @@
             padding: 0.8rem 2rem;
         }
 
-        /* Logo */
         .logo {
             display: flex;
             align-items: center;
@@ -159,7 +157,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Botón menú hamburguesa */
         .menu-toggle {
             display: none;
             background: none;
@@ -179,7 +176,6 @@
             border-radius: 3px;
         }
 
-        /* Menú desktop */
         .nav-menu {
             display: flex;
         }
@@ -204,7 +200,6 @@
             color: var(--color-accent);
         }
 
-        /* ===== MENÚ LATERAL MÓVIL (OFF-CANVAS) ===== */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: block;
@@ -239,7 +234,6 @@
                 color: white;
             }
 
-            /* Overlay cuando menú está abierto */
             .menu-overlay {
                 position: fixed;
                 top: 0;
@@ -255,17 +249,14 @@
                 display: block;
             }
 
-            /* Animación hamburguesa a X */
             .menu-toggle.active span:nth-child(1) {
                 transform: rotate(45deg) translate(5px, 5px);
-                background-color: var(--color-accent);
             }
             .menu-toggle.active span:nth-child(2) {
                 opacity: 0;
             }
             .menu-toggle.active span:nth-child(3) {
                 transform: rotate(-45deg) translate(7px, -6px);
-                background-color: var(--color-accent);
             }
         }
 
@@ -292,7 +283,7 @@
 
         .carousel-slide:nth-child(1) {
             background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
-                            url('https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+                            url('https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg');
             animation-delay: 0s;
         }
 
@@ -309,10 +300,10 @@
         }
 
         .carousel-slide:nth-child(4) {
-    background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
-                    url('https://i.postimg.cc/CxWqPKD4/estructuras-metalicas-1.png');
-    animation-delay: 12s;
-}
+            background-image: linear-gradient(rgba(0, 35, 77, 0.85), rgba(0, 35, 77, 0.85)), 
+                            url('https://i.postimg.cc/CxWqPKD4/estructuras-metalicas-1.png');
+            animation-delay: 12s;
+        }
 
         .hero-content {
             position: relative;
@@ -400,56 +391,220 @@
         }
 
         .about-image {
-            display: grid;
-            gap: 1rem;
+            display: block;
         }
 
         .about-image img {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 10px 30px var(--color-shadow);
         }
 
-        /* Servicios */
+        /* Certificaciones Grid */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .cert-card {
+            background: var(--color-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px var(--color-shadow);
+            transition: transform 0.3s;
+            text-align: center;
+            padding-bottom: 1.5rem;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .cert-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-bottom: 3px solid var(--color-accent);
+        }
+
+        .cert-card h3 {
+            color: var(--color-primary);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .cert-card p {
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+            padding: 0 1rem;
+        }
+
+        /* Política, Misión, Visión y Valores */
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .policy-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px var(--color-shadow);
+            border-left: 4px solid var(--color-accent);
+            transition: transform 0.3s;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .policy-card h3 {
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .policy-card h3 .icon {
+            color: var(--color-accent);
+            font-size: 1.8rem;
+        }
+
+        .policy-card p {
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        /* Valores */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 1200px) {
+            .values-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .values-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .values-grid > :last-child {
+                grid-column: 2 / 3;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            .values-grid > * {
+                margin: 0 auto;
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        .value-item {
+            background: var(--color-white);
+            padding: 1.8rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 20px var(--color-shadow);
+            transition: all 0.3s;
+        }
+
+        .value-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .value-item h4 {
+            color: var(--color-primary);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .value-item p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Servicios - NUEVO ESTILO CON IMAGEN */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
         .service-card {
             background: var(--color-white);
-            padding: 2.5rem 2rem;
-            border-radius: 8px;
-            text-align: left;
+            border-radius: 12px;
+            overflow: hidden;
             box-shadow: 0 5px 20px var(--color-shadow);
             transition: all 0.3s;
-            border-left: 4px solid var(--color-accent);
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
-        .service-icon {
-            font-size: 2.8rem;
-            margin-bottom: 1.2rem;
-            color: var(--color-accent);
+        /* Imagen del servicio - ocupa todo el ancho */
+        .service-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
         }
 
-        .service-card h3 {
-            margin-bottom: 1rem;
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.05);
+        }
+
+        /* Contenido de la tarjeta */
+        .service-content {
+            padding: 1.8rem;
+        }
+
+        .service-content h3 {
+            margin-bottom: 0.8rem;
             font-weight: 600;
             color: var(--color-primary);
             font-size: 1.3rem;
         }
 
-        .service-card p {
+        .service-content p {
             color: var(--color-text-light);
             font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        /* Certificaciones */
         .cert-badge {
             background: var(--color-primary);
             color: white;
@@ -572,7 +727,6 @@
             border-top: 1px solid var(--color-border);
         }
 
-        /* Footer */
         footer {
             background-color: var(--color-primary);
             color: #b0c4de;
@@ -581,12 +735,10 @@
             border-top: 4px solid var(--color-accent);
         }
 
-        /* Fondo de secciones alternas */
         .bg-gray {
             background-color: var(--color-gray-light);
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 968px) {
             .hero h1 {
                 font-size: 2.8rem;
@@ -599,6 +751,22 @@
             .about-content,
             .contact-content {
                 grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cert-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .about-image {
+                order: 2;
+            }
+            .about-text {
+                order: 1;
             }
         }
 
@@ -627,6 +795,12 @@
                 font-size: 0.6rem;
             }
         }
+
+        @media (max-width: 480px) {
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -634,7 +808,10 @@
         <div class="header-container">
             <div class="logo">
                 <img class="logo-img" src="https://i.postimg.cc/FRShH9n6/LOGO_KISLEV_AMARILLO_BLANCO-1.png" alt="KISLEV Logo">
-                
+                <div class="logo-text">
+                    <span class="brand">KISLEV</span>
+                    <span class="sub">Construcción y Examinación Industrial</span>
+                </div>
             </div>
             <button class="menu-toggle" id="menu-toggle">
                 <span></span>
@@ -645,6 +822,8 @@
                 <ul>
                     <li><a href="#inicio">Inicio</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#certificaciones">Códigos</a></li>
+                    <li><a href="#filosofia">Filosofía</a></li>
                     <li><a href="#servicios">Servicios</a></li>
                     <li><a href="#proyectos">Proyectos</a></li>
                     <li><a href="#contacto">Contacto</a></li>
@@ -662,8 +841,8 @@
             <div class="carousel-slide"></div>
             <div class="carousel-slide"></div>
             <div class="hero-content">
-                <h1>Ingeniería de <strong>precisión</strong><br>para la industria</h1>
-                <p>Estructuras metálicas, tuberías de proceso, pruebas no destructivas y mantenimiento especializado</p>
+                <h1>INGENIERÍA, CONSTRUCCIÓN Y EXAMINACIÓN INDUSTRIAL CON ALTA <strong>CALIDAD</strong></h1>
+                <p>Estructuras metálicas, tuberías de proceso, pruebas no destructivas, mantenimiento especializado y capacitación.</p>
                 <a href="#contacto" class="btn">Solicitar información</a>
                 <a href="#servicios" class="btn btn-outline" style="margin-left: 1rem;">Nuestros servicios</a>
             </div>
@@ -677,45 +856,251 @@
                 
                 <div class="about-content">
                     <div class="about-text">
-                        <p>En <strong>KISLEV Construcción y Examinación Industrial</strong> nos especializamos en ofrecer servicios de alta ingeniería para los sectores de energía, petróleo, gas y minería. Nuestro equipo combina experiencia técnica con certificaciones internacionales para garantizar la excelencia en cada proyecto.</p>
-                        <p>A pesar de ser una empresa joven, nuestro principal logro ha sido la <strong>reparación y remodelación de una plataforma para perforación de pozos de agua bajo la estricta certificación API 4G</strong>, demostrando nuestra capacidad para manejar proyectos de alto riesgo y exigencia técnica.</p>
-                        
-                        <div class="about-highlight">
-                            <h4>Certificación API 4G</h4>
-                            <p>Esta certificación internacional avala nuestra competencia en la reparación y modificación de estructuras para perforación, garantizando que nuestros procesos cumplen con los más altos estándares de calidad y seguridad de la industria.</p>
-                        </div>
+                        <p>En <strong>KISLEV Construcción y Examinación Industrial</strong> nos especializamos en ofrecer servicios para los sectores de energía, petróleo, gas y minería. Nuestro equipo combina experiencia técnica para garantizar la excelencia en cada proyecto.</p>
+                        <p>A pesar de ser una empresa joven, nuestro principal logro ha sido la <strong>reparación y remodelación de una plataforma para perforación de pozos de agua bajo la certificación API 4G</strong>, demostrando nuestra capacidad para manejar proyectos de alto riesgo y exigencia técnica.</p>
                     </div>
                     <div class="about-image">
-                        <img src="https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Plataforma industrial">
-                        <img src="https://i.postimg.cc/76NXrznN/American-Petroleum-Institute-Individual-Certification-Programs-API.png?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Trabajo en altura">
+                        <img src="https://i.postimg.cc/RZ8DgwX8/one-shot-pass-hero.jpg" alt="Plataforma industrial">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SERVICIOS (fondo gris claro) -->
-        <section id="servicios" class="bg-gray">
+        <!-- CERTIFICACIONES -->
+        <section id="certificaciones" style="background-color: var(--color-white);">
+            <div class="container">
+                <h2 class="section-title">Nuestros <span>Códigos</span></h2>
+                <p class="section-subtitle">Respaldo que garantiza calidad y seguridad en cada proyecto</p>
+                
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <img src="https://i.postimg.cc/Ghc5YNxS/AWS-Corporate-Logo.png" alt="AWS">
+                        <h3>American Welding Society</h3>
+                        <p>Sociedad Americana de Soldadura</p>
+                    </div>
+                    <div class="cert-card">
+                        <img src="https://i.postimg.cc/90fyXGyL/epub-ES-ASME-Logo-900x550-1200x635.jpg" alt="ASME">
+                        <h3>ASME</h3>
+                        <p>Sociedad Americana de Ingenieros Mecánicos</p>
+                    </div>
+                    <div class="cert-card">
+                        <img src="https://i.postimg.cc/KvBtGvMs/Not-Found.jpg" alt="ASNT">
+                        <h3>ASNT</h3>
+                        <p>Sociedad Estadounidense de Ensayos No Destructivos</p>
+                    </div>
+                    <div class="cert-card">
+                        <img src="https://i.postimg.cc/SQ7ykBK7/raw-Image.jpg" alt="API">
+                        <h3>API</h3>
+                        <p>Instituto Americano del Petróleo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILOSOFÍA: POLÍTICA, MISIÓN, VISIÓN Y VALORES -->
+        <section id="filosofia" class="bg-gray">
+            <div class="container">
+                <h2 class="section-title">Nuestra <span>Filosofía</span></h2>
+                <p class="section-subtitle">Comprometidos con la excelencia, la seguridad y el respeto por nuestro entorno</p>
+
+                <div class="policy-card" style="margin-bottom: 2rem;">
+                    <h3><span class="icon">📜</span> Política Integral</h3>
+                    <p>KISLEV es una empresa competitiva en las disciplinas industriales, que se distingue por cumplir los requisitos aplicables del cliente, promoviendo la calidad, prevención de lesiones, deterioro a la salud y protección al medio ambiente alcanzando así la mejora continua de nuestro sistema de gestión integral.</p>
+                </div>
+
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <h3><span class="icon">🎯</span> Misión</h3>
+                        <p>Ofrecer trabajos profesionales de Ingeniería, construcción, examinación, mantenimiento y capacitación, a todos nuestros clientes y a sus partes interesadas, sea en nuestras instalaciones o en las de estos.</p>
+                    </div>
+                    <div class="policy-card">
+                        <h3><span class="icon">👁️</span> Visión</h3>
+                        <p>Ser la organización que ofrezca los mejores trabajos profesionales a nivel regional.</p>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin: 3rem 0 1.5rem; color: var(--color-primary); font-size: 1.8rem;">Nuestros <span style="color: var(--color-accent);">Valores</span></h3>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="value-icon">🤝</div>
+                        <h4>Trabajo en equipo</h4>
+                        <p>Se incita a colaborar activamente en todos los niveles de la organización.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">⭐</div>
+                        <h4>Creación de valor agregado</h4>
+                        <p>Las características de calidad de nuestros trabajos, es el elemento clave respecto a nuestros competidores.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🌿</div>
+                        <h4>Preservación del medio ambiente</h4>
+                        <p>Cuidamos y preservamos nuestro entorno, teniendo como principal interés la preservación de la naturaleza.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🏛️</div>
+                        <h4>Ética comercial</h4>
+                        <p>Actuamos de manera apropiada y justa.</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🙏</div>
+                        <h4>Respeto</h4>
+                        <p>Actuamos respetando la dignidad de nuestros clientes, proveedores y colaboradores en todos los niveles de la organización.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS - NUEVO DISEÑO CON IMÁGENES -->
+        <section id="servicios">
             <div class="container">
                 <h2 class="section-title">Nuestros <span>Servicios</span></h2>
                 <p class="section-subtitle">Soluciones integrales para cada etapa de tu proyecto industrial</p>
                 
                 <div class="services-grid">
-                    <div class="service-card"><div class="service-icon">🔩</div><h3>Estructuras metálicas</h3><p>Fabricación y montaje de estructuras para naves industriales, plataformas y soportería.</p></div>
-                    <div class="service-card"><div class="service-icon">⛽</div><h3>Tanques industriales</h3><p>Fabricación y montaje de tanques para almacenamiento de agua, combustible y productos químicos.</p></div>
-                    <div class="service-card"><div class="service-icon">🔧</div><h3>Tuberías de proceso</h3><p>Prefabricado y montaje de tuberías para procesos industriales, alta presión y temperatura.</p></div>
-                    <div class="service-card"><div class="service-icon">💧</div><h3>Pruebas de hermeticidad</h3><p>Pruebas neumáticas, hidrostáticas y de fuga para garantizar la estanqueidad de sistemas.</p></div>
-                    <div class="service-card"><div class="service-icon">⚙️</div><h3>Mantenimiento industrial</h3><p>Mantenimiento preventivo y correctivo a equipos e instalaciones industriales.</p></div>
-                    <div class="service-card"><div class="service-icon">⚡</div><h3>Instalaciones eléctricas</h3><p>Instalación y pruebas en obra eléctrica para proyectos industriales.</p></div>
-                    <div class="service-card"><div class="service-icon">📊</div><h3>Instrumentación industrial</h3><p>Calibración e instalación de instrumentos para control de procesos.</p></div>
-                    <div class="service-card"><div class="service-icon">🏗️</div><h3>Estructuras de concreto</h3><p>Construcción de cimentaciones, losas y elementos de concreto reforzado.</p></div>
-                    <div class="service-card"><div class="service-icon">🔧</div><h3>Aplicación de torque</h3><p>Operación y control de torque en uniones atornilladas críticas.</p></div>
-                    <div class="service-card"><div class="service-icon">🔥</div><h3>Aislamiento térmico</h3><p>Instalación de aislamiento para tuberías y equipos industriales.</p></div>
-                    <div class="service-card"><div class="service-icon">🎨</div><h3>Recubrimiento anticorrosivo</h3><p>Aplicación de pinturas y recubrimientos para protección contra corrosión.</p></div>
-                    <div class="service-card"><div class="service-icon">🛠️</div><h3>Reparación estructural</h3><p>Reparación y reforzamiento de estructuras metálicas existentes.</p></div>
-                    <div class="service-card"><div class="service-icon">🚀</div><h3>Comisionamiento</h3><p>Puesta en marcha y arranque de instalaciones industriales.</p></div>
-                    <div class="service-card"><div class="service-icon">🔍</div><h3>Pruebas no destructivas</h3><p>Inspección mediante ultrasonido, partículas magnéticas, tintes penetrantes y más.</p></div>
-                    <div class="service-card"><div class="service-icon">📋</div><h3>Procedimientos y manuales</h3><p>Elaboración de documentación técnica, procedimientos de calidad y manuales de operación.</p></div>
-                    <div class="service-card"><div class="service-icon">👨‍🏫</div><h3>Capacitación</h3><p>Formación de inspectores de calidad y personal técnico especializado.</p></div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/CxpX5166/slide-estructuras-metalicas-874x1024.jpg" alt="Estructuras metálicas">
+                        </div>
+                        <div class="service-content">
+                            <h3>Estructuras metálicas</h3>
+                            <p>Fabricación y montaje de estructuras para naves industriales, plataformas y soportería.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/W1PpVsGC/fabricamos-3.jpg" alt="Tanques industriales">
+                        </div>
+                        <div class="service-content">
+                            <h3>Tanques industriales</h3>
+                            <p>Fabricación y montaje de tanques para almacenamiento de agua, combustible y productos químicos.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/ncfMFKZ4/image.png" alt="Tuberías de proceso">
+                        </div>
+                        <div class="service-content">
+                            <h3>Tuberías de proceso</h3>
+                            <p>Prefabricado y montaje de tuberías para procesos industriales, alta presión y temperatura.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/GhbrgXbm/protocolo-de-prueba-de-hermeticidad.jpg" alt="Pruebas de hermeticidad">
+                        </div>
+                        <div class="service-content">
+                            <h3>Pruebas de hermeticidad</h3>
+                            <p>Pruebas neumáticas, hidrostáticas y de fuga para garantizar la estanqueidad de sistemas.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/656JfTfk/image.png" alt="Mantenimiento industrial">
+                        </div>
+                        <div class="service-content">
+                            <h3>Mantenimiento industrial</h3>
+                            <p>Mantenimiento preventivo y correctivo a equipos e instalaciones industriales.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/mkbqj6Cy/image.png" alt="Instalaciones eléctricas">
+                        </div>
+                        <div class="service-content">
+                            <h3>Instalaciones eléctricas</h3>
+                            <p>Instalación y pruebas en obra eléctrica para proyectos industriales.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/wvk41cZV/image.png" alt="Instrumentación industrial">
+                        </div>
+                        <div class="service-content">
+                            <h3>Instrumentación industrial</h3>
+                            <p>Calibración e instalación de instrumentos para control de procesos.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/RZnP7z2t/image.png" alt="Estructuras de concreto">
+                        </div>
+                        <div class="service-content">
+                            <h3>Estructuras de concreto</h3>
+                            <p>Construcción de cimentaciones, losas y elementos de concreto reforzado.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/XNHxtJ0t/image.png" alt="Aplicación de torque">
+                        </div>
+                        <div class="service-content">
+                            <h3>Aplicación de torque</h3>
+                            <p>Operación y control de torque en uniones atornilladas críticas.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/Jn7c2wY7/image.png" alt="Aislamiento térmico">
+                        </div>
+                        <div class="service-content">
+                            <h3>Aislamiento térmico</h3>
+                            <p>Instalación de aislamiento para tuberías y equipos industriales.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/3RwmZXWZ/image.png" alt="Recubrimiento anticorrosivo">
+                        </div>
+                        <div class="service-content">
+                            <h3>Recubrimiento anticorrosivo</h3>
+                            <p>Aplicación de pinturas y recubrimientos para protección contra corrosión.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/MGH7Sk8q/image.png" alt="Reparación estructural">
+                        </div>
+                        <div class="service-content">
+                            <h3>Reparación estructural</h3>
+                            <p>Reparación y reforzamiento de estructuras metálicas existentes.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/c4WfJtNQ/image.png" alt="Comisionamiento">
+                        </div>
+                        <div class="service-content">
+                            <h3>Comisionamiento</h3>
+                            <p>Puesta en marcha y arranque de instalaciones industriales.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/sfYZbfZy/image.png" alt="Pruebas no destructivas">
+                        </div>
+                        <div class="service-content">
+                            <h3>Pruebas no destructivas</h3>
+                            <p>Inspección mediante ultrasonido, partículas magnéticas, tintes penetrantes y más.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/XvBrLnb4/image.png" alt="Procedimientos y manuales">
+                        </div>
+                        <div class="service-content">
+                            <h3>Procedimientos y manuales</h3>
+                            <p>Elaboración de documentación técnica, procedimientos de calidad y manuales de operación.</p>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="https://i.postimg.cc/85VzbWwQ/Whats-App-Image-2026-03-23-at-11-29-56-AM.jpg" alt="Capacitación">
+                        </div>
+                        <div class="service-content">
+                            <h3>Capacitación</h3>
+                            <p>Formación de inspectores de calidad y personal técnico especializado.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="cert-badge">
@@ -726,7 +1111,7 @@
         </section>
 
         <!-- PROYECTOS -->
-        <section id="proyectos">
+        <section id="proyectos" class="bg-gray">
             <div class="container">
                 <h2 class="section-title">Proyectos <span>Destacados</span></h2>
                 <p class="section-subtitle">Casos de éxito que avalan nuestra experiencia y capacidad técnica</p>
@@ -760,8 +1145,8 @@
             </div>
         </section>
 
-        <!-- CONTACTO (fondo gris claro) -->
-        <section id="contacto" class="bg-gray">
+        <!-- CONTACTO -->
+        <section id="contacto">
             <div class="container">
                 <h2 class="section-title">Contacto <span>Profesional</span></h2>
                 <p class="section-subtitle">Solicita una entrevista para conocer tus necesidades y presentar nuestras soluciones</p>
@@ -769,18 +1154,18 @@
                 <div class="contact-content">
                     <div class="contact-info">
                         <h3>Hablemos de tu proyecto</h3>
-                        <p><strong>📍 Dirección:</strong> Av. Industrias 1500, Parque Industrial, Ciudad</p>
+                        <p><strong>📍 Dirección:</strong> Infonavit Tenechaco, Tuxpan, Veracruz.</p>
                         <p><strong>📞 Teléfono:</strong> +52 783 135 3057</p>
                         <p><strong>📧 Email:</strong> proyectos@kislevindustrial.com</p>
-                        <p><strong>🕒 Horario:</strong> Lunes a Viernes, 8:00 - 18:00</p>
+                        <p><strong>🕒 Horario:</strong> Lunes a Sábado, 8:00 - 18:00</p>
                         <p style="margin-top: 2rem; font-style: italic;">"Buscamos entrevistas personalizadas para entender a fondo tus requerimientos y ofrecer soluciones a la medida"</p>
                     </div>
-                    <form class="contact-form" id="contactForm">
-                        <input type="text" placeholder="Nombre completo" required>
-                        <input type="text" placeholder="Empresa">
-                        <input type="email" placeholder="Email corporativo" required>
-                        <input type="tel" placeholder="Teléfono">
-                        <select>
+                                        <form class="contact-form" id="contactForm" action="https://formsubmit.co/cris.ordonez.santiago@gmail.com" method="POST">
+                        <input type="text" name="nombre" placeholder="Nombre completo" required>
+                        <input type="text" name="empresa" placeholder="Empresa">
+                        <input type="email" name="email" placeholder="Email corporativo" required>
+                        <input type="tel" name="telefono" placeholder="Teléfono">
+                        <select name="servicio">
                             <option>Selecciona un servicio de interés</option>
                             <option>Estructuras metálicas</option>
                             <option>Tanques y tuberías</option>
@@ -788,12 +1173,18 @@
                             <option>Mantenimiento industrial</option>
                             <option>Certificación API</option>
                         </select>
-                        <textarea placeholder="Cuéntanos brevemente tu proyecto"></textarea>
+                        <textarea name="mensaje" placeholder="Cuéntanos brevemente tu proyecto"></textarea>
+                        
+                        <!-- Configuración de FormSubmit -->
+                        <input type="hidden" name="_subject" value="Nuevo mensaje desde KISLEV Web">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" value="https://crisordsan2002.github.io/kislev_constructora.html?gracias">
+                        
                         <button type="submit" class="btn">Solicitar entrevista</button>
                     </form>
                 </div>
                 
-                <!-- Botón WhatsApp Ejecutivo -->
                 <div class="whatsapp-section">
                     <a href="https://wa.me/527831353057?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20los%20servicios%20de%20KISLEV%20Construcci%C3%B3n%20y%20Examinaci%C3%B3n%20Industrial.%20Me%20gustar%C3%ADa%20agendar%20una%20entrevista%20para%20conocer%20m%C3%A1s%20sobre%20sus%20soluciones." 
                        class="btn btn-wa" 
@@ -810,12 +1201,11 @@
     <footer>
         <div class="container">
             <p>© 2026 KISLEV Construcción y Examinación Industrial - Todos los derechos reservados</p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Soluciones integrales para la industria con certificación API 4G</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Soluciones para todo trabajo industrial.</p>
         </div>
     </footer>
 
     <script>
-        // MENÚ LATERAL MÓVIL
         const menuToggle = document.getElementById('menu-toggle');
         const navMenu = document.getElementById('nav-menu');
         const menuOverlay = document.getElementById('menu-overlay');
@@ -846,7 +1236,6 @@
             link.addEventListener('click', closeMenu);
         });
 
-        // SMOOTH SCROLL
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -857,7 +1246,6 @@
             });
         });
 
-        // ANIMACIÓN DE APARICIÓN
         const sections = document.querySelectorAll('section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -871,15 +1259,7 @@
             observer.observe(section);
         });
 
-        // FORMULARIO
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Gracias por tu mensaje. Pronto nos pondremos en contacto contigo. Mientras tanto, puedes escribirnos por WhatsApp.');
-                contactForm.reset();
-            });
-        }
+        
     </script>
 </body>
 </html>
