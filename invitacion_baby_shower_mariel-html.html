@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower Mariel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        :root {
+            --pink-soft: #fdf0f2;
+            --pink-accent: #f4a7b9;
+            --purple-accent: #a890c0;
+            --text-dark: #5a5a5a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--pink-soft);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        #magic-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 99;
+        }
+
+        .particle { position: absolute; user-select: none; will-change: transform; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, var(--pink-soft) 100%);
+        }
+
+        .hero-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(4.5rem, 18vw, 8rem);
+            color: var(--purple-accent);
+            line-height: 1.1;
+            margin: 15px 0;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        .countdown-item {
+            background: white;
+            padding: 12px;
+            border-radius: 15px;
+            min-width: 70px;
+            box-shadow: 0 5px 15px rgba(244, 167, 185, 0.2);
+        }
+        .countdown-number { display: block; font-size: 1.8rem; font-weight: 700; color: var(--pink-accent); }
+        .countdown-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .giraffe-main {
+            width: 280px;
+            max-width: 70%;
+            animation: floating 3s ease-in-out infinite;
+            z-index: 5;
+            margin-top: 20px;
+        }
+
+        @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .section { padding: 40px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        
+        .thought-card {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.4rem;
+            color: var(--purple-accent);
+            margin: 40px 0;
+            line-height: 1.2;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 25px;
+            border-radius: 35px;
+            box-shadow: 0 15px 35px rgba(168, 144, 192, 0.1);
+            margin-bottom: 35px;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .adults-notice {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #fff5f7;
+            border: 1px dashed var(--pink-accent);
+            border-radius: 50px;
+            color: var(--pink-accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Mapa con Marcador */
+        .map-frame {
+            border-radius: 35px;
+            overflow: hidden;
+            height: 400px;
+            margin: 25px 0;
+            border: 8px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .btn {
+            display: block;
+            padding: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 15px auto;
+            max-width: 320px;
+            transition: 0.4s;
+        }
+        .btn-liverpool { background: #e6007e; color: white; box-shadow: 0 8px 20px rgba(230, 0, 126, 0.3); }
+        .btn-wa { background: #25D366; color: white; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
+        .btn:hover { transform: scale(1.05); }
+
+        footer { font-family: 'Great Vibes', cursive; font-size: 2.2rem; padding: 60px; color: var(--purple-accent); opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+    <div id="magic-container"></div>
+
+    <section class="hero">
+        <div class="reveal">
+            <h2 style="letter-spacing: 6px; color: var(--pink-accent); font-size: 1.1rem; font-weight: 400;">BABY SHOWER</h2>
+            <h1 class="hero-name">Mariel</h1>
+            
+            <div class="countdown-container">
+                <div class="countdown-item"><span id="days" class="countdown-number">00</span><span class="countdown-label">Días</span></div>
+                <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Hrs</span></div>
+                <div class="countdown-item"><span id="mins" class="countdown-number">00</span><span class="countdown-label">Min</span></div>
+                <div class="countdown-item"><span id="secs" class="countdown-number">00</span><span class="countdown-label">Seg</span></div>
+            </div>
+        </div>
+        <img src="https://i.postimg.cc/SNb0wS0q/JIRAFITA.png" alt="Jirafita" class="giraffe-main">
+    </section>
+
+    <section class="section">
+        <div class="thought-card reveal">
+            “Una dulce espera que llena de amor nuestros corazones. Mariel, ya eres nuestra mayor bendición.” 🌸
+        </div>
+
+        <div class="info-card reveal">
+            <h3 style="font-family: 'Playfair Display'; color: var(--purple-accent); letter-spacing: 2px;">¿CUÁNDO Y DÓNDE?</h3>
+            <p style="margin: 15px 0; font-size: 1.1rem;">SÁBADO 02 DE MAYO, 2026<br><b>16:00 HRS</b></p>
+            <p><strong>Salón de Eventos Samsara</strong></p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Av. Cuauhtemoc #115, Col. Tepeyac, Poza Rica.</p>
+            
+            <div class="adults-notice">
+                ✨ EVENTO PARA ADULTOS ✨
+            </div>
+        </div>
+
+        <div class="map-frame reveal">
+            <iframe 
+                width="100%" 
+                height="100%" 
+                style="border:0" 
+                loading="lazy" 
+                allowfullscreen 
+                referrerpolicy="no-referrer-when-downgrade" 
+                src="https://www.google.com/maps/embed/v1/place?key=REPLACE_WITH_YOUR_KEY&q=20.5291004,-97.4335022&zoom=16">
+            </iframe>
+            <script>
+                document.querySelector('iframe').src = "https://maps.google.com/maps?q=20.5291004,-97.4335022&hl=es&z=16&output=embed";
+            </script>
+        </div>
+
+        <div class="info-card reveal">
+            <h3 style="font-family: 'Playfair Display'; color: var(--pink-accent); letter-spacing: 2px;">MESA DE REGALOS</h3>
+            <p style="margin-bottom: 15px; font-size: 0.9rem;">Tu presencia es nuestro regalo más especial, pero si gustas tener un detalle:</p>
+            <span style="font-size: 2.2rem; letter-spacing: 8px; color: var(--purple-accent); font-weight: 700; display: block; margin-bottom: 20px;">51864550</span>
+            <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51864550" target="_blank" class="btn btn-liverpool">VER MESA EN LIVERPOOL</a>
+        </div>
+
+        <div class="reveal" style="margin-top: 50px;">
+            <p style="margin-bottom: 15px;">¿Nos acompañas en este día?</p>
+            <a href="https://wa.me/5217711035377?text=¡Hola%20Michelle!%20Confirmo%20con%20mucho%20gusto%20mi%20asistencia%20al%20Baby%20Shower%20de%20Mariel%20🌸" class="btn btn-wa" target="_blank">CONFIRMAR POR WHATSAPP</a>
+        </div>
+
+        <footer>¡Te esperamos!</footer>
+    </section>
+
+    <script>
+        // Contador
+        const target = new Date("May 2, 2026 16:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = target - now;
+            document.getElementById("days").innerText = Math.max(0, Math.floor(d / 86400000));
+            document.getElementById("hours").innerText = Math.max(0, Math.floor((d % 86400000) / 3600000));
+            document.getElementById("mins").innerText = Math.max(0, Math.floor((d % 3600000) / 60000));
+            document.getElementById("secs").innerText = Math.max(0, Math.floor((d % 60000) / 1000));
+        }, 1000);
+
+        // Flores y Mariposas
+        const container = document.getElementById('magic-container');
+        const items = ['🌸', '🦋', '✨', '💮'];
+        function createP() {
+            const p = document.createElement('div');
+            p.innerHTML = items[Math.floor(Math.random() * items.length)];
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-50px';
+            p.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            p.style.opacity = Math.random() * 0.4 + 0.4;
+            container.appendChild(p);
+            p.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 0 }, { opacity: 1, offset: 0.1 }, { transform: `translate(${Math.random()*100-50}px, 105vh) rotate(720deg)`, opacity: 0 }], 
+            { duration: Math.random() * 6000 + 4000, iterations: Infinity });
+        }
+        for(let i=0; i<18; i++) createP();
+
+        ScrollReveal().reveal('.reveal', { distance: '30px', duration: 1200, interval: 250, origin: 'bottom' });
+    </script>
+</body>
+</html>
