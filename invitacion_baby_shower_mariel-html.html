@@ -159,13 +159,13 @@
 
     <div id="magic-container"></div>
 
-    <audio id="bg-music" autoplay loop>
+    <audio id="bg-music" loop>
         <source src="once_upon_a_dream.mp3" type="audio/mpeg">
     </audio>
 
     <div id="music-control" onclick="toggleMusic()">
         <svg id="music-icon" viewBox="0 0 24 24">
-            <path id="icon-path" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            <path id="icon-path" d="M8 5v14l11-7z"/>
         </svg>
     </div>
 
@@ -222,21 +222,23 @@
     <script>
         const music = document.getElementById('bg-music');
         const iconPath = document.getElementById('icon-path');
-        let isPlaying = true; // Inicia en true por el autoplay
+        let isPlaying = false; // Iniciamos en falso por las restricciones del navegador
 
         function toggleMusic() {
             if (isPlaying) {
                 music.pause();
                 iconPath.setAttribute('d', 'M8 5v14l11-7z'); // Icono Play
             } else {
-                music.play().catch(e => console.log("Bloqueo de audio"));
+                music.play().catch(e => console.log("Reproducción bloqueada por el navegador"));
                 iconPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Icono Pausa
             }
             isPlaying = !isPlaying;
         }
 
-        document.body.addEventListener('click', () => {
-            if(music.paused && isPlaying) music.play().catch(() => {});
+       document.body.addEventListener('click', () => {
+            if (!isPlaying) {
+                toggleMusic();
+            }
         }, { once: true });
 
         const target = new Date("May 2, 2026 16:00:00").getTime();
