@@ -30,7 +30,6 @@
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 99;
         }
-
         .particle { position: absolute; user-select: none; will-change: transform; }
 
         .hero {
@@ -55,18 +54,18 @@
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin: 25px 0;
+            gap: 10px;
+            margin: 20px 0;
         }
         .countdown-item {
             background: white;
-            padding: 12px;
-            border-radius: 15px;
-            min-width: 70px;
-            box-shadow: 0 5px 15px rgba(244, 167, 185, 0.2);
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 65px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .countdown-number { display: block; font-size: 1.8rem; font-weight: 700; color: var(--pink-accent); }
-        .countdown-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        .countdown-number { display: block; font-size: 1.5rem; font-weight: 700; color: var(--pink-accent); }
+        .countdown-label { font-size: 0.6rem; text-transform: uppercase; }
 
         .giraffe-main {
             width: 280px;
@@ -75,77 +74,83 @@
             z-index: 5;
             margin-top: 20px;
         }
-
         @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         .section { padding: 40px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
-        
-        .thought-card {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.4rem;
-            color: var(--purple-accent);
-            margin: 40px 0;
-            line-height: 1.2;
-        }
-
         .info-card {
             background: rgba(255, 255, 255, 0.95);
-            padding: 40px 25px;
-            border-radius: 35px;
-            box-shadow: 0 15px 35px rgba(168, 144, 192, 0.1);
-            margin-bottom: 35px;
-            border: 1px solid rgba(255,255,255,0.8);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(244, 167, 185, 0.15);
+            margin-bottom: 30px;
         }
 
-        .adults-notice {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 25px;
-            background: #fff5f7;
-            border: 1px dashed var(--pink-accent);
-            border-radius: 50px;
-            color: var(--pink-accent);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        /* Mapa con Marcador */
-        .map-frame {
-            border-radius: 35px;
+        /* Contenedor del mapa ajustado */
+        .map-wrapper {
+            border-radius: 30px;
             overflow: hidden;
-            height: 400px;
-            margin: 25px 0;
-            border: 8px solid white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            height: 350px;
+            margin: 20px 0;
+            border: 6px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .map-wrapper iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: 0 !important;
         }
 
         .btn {
-            display: block;
-            padding: 20px;
+            display: inline-block;
+            padding: 18px 40px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            margin: 15px auto;
-            max-width: 320px;
-            transition: 0.4s;
+            margin: 10px auto;
+            max-width: 300px;
+            transition: 0.3s;
         }
-        .btn-liverpool { background: #e6007e; color: white; box-shadow: 0 8px 20px rgba(230, 0, 126, 0.3); }
-        .btn-wa { background: #25D366; color: white; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
-        .btn:hover { transform: scale(1.05); }
+        .btn-wa { background: #25D366; color: white; }
+        .btn-gift { background: #e6007e; color: white; }
 
-        footer { font-family: 'Great Vibes', cursive; font-size: 2.2rem; padding: 60px; color: var(--purple-accent); opacity: 0.5; }
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: var(--purple-accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #music-icon { width: 24px; height: 24px; fill: white; }
+
+        footer { font-family: 'Great Vibes', cursive; font-size: 2rem; padding: 40px; color: var(--purple-accent); opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <div id="magic-container"></div>
 
+    <audio id="bg-music" autoplay loop>
+        <source src="once_upon_a_dream.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-control" onclick="toggleMusic()">
+        <svg id="music-icon" viewBox="0 0 24 24">
+            <path id="icon-path" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+    </div>
+
     <section class="hero">
         <div class="reveal">
-            <h2 style="letter-spacing: 6px; color: var(--pink-accent); font-size: 1.1rem; font-weight: 400;">BABY SHOWER</h2>
+            <h2 style="letter-spacing: 5px; color: var(--pink-accent); font-size: 1.2rem;">BABY SHOWER</h2>
             <h1 class="hero-name">Mariel</h1>
-            
             <div class="countdown-container">
                 <div class="countdown-item"><span id="days" class="countdown-number">00</span><span class="countdown-label">Días</span></div>
                 <div class="countdown-item"><span id="hours" class="countdown-number">00</span><span class="countdown-label">Hrs</span></div>
@@ -157,55 +162,61 @@
     </section>
 
     <section class="section">
-        <div class="thought-card reveal">
-            “Una dulce espera que llena de amor nuestros corazones. Mariel, ya eres nuestra mayor bendición.” 🌸
-        </div>
-
         <div class="info-card reveal">
-            <h3 style="font-family: 'Playfair Display'; color: var(--purple-accent); letter-spacing: 2px;">¿CUÁNDO Y DÓNDE?</h3>
-            <p style="margin: 15px 0; font-size: 1.1rem;">SÁBADO 02 DE MAYO, 2026<br><b>16:00 HRS</b></p>
+            <h3>CUÁNDO Y DÓNDE</h3>
+            <p>SÁBADO 02 DE MAYO, 2026 | 16:00 HRS</p>
             <p><strong>Salón de Eventos Samsara</strong></p>
             <p style="font-size: 0.9rem; opacity: 0.8;">Av. Cuauhtemoc #115, Col. Tepeyac, Poza Rica.</p>
-            
-            <div class="adults-notice">
-                ✨ EVENTO PARA ADULTOS ✨
-            </div>
         </div>
 
-        <div class="map-frame reveal">
-            
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d467.0550490372941!2d-97.43360702946508!3d20.52915442614486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1775150690801!5m2!1ses!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-           
+        <div class="map-wrapper reveal">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.439365316127!2d-97.43607332475696!3d20.529196480998017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e1!3m2!1ses!2sus!4v1775242594237!5m2!1ses!2sus" width="800" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
         <div class="info-card reveal">
-            <h3 style="font-family: 'Playfair Display'; color: var(--pink-accent); letter-spacing: 2px;">MESA DE REGALOS</h3>
-            <p style="margin-bottom: 15px; font-size: 0.9rem;">Tu presencia es nuestro regalo más especial, pero si gustas tener un detalle:</p>
-            <span style="font-size: 2.2rem; letter-spacing: 8px; color: var(--purple-accent); font-weight: 700; display: block; margin-bottom: 20px;">51864550</span>
-            <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51864550" target="_blank" class="btn btn-liverpool">VER MESA EN LIVERPOOL</a>
+            <h3>MESA DE REGALOS LIVERPOOL</h3>
+            <span style="font-size: 2rem; letter-spacing: 5px; color: var(--purple-accent); font-weight: 700; display: block; margin: 15px 0;">51864550</span>
+            <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/51864550" target="_blank" class="btn btn-gift">Ver Mesa</a>
         </div>
 
-        <div class="reveal" style="margin-top: 50px;">
-            <p style="margin-bottom: 15px;">¿Nos acompañas en este día?</p>
-            <a href="https://wa.me/5217711035377?text=¡Hola%20Michelle!%20Confirmo%20con%20mucho%20gusto%20mi%20asistencia%20al%20Baby%20Shower%20de%20Mariel%20🌸" class="btn btn-wa" target="_blank">CONFIRMAR POR WHATSAPP</a>
+        <div class="reveal">
+            <a href="https://wa.me/5217711035377?text=Confirmo%20asistencia%20Mariel%20🌸" class="btn btn-wa" target="_blank">Confirmar por WhatsApp</a>
         </div>
 
         <footer>¡Te esperamos!</footer>
     </section>
 
     <script>
-        // Contador
-        const target = new Date("May 2, 2026 16:00:00").getTime();
+        const music = document.getElementById('bg-music');
+        const iconPath = document.getElementById('icon-path');
+        let isPlaying = true;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                iconPath.setAttribute('d', 'M8 5v14l11-7z');
+            } else {
+                music.play().catch(e => console.log("Autoplay bloqueado"));
+                iconPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Respaldo para iniciar audio tras la primera interacción del usuario
+        document.body.addEventListener('click', () => {
+            if (music.paused && isPlaying) music.play().catch(() => {});
+        }, { once: true });
+
+        const targetDate = new Date("May 2, 2026 16:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
-            const d = target - now;
+            const d = targetDate - now;
             document.getElementById("days").innerText = Math.max(0, Math.floor(d / 86400000));
             document.getElementById("hours").innerText = Math.max(0, Math.floor((d % 86400000) / 3600000));
             document.getElementById("mins").innerText = Math.max(0, Math.floor((d % 3600000) / 60000));
             document.getElementById("secs").innerText = Math.max(0, Math.floor((d % 60000) / 1000));
         }, 1000);
 
-        // Flores y Mariposas
         const container = document.getElementById('magic-container');
         const items = ['🌸', '🦋', '✨', '💮'];
         function createP() {
@@ -215,14 +226,11 @@
             p.style.left = Math.random() * 100 + 'vw';
             p.style.top = '-50px';
             p.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            p.style.opacity = Math.random() * 0.4 + 0.4;
             container.appendChild(p);
-            p.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 0 }, { opacity: 1, offset: 0.1 }, { transform: `translate(${Math.random()*100-50}px, 105vh) rotate(720deg)`, opacity: 0 }], 
-            { duration: Math.random() * 6000 + 4000, iterations: Infinity });
+            p.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 0 }, { opacity: 1, offset: 0.1 }, { transform: `translate(${Math.random()*100-50}px, 105vh) rotate(720deg)`, opacity: 0 }], { duration: Math.random() * 6000 + 4000, iterations: Infinity });
         }
-        for(let i=0; i<18; i++) createP();
-
-        ScrollReveal().reveal('.reveal', { distance: '30px', duration: 1200, interval: 250, origin: 'bottom' });
+        for(let i=0; i<15; i++) createP();
+        ScrollReveal().reveal('.reveal', { distance: '30px', duration: 1000, interval: 200, origin: 'bottom' });
     </script>
 </body>
 </html>
