@@ -48,25 +48,90 @@
             box-shadow: 0 10px 30px rgba(255, 107, 139, 0.2);
             border: 8px dashed var(--rosa-fresa);
             position: relative;
-            overflow: hidden;
+            /* Quitamos overflow hidden para que las fresitas de adorno puedan sobresalir de la esquina como tu muestra */
+        }
+        /* Adornos CSS (Fresitas flotantes simuladas con border-radius) */
+        .fresita-decoracion {
+            position: absolute;
+            width: 30px;
+            height: 35px;
+            background-color: var(--rojo-fresa);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            box-shadow: inset -3px -3px 0px rgba(0,0,0,0.1);
+        }
+        /* Hojitas de la fresa */
+        .fresita-decoracion::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 7px;
+            width: 15px;
+            height: 8px;
+            background: var(--verde-menta);
+            border-radius: 50%;
+        }
 
-            /* TU ENLACE DE FONDO CORREGIDO AQUÍ */
+        .fresita-1 { top: -20px; left: 20px; transform: rotate(-15deg); }
+        .fresita-2 { bottom: -20px; right: 20px; transform: rotate(20deg); }
+
+        /* Capa interna de fondo (Tu imagen de fresitas) */
+        .background-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://i.postimg.cc/1tyXpTqv/cute-aesthetic-strawberry-desktop-mlnfwdx8dayv5zct.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 22px;
+            z-index: 1;
         }
 
-        /* Capa interna transparente CON CENTRADO PERFECTO */
+        /* Capa translúcida interna con centrado */
         .glass-overlay {
+            position: relative;
+            z-index: 2;
             background-color: rgba(255, 255, 255, 0.5);
             padding: 35px 25px;
             width: 100%;
             height: 100%;
+            border-radius: 22px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+        }
+
+        /* NUEVAS FRESITAS CSS EN LAS ESQUINAS DE LA LÍNEA */
+        .fresita-esquina {
+            position: absolute;
+            width: 35px;
+            height: 40px;
+            background-color: var(--rojo-fresa);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            box-shadow: inset -3px -3px 0px rgba(0,0,0,0.15);
+            z-index: 10; /* Para que queden encima de la línea de puntos */
+        }
+        /* Hojita verde de la fresa */
+        .fresita-esquina::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 10px;
+            width: 15px;
+            height: 9px;
+            background: var(--verde-menta);
+            border-radius: 50%;
+        }
+        /* Posiciones exactas en las esquinas */
+        .fresita-top-left {
+            top: 15px;
+            left: 15px;
+            transform: rotate(-15deg);
+        }
+        .fresita-bottom-right {
+            bottom: 15px;
+            right: 15px;
+            transform: rotate(20deg);
         }
 
         /* ANIMACIÓN DE FLOTACIÓN PARA ROSITA FRESITA */
@@ -245,7 +310,7 @@
             transform: scale(1.05);
         }
 
-        /* Flores en esquinas fijas de fondo */
+        /* Flores en esquinas fijas de fondo de pantalla */
         .flower-corner {
             position: fixed;
             width: 50px;
@@ -276,9 +341,13 @@
     <div class="flower-corner flower-br"></div>
 
     <div class="invitation-container">
+        <div class="background-layer"></div>
+
+        <div class="fresita-esquina fresita-top-left"></div>
+        <div class="fresita-esquina fresita-bottom-right"></div>
+
         <div class="glass-overlay">
             
-            <!-- Imagen con movimiento de flotación animada -->
             <img src="https://i.postimg.cc/B6p45nTK/rosita-fresita.png" alt="Rosita Fresita" class="header-img">
 
             <p class="subtitle">¡Estás invitado a celebrar con nosotros!</p>
@@ -287,15 +356,12 @@
             
             <div class="badge-edad">¡Cumple 1 Añito! 🍓</div>
 
-            <!-- REPRODUCTOR DE MÚSICA INTERACTIVO -->
             <div class="music-container">
                 <span class="music-title">🎵 Dale Play para escuchar la música de fondo:</span>
-                <!-- CAMBIA ESTE LINK DE ABAJO POR TU ENLACE .MP3 DE LA CANCIÓN -->
                 <audio id="strawberrySong" src="AQUI_VA_EL_LINK_DE_TU_CANCION.mp3" loop></audio>
                 <button class="btn-music" id="musicBtn" onclick="toggleMusic()">▶ Escuchar Música</button>
             </div>
 
-            <!-- Detalles del Evento -->
             <div class="info-section">
                 <div class="info-item">
                     <strong>¿CUÁNDO?</strong>
@@ -316,7 +382,6 @@
                 </a>
             </div>
 
-            <!-- Contador Regresivo -->
             <p class="countdown-title">🍓 Falta muy poco para la fiesta: 🍓</p>
             <div class="countdown-container" id="countdown">
                 <div class="countdown-box">
@@ -340,7 +405,6 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
         // LÓGICA DE LA MÚSICA
         const song = document.getElementById('strawberrySong');
