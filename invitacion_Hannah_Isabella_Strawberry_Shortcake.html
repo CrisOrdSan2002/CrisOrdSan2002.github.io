@@ -26,10 +26,10 @@
         body {
             font-family: 'Quicksand', sans-serif;
             background-color: var(--rosa-pastel);
-            /* Fondo de cuadritos tipo picnic/fresita */
+            /* Fondo de cuadritos tipo picnic general */
             background-image: 
-                linear-gradient(90deg, rgba(255,255,255,.5) 50%, transparent 50%),
-                linear-gradient(rgba(255,255,255,.5) 50%, transparent 50%);
+                linear-gradient(90deg, rgba(255,255,255,.4) 50%, transparent 50%),
+                linear-gradient(rgba(255,255,255,.4) 50%, transparent 50%);
             background-size: 40px 40px;
             color: #4a4a4a;
             display: flex;
@@ -47,42 +47,43 @@
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(255, 107, 139, 0.2);
             border: 8px dashed var(--rosa-fresa);
-            padding: 30px;
-            text-align: center;
             position: relative;
+            overflow: hidden;
+
+            /* TU ENLACE DE FONDO CORREGIDO AQUÍ */
+            background-image: url('https://i.postimg.cc/1tyXpTqv/cute-aesthetic-strawberry-desktop-mlnfwdx8dayv5zct.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        /* Adornos CSS (Fresitas flotantes simuladas con border-radius) */
-        .fresita-decoracion {
-            position: absolute;
-            width: 30px;
-            height: 35px;
-            background-color: var(--rojo-fresa);
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            box-shadow: inset -3px -3px 0px rgba(0,0,0,0.1);
-        }
-        /* Hojitas de la fresa */
-        .fresita-decoracion::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: 7px;
-            width: 15px;
-            height: 8px;
-            background: var(--verde-menta);
-            border-radius: 50%;
+        /* Capa interna transparente CON CENTRADO PERFECTO */
+        .glass-overlay {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 35px 25px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
-        .fresita-1 { top: -20px; left: 20px; transform: rotate(-15deg); }
-        .fresita-2 { bottom: -20px; right: 20px; transform: rotate(20deg); }
+        /* ANIMACIÓN DE FLOTACIÓN PARA ROSITA FRESITA */
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
 
-        /* Imagen Principal */
+        /* Imagen Principal con Movimiento */
         .header-img {
             width: 100%;
-            max-width: 280px;
+            max-width: 260px;
             margin: 0 auto 20px;
             display: block;
             filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+            animation: flotar 3s ease-in-out infinite; 
         }
 
         h1, h2, h3 {
@@ -92,12 +93,18 @@
 
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 2px 2px 0px var(--verde-menta);
         }
 
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--rosa-fresa);
+        }
+
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--rosa-fresa);
             font-weight: bold;
             margin-bottom: 25px;
@@ -108,49 +115,93 @@
         .badge-edad {
             background-color: var(--verde-menta);
             color: #2d5a27;
-            padding: 8px 20px;
+            padding: 8px 25px;
             border-radius: 20px;
             display: inline-block;
             font-weight: bold;
             font-size: 1.2rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border: 2px solid #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
 
         /* Sección de Detalles */
         .info-section {
-            background: #fff8f9;
+            background: rgba(255, 248, 249, 0.95);
             border-radius: 20px;
             padding: 20px;
             margin: 20px 0;
             border: 2px solid #ffe3e8;
+            width: 100%;
+            max-width: 480px;
         }
 
         .info-item {
             margin: 15px 0;
             font-size: 1.1rem;
+            line-height: 1.4;
         }
 
         .info-item strong {
             color: var(--rojo-fresa);
             display: block;
             font-size: 1.2rem;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
+        }
+
+        /* Contenedor del Reproductor de Música */
+        .music-container {
+            background: #fff0f3;
+            border: 2px dashed var(--rosa-fresa);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .music-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--rojo-fresa);
+        }
+
+        .btn-music {
+            background-color: var(--rosa-fresa);
+            color: white;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .btn-music:hover {
+            background-color: var(--rojo-fresa);
+            transform: scale(1.03);
         }
 
         /* Contador Regresivo */
         .countdown-title {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 1.1rem;
             color: var(--rosa-fresa);
+            font-weight: bold;
         }
 
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin: 15px 0;
+            width: 100%;
         }
 
         .countdown-box {
@@ -158,14 +209,14 @@
             color: white;
             padding: 10px;
             border-radius: 12px;
-            min-width: 65px;
+            min-width: 70px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .countdown-box span {
             display: block;
             font-family: 'Fredoka One', cursive;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
 
         .countdown-box .label {
@@ -194,7 +245,7 @@
             transform: scale(1.05);
         }
 
-        /* Flores decorativas con CSS puro en las esquinas de la pantalla */
+        /* Flores en esquinas fijas de fondo */
         .flower-corner {
             position: fixed;
             width: 50px;
@@ -221,90 +272,109 @@
 </head>
 <body>
 
-    <!-- Flores decorativas de fondo -->
     <div class="flower-corner flower-tl"></div>
     <div class="flower-corner flower-br"></div>
 
     <div class="invitation-container">
-        <!-- Fresitas CSS decorativas -->
-        <div class="fresita-decoracion fresita-1"></div>
-        <div class="fresita-decoracion fresita-2"></div>
-
-        <!-- Imagen de Rosita Fresita -->
-        <img src="https://i.postimg.cc/B6p45nTK/rosita-fresita.png" alt="Rosita Fresita" class="header-img">
-
-        <!-- Textos principales -->
-        <p class="subtitle">¡Estás invitado a celebrar con nosotros!</p>
-        <h1>Hannah Isabella</h1>
-        <h2>Flores Gómez</h2>
-        
-        <div class="badge-edad">¡Cumple 1 Añito! 🍓</div>
-
-        <!-- Detalles del Evento -->
-        <div class="info-section">
-            <div class="info-item">
-                <strong>¿CUÁNDO?</strong>
-                Domingo, 14 de Junio de 2026
-            </div>
-            <div class="info-item">
-                <strong>¿A QUÉ HORA?</strong>
-                3:00 PM
-            </div>
-            <div class="info-item">
-                <strong>¿DÓNDE?</strong>
-                Salón Revel <br>
-                <span style="font-size: 0.95rem; color: #666;">Ferrocarril 40, Aviacion Vieja, 93370 Poza Rica de Hidalgo, Ver.</span>
-            </div>
+        <div class="glass-overlay">
             
-            <a href="https://maps.app.goo.gl/yP2tXiEiVG5X2wM69" target="_blank" class="btn-mapa">
-                📍 Ver Ubicación en Google Maps
-            </a>
-        </div>
+            <!-- Imagen con movimiento de flotación animada -->
+            <img src="https://i.postimg.cc/B6p45nTK/rosita-fresita.png" alt="Rosita Fresita" class="header-img">
 
-        <!-- Contador Regresivo -->
-        <p class="countdown-title">🍓 Falta muy poco para la fiesta: 🍓</p>
-        <div class="countdown-container" id="countdown">
-            <div class="countdown-box">
-                <span id="days">00</span>
-                <div class="label">Días</div>
+            <p class="subtitle">¡Estás invitado a celebrar con nosotros!</p>
+            <h1>Hannah Isabella</h1>
+            <h2>Flores Gómez</h2>
+            
+            <div class="badge-edad">¡Cumple 1 Añito! 🍓</div>
+
+            <!-- REPRODUCTOR DE MÚSICA INTERACTIVO -->
+            <div class="music-container">
+                <span class="music-title">🎵 Dale Play para escuchar la música de fondo:</span>
+                <!-- CAMBIA ESTE LINK DE ABAJO POR TU ENLACE .MP3 DE LA CANCIÓN -->
+                <audio id="strawberrySong" src="AQUI_VA_EL_LINK_DE_TU_CANCION.mp3" loop></audio>
+                <button class="btn-music" id="musicBtn" onclick="toggleMusic()">▶ Escuchar Música</button>
             </div>
-            <div class="countdown-box">
-                <span id="hours">00</span>
-                <div class="label">Horas</div>
+
+            <!-- Detalles del Evento -->
+            <div class="info-section">
+                <div class="info-item">
+                    <strong>¿CUÁNDO?</strong>
+                    Domingo, 14 de Junio de 2026
+                </div>
+                <div class="info-item">
+                    <strong>¿A QUÉ HORA?</strong>
+                    3:00 PM
+                </div>
+                <div class="info-item">
+                    <strong>¿DÓNDE?</strong>
+                    Salón Revel <br>
+                    <span style="font-size: 0.95rem; color: #666;">Ferrocarril 40, Aviacion Vieja, 93370 Poza Rica de Hidalgo, Ver.</span>
+                </div>
+                
+                <a href="https://maps.google.com/?q=Salon+Revel+Poza+Rica" target="_blank" class="btn-mapa">
+                    📍 Ver Ubicación en Google Maps
+                </a>
             </div>
-            <div class="countdown-box">
-                <span id="minutes">00</span>
-                <div class="label">Min.</div>
+
+            <!-- Contador Regresivo -->
+            <p class="countdown-title">🍓 Falta muy poco para la fiesta: 🍓</p>
+            <div class="countdown-container" id="countdown">
+                <div class="countdown-box">
+                    <span id="days">00</span>
+                    <div class="label">Días</div>
+                </div>
+                <div class="countdown-box">
+                    <span id="hours">00</span>
+                    <div class="label">Horas</div>
+                </div>
+                <div class="countdown-box">
+                    <span id="minutes">00</span>
+                    <div class="label">Min.</div>
+                </div>
+                <div class="countdown-box">
+                    <span id="seconds">00</span>
+                    <div class="label">Seg.</div>
+                </div>
             </div>
-            <div class="countdown-box">
-                <span id="seconds">00</span>
-                <div class="label">Seg.</div>
-            </div>
+
         </div>
     </div>
 
-    <!-- SCRIPT DEL CONTADOR -->
+    <!-- SCRIPTS -->
     <script>
-        // Fecha del evento: 14 de Junio de 2026 a las 15:00:00 (3 PM)
+        // LÓGICA DE LA MÚSICA
+        const song = document.getElementById('strawberrySong');
+        const btn = document.getElementById('musicBtn');
+
+        function toggleMusic() {
+            if (song.paused) {
+                song.play().catch(error => {
+                    alert("Asegúrate de agregar un link válido de un archivo de música (.mp3) dentro del código HTML.");
+                });
+                btn.innerText = "⏸ Pausar Música";
+            } else {
+                song.pause();
+                btn.innerText = "▶ Escuchar Música";
+            }
+        }
+
+        // FECHA DEL EVENTO: 14 de Junio de 2026 a las 3:00 PM
         const targetDate = new Date('June 14, 2026 15:00:00').getTime();
 
         const updateCountdown = setInterval(function() {
             const now = new Date().getTime();
             const difference = targetDate - now;
 
-            // Cálculos de tiempo
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            // Mostrar el resultado en los elementos correspondientes
             document.getElementById('days').innerText = days < 10 ? '0' + days : days;
             document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
             document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
             document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
 
-            // Si la fecha ya pasó
             if (difference < 0) {
                 clearInterval(updateCountdown);
                 document.getElementById('countdown').innerHTML = "<p style='font-family:\"Fredoka One\"; color:var(--rojo-fresa); font-size:1.2rem;'>¡Es hoy! ¡Bienvenidos!</p>";
