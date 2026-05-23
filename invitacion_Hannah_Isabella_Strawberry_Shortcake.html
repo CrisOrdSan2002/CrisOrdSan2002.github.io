@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Mi Primer Añito! - Hannah Isabella</title>
-    <!-- Fuente dulce y divertida de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- ESTILOS AL ESTILO ROSITA FRESITA --- */
@@ -48,8 +49,8 @@
             box-shadow: 0 10px 30px rgba(255, 107, 139, 0.2);
             border: 8px dashed var(--rosa-fresa);
             position: relative;
-            /* Quitamos overflow hidden para que las fresitas de adorno puedan sobresalir de la esquina como tu muestra */
         }
+
         /* Adornos CSS (Fresitas flotantes simuladas con border-radius) */
         .fresita-decoracion {
             position: absolute;
@@ -78,7 +79,7 @@
         .background-layer {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://i.postimg.cc/1tyXpTqv/cute-aesthetic-strawberry-desktop-mlnfwdx8dayv5zct.jpg'); 
+            background-image: url('https://i.postimg.cc/bwQ73Ddm/fondo-strawberry-shortcake.png'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -109,7 +110,7 @@
             background-color: var(--rojo-fresa);
             border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
             box-shadow: inset -3px -3px 0px rgba(0,0,0,0.15);
-            z-index: 10; /* Para que queden encima de la línea de puntos */
+            z-index: 10;
         }
         /* Hojita verde de la fresa */
         .fresita-esquina::before {
@@ -151,9 +152,12 @@
             animation: flotar 3s ease-in-out infinite; 
         }
 
+        /* AJUSTE AQUÍ: Cambiado 'Fredoka One' por 'Fredoka' */
         h1, h2, h3 {
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
             color: var(--rojo-fresa);
+            text-shadow: 2px 2px 4px #aa1d2c; 
         }
 
         h1 {
@@ -165,16 +169,18 @@
         h2 {
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: var(--rosa-fresa);
+            color: var(--blanco);
         }
 
         .subtitle {
-            font-size: 1.1rem;
-            color: var(--rosa-fresa);
-            font-weight: bold;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        font-size: 1.1rem;
+        color: var(--blanco);
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        /* SOMBRA ROJA OSCURA COMPACTA Y DEFINIDA */
+        text-shadow: 2px 2px 4px #aa1d2c; 
         }
 
         .badge-edad {
@@ -241,7 +247,8 @@
             border: none;
             padding: 8px 25px;
             border-radius: 20px;
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
@@ -257,7 +264,7 @@
         .countdown-title {
             margin-top: 25px;
             font-size: 1.1rem;
-            color: var(--rosa-fresa);
+            color: var(--rojo-fresa);
             font-weight: bold;
         }
 
@@ -280,7 +287,8 @@
 
         .countdown-box span {
             display: block;
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
             font-size: 1.6rem;
         }
 
@@ -299,7 +307,8 @@
             text-decoration: none;
             padding: 12px 25px;
             border-radius: 25px;
-            font-family: 'Fredoka One', cursive;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
             margin-top: 15px;
             transition: transform 0.2s, background-color 0.2s;
             box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
@@ -357,7 +366,7 @@
             <div class="badge-edad">¡Cumple 1 Añito! 🍓</div>
 
             <div class="music-container">
-                <span class="music-title">🎵 Dale Play para escuchar la música de fondo:</span>
+                <span class="music-title">🎵 Sonando música de fondo...</span>
                 <audio id="strawberrySong" src="Strawberry Shortcake Theme song 2003 (Straw Buh-buh-buh-berry Shortcake).mp3" loop></audio>
                 <button class="btn-music" id="musicBtn" onclick="toggleMusic()">▶ Escuchar Música</button>
             </div>
@@ -412,15 +421,39 @@
 
         function toggleMusic() {
             if (song.paused) {
-                song.play().catch(error => {
-                    alert("Asegúrate de agregar un link válido de un archivo de música (.mp3) dentro del código HTML.");
-                });
-                btn.innerText = "⏸ Pausar Música";
+                playAudio();
             } else {
                 song.pause();
                 btn.innerText = "▶ Escuchar Música";
             }
         }
+
+        function playAudio() {
+            song.play().then(() => {
+                btn.innerText = "⏸ Pausar Música";
+                removeAllTriggers();
+            }).catch(error => {
+                console.log("Autoplay bloqueado temporalmente. Esperando interacción real...");
+            });
+        }
+
+        function removeAllTriggers() {
+            document.removeEventListener('click', playAudioOnInteraction);
+            document.removeEventListener('touchstart', playAudioOnInteraction);
+            document.removeEventListener('scroll', playAudioOnInteraction);
+        }
+
+        function playAudioOnInteraction() {
+            playAudio();
+        }
+
+        document.addEventListener('click', playAudioOnInteraction);
+        document.addEventListener('touchstart', playAudioOnInteraction);
+        document.addEventListener('scroll', playAudioOnInteraction);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            playAudio();
+        });
 
         // FECHA DEL EVENTO: 14 de Junio de 2026 a las 3:00 PM
         const targetDate = new Date('June 14, 2026 15:00:00').getTime();
@@ -441,7 +474,7 @@
 
             if (difference < 0) {
                 clearInterval(updateCountdown);
-                document.getElementById('countdown').innerHTML = "<p style='font-family:\"Fredoka One\"; color:var(--rojo-fresa); font-size:1.2rem;'>¡Es hoy! ¡Bienvenidos!</p>";
+                document.getElementById('countdown').innerHTML = "<p style='font-family:\"Fredoka\"; font-weight:700; color:var(--rojo-fresa); font-size:1.2rem;'>¡Es hoy! ¡Bienvenidos!</p>";
             }
         }, 1000);
     </script>
