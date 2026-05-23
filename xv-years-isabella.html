@@ -9,10 +9,11 @@
     
     <style>
         :root {
-            /* Degradado azul para las tarjetas según image_73105f.jpg */
-            --azul-glass: linear-gradient(135deg, rgba(10, 37, 64, 0.5), rgba(2, 6, 23, 0.7));
+            /* Degradado azul para las tarjetas */
+            --azul-glass: linear-gradient(135deg, rgba(10, 37, 64, 0.75), rgba(2, 6, 23, 0.85));
             --dorado: #d4af37;
             --blanco: rgba(255, 255, 255, 0.95);
+            --rosa-suave: #f8cddb; 
         }
 
         body, html {
@@ -20,32 +21,28 @@
             padding: 0;
             font-family: 'Montserrat', sans-serif;
             color: white;
-            /* Eliminamos el background-color sólido que causaba el error */
             scroll-behavior: smooth;
+            background-color: var(--rosa-suave);
         }
 
-        /* ----- FONDO DEL BOSQUE - SIEMPRE VISIBLE ----- */
+        /* ----- FONDO ROSA FIJO CON LAS LUCES ----- */
         .forest-fixed {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Imagen de bosque encantado estable */
-            background-image: url('https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=1920');
-            background-size: cover;
-            background-position: center;
+            background-color: var(--rosa-suave);
             z-index: -2;
         }
 
-        /* Filtro sutil para no opacar el bosque */
         .forest-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.1);
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(235,210,220,0.3) 100%);
             z-index: -1;
         }
 
@@ -64,7 +61,7 @@
             position: absolute;
             background: radial-gradient(circle, #fff, var(--dorado));
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--dorado);
+            box-shadow: 0 0 12px var(--dorado);
             opacity: 0;
         }
 
@@ -94,8 +91,8 @@
             max-width: 600px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            opacity: 0; /* Para la animación de aparición */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            opacity: 0;
         }
 
         h1.main-name {
@@ -118,7 +115,7 @@
 
         p { font-size: 1.2rem; line-height: 1.7; color: var(--blanco); }
 
-        /* ----- CONTADOR ESTILO image_73105f.jpg ----- */
+        /* ----- CONTADOR ----- */
         .countdown-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -127,7 +124,7 @@
         }
 
         .unit-box {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             padding: 20px 5px;
             border-radius: 15px;
             border: 1px solid rgba(212, 175, 55, 0.4);
@@ -163,6 +160,34 @@
             display: block;
             margin-top: 15px;
         }
+
+        /* ----- ACTUALIZADO: BOTÓN FLOTANTE SÓLO ICONO ----- */
+        .btn-audio-circle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+            width: 55px;
+            height: 55px;
+            background: rgba(10, 37, 64, 0.9);
+            border: 2px solid var(--dorado);
+            color: var(--dorado);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem; /* Tamaño del icono interno */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-audio-circle:hover {
+            transform: scale(1.08);
+            background: #0a2540;
+        }
     </style>
 </head>
 <body>
@@ -171,9 +196,11 @@
     <div class="forest-overlay"></div>
     <div id="magic-particles"></div>
 
+    <audio id="xvSong" src="Indila - Love Story.mp3" loop></audio>
+    <button class="btn-audio-circle" id="audioBtn" onclick="toggleMusic()">▶</button>
+
     <div class="content-scroll">
         
-        <!-- PARTE 1: NOMBRE -->
         <section>
             <div class="glass-card">
                 <span class="label-top">Mis XV Años</span>
@@ -182,7 +209,6 @@
             </div>
         </section>
 
-        <!-- PARTE 2: PADRES Y VESTIDO -->
         <section>
             <div class="glass-card">
                 <span class="label-top">Con la bendición de mis padres</span>
@@ -193,7 +219,6 @@
             </div>
         </section>
 
-        <!-- PARTE 3: CUENTA REGRESIVA Y MAPA -->
         <section>
             <div class="glass-card">
                 <span class="label-top">Faltan solo...</span>
@@ -207,7 +232,6 @@
             </div>
         </section>
 
-        <!-- PARTE 4: REGALOS -->
         <section>
             <div class="glass-card">
                 <span class="label-top">Mesa de Regalos</span>
@@ -219,7 +243,48 @@
     </div>
 
     <script>
-        // 1. LÓGICA DEL CONTADOR (25 de Julio de 2026)
+        // 1. CONTROL DE AUDIO
+        const song = document.getElementById('xvSong');
+        const audioBtn = document.getElementById('audioBtn');
+
+        function toggleMusic() {
+            if (song.paused) {
+                playAudio();
+            } else {
+                song.pause();
+                audioBtn.innerText = "▶"; // Cambia a Play
+            }
+        }
+
+        function playAudio() {
+            song.play().then(() => {
+                audioBtn.innerText = "⏸"; // Cambia a Pause
+                removeAudioTriggers();
+            }).catch(error => {
+                console.log("Esperando interacción para iniciar el audio.");
+            });
+        }
+
+        function removeAudioTriggers() {
+            document.removeEventListener('click', playAudioOnFirstInteraction);
+            document.removeEventListener('touchstart', playAudioOnFirstInteraction);
+            document.removeEventListener('scroll', playAudioOnFirstInteraction);
+        }
+
+        function playAudioOnFirstInteraction() {
+            playAudio();
+        }
+
+        document.addEventListener('click', playAudioOnFirstInteraction);
+        document.addEventListener('touchstart', playAudioOnFirstInteraction);
+        document.addEventListener('scroll', playAudioOnFirstInteraction);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            playAudio();
+        });
+
+
+        // 2. LÓGICA DEL CONTADOR (25 de Julio de 2026)
         const targetDate = new Date("July 25, 2026 18:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -230,7 +295,7 @@
             document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000);
         }, 1000);
 
-        // 2. ANIMACIÓN DE PARTÍCULAS "BOSQUE ENCANTADO"
+        // 3. ANIMACIÓN DE PARTÍCULAS
         const pContainer = document.getElementById('magic-particles');
         for (let i = 0; i < 70; i++) {
             const sparkle = document.createElement('div');
@@ -253,7 +318,7 @@
             easing: 'easeInOutQuad'
         });
 
-        // 3. REVELACIÓN DE TARJETAS AL HACER SCROLL
+        // 4. REVELACIÓN DE TARJETAS AL HACER SCROLL
         const obs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
