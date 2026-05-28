@@ -332,11 +332,23 @@
             </div>
         </section>
 
+        <!-- SECCIÓN 6: REGALOS (MODIFICADA CON BOTÓN DE ENLACE) -->
         <section>
             <div class="glass-card">
                 <span class="label-top">Mesa de Regalos</span>
                 <p>Tu presencia es mi mejor regalo, pero si deseas obsequiarme algo:</p>
-                <span class="gift-number-display">52001872</span>
+                
+                <!-- Cambiado por un botón interactivo que redirecciona a Liverpool -->
+                <a href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/52001872" 
+                   target="_blank" 
+                   class="gift-number-display" 
+                   style="text-decoration: none; display: inline-block; transition: transform 0.3s ease, text-shadow 0.3s ease;"
+                   onmouseover="this.style.transform='scale(1.05)'; this.style.textShadow='0 0 25px rgba(212, 175, 55, 0.8)';"
+                   onmouseout="this.style.transform='scale(1)'; this.style.textShadow='none';">
+                   52001872
+                </a>
+                
+                <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">(Toca el número para ir a la mesa)</p>
             </div>
         </section>
 
