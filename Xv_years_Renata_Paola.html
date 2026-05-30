@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XV Años | Renata Paola</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background: linear-gradient(180deg, #00b2d2 0%, #fa7305 100%);
+            background-attachment: fixed;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        /* Olas al fondo */
+        .ocean { position: fixed; bottom: 0; left: 0; width: 100%; height: 150px; z-index: 0; opacity: 0.3; }
+        .wave {
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg') repeat-x;
+            position: absolute; width: 6400px; height: 198px;
+            animation: wave 10s linear infinite;
+        }
+        @keyframes wave { 0% { margin-left: 0; } 100% { margin-left: -1600px; } }
+
+        /* Contenedores */
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px;
+            margin: 20px auto;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            z-index: 1;
+            /* Transición al hacer scroll */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.9s ease-out;
+        }
+        .section.visible { opacity: 1; transform: translateY(0); }
+
+        /* Título Principal (Hero) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInDown 1.5s ease-out;
+        }
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; line-height: 1.1; }
+        .hero p { font-size: 1.2rem; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Estilos de texto */
+        h2 { font-family: 'Playfair Display', serif; margin-bottom: 15px; font-size: 1.5rem; }
+        .data { font-size: 1.1rem; line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <p>Mis XV Años</p>
+        <h1>Renata Paola</h1>
+        <p>4 de julio, 2026</p>
+    </div>
+
+    <div class="section">
+        <h2>Cuenta Regresiva</h2>
+        <div id="countdown" style="font-size: 1.5rem; font-weight: bold;"></div>
+    </div>
+
+    <div class="section">
+        <h2>Mis Padres</h2>
+        <p class="data">Vicente García Juárez<br>Ericka Lopez Butron</p>
+    </div>
+
+    <div class="section">
+        <h2>Mis Padrinos</h2>
+        <p class="data">
+            Cerecedo Guevara Apolinar & Espinoza Liscano Florentina Marlene<br><br>
+            Meza Hernández Luis Fernando & Espinosa del Ángel Dora Luz<br><br>
+            Lopez Medina Heriberto & Diaz Benítez Eugenia
+        </p>
+    </div>
+
+    <div class="ocean"><div class="wave"></div></div>
+
+    <script>
+        // Animación de aparición al hacer scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+        // Contador regresivo
+        const target = new Date("July 4, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            document.getElementById("countdown").innerText = `${d}d ${h}h ${m}m`;
+        }, 1000);
+    </script>
+</body>
+</html>
