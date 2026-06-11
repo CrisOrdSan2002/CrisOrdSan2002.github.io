@@ -349,6 +349,60 @@ h2 {
         padding: 30px 22px;
     }
 }
+
+/* Confirmación */
+.confirm-section {
+    text-align: center;
+}
+
+.confirm-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.confirm-text {
+    line-height: 1.8;
+    font-size: 1rem;
+    margin-bottom: 25px;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 16px 32px;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    background: rgba(255,255,255,0.20);
+    border: 1px solid rgba(255,255,255,0.35);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 12px 24px rgba(0,0,0,.18);
+
+    transition: all .3s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.30);
+}
+
+.whatsapp-btn:active {
+    transform: scale(.97);
+}
+
+.whatsapp-icon {
+    font-size: 1.4rem;
+}
 </style>
 </head>
 
@@ -490,6 +544,31 @@ h2 {
     </a>
 
 </div>
+
+<div class="section confirm-section">
+
+    <div class="confirm-title">
+        Confirmación de Asistencia
+    </div>
+
+    <div class="confirm-text">
+        Hay momentos inolvidables que se atesoran en el corazón para siempre.
+        Me gustaría que compartieras conmigo este día tan especial.
+        <br><br>
+        Por favor ayúdame confirmando tu asistencia para reservar tu lugar.
+    </div>
+
+    <a
+        class="whatsapp-btn"
+        href="https://wa.me/527821078297?text=Hola%20Renata,%20confirmo%20mi%20asistencia%20a%20tus%20XV%20años.%20🎉"
+        target="_blank"
+    >
+        <span class="whatsapp-icon">💬</span>
+        Confirmar Asistencia
+    </a>
+
+</div>
+
 
 <script>
 // Música
