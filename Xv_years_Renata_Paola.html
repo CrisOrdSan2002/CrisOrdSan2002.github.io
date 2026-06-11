@@ -1,75 +1,194 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XV Años | Renata Paola</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-    
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            background: linear-gradient(180deg, #00b2d2 0%, #fa7305 100%);
-            background-attachment: fixed;
-            font-family: 'Montserrat', sans-serif;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 50px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XV Años | Renata Paola</title>
 
-        /* Olas al fondo */
-        .ocean { position: fixed; bottom: 0; left: 0; width: 100%; height: 150px; z-index: 0; opacity: 0.3; }
-        .wave {
-            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg') repeat-x;
-            position: absolute; width: 6400px; height: 198px;
-            animation: wave 10s linear infinite;
-        }
-        @keyframes wave { 0% { margin-left: 0; } 100% { margin-left: -1600px; } }
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
 
-        /* Contenedores */
-        .section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px;
-            margin: 20px auto;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            z-index: 1;
-            /* Transición al hacer scroll */
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.9s ease-out;
-        }
-        .section.visible { opacity: 1; transform: translateY(0); }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* Título Principal (Hero) */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: fadeInDown 1.5s ease-out;
-        }
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; line-height: 1.1; }
-        .hero p { font-size: 1.2rem; margin-top: 10px; letter-spacing: 2px; text-transform: uppercase; }
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    background: #7ed9df;
+}
 
-        /* Estilos de texto */
-        h2 { font-family: 'Playfair Display', serif; margin-bottom: 15px; font-size: 1.5rem; }
-        .data { font-size: 1.1rem; line-height: 1.8; }
+/* Fondo playa */
+.beach-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    background: #7ed9df;
+}
 
-        .photo-section {
+.water-layer {
+    position: absolute;
+    top: -14vh;
+    left: -10vw;
+    width: 120vw;
+    height: 130vh;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: brightness(1.1) saturate(1.15) blur(0.2px);
+    z-index: 1;
+    animation: waterVertical 16s ease-in-out infinite alternate;
+}
+
+@keyframes waterVertical {
+    from {
+        transform: translateY(-4vh) scale(1.04);
+    }
+    to {
+        transform: translateY(6vh) scale(1.08);
+    }
+}
+
+/* Capa flotante */
+#floatingElements {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+}
+
+.float-item {
+    position: absolute;
+    opacity: 0;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.18));
+    animation-name: floatSea;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes floatSea {
+    0% {
+        opacity: 0;
+        transform: translateX(0) translateY(-30vh) rotate(0deg);
+    }
+
+    8% {
+        opacity: 0.95;
+    }
+
+    20% {
+        transform: translateX(28px) translateY(10vh) rotate(7deg);
+    }
+
+    40% {
+        transform: translateX(-18px) translateY(35vh) rotate(-5deg);
+    }
+
+    60% {
+        transform: translateX(35px) translateY(65vh) rotate(9deg);
+    }
+
+    85% {
+        opacity: 0.95;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(18px) translateY(135vh) rotate(5deg);
+    }
+}
+
+/* Hero */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInDown 1.5s ease-out;
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 20px;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    text-shadow: 0 5px 18px rgba(0,0,0,0.25);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+
+/* Secciones */
+.section {
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 40px;
+    margin: 20px auto;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    z-index: 5;
+    position: relative;
+    box-shadow: 0 18px 35px rgba(0,0,0,0.18);
+
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.9s ease-out;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.data {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.note {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+.photo-section {
     padding: 25px;
 }
 
@@ -89,110 +208,207 @@
     object-fit: cover;
 }
 
+/* Botón música */
 #musicBtn {
     position: fixed;
     right: 22px;
     bottom: 22px;
-    width: 55px;
-    height: 55px;
+    width: 62px;
+    height: 62px;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.4);
-    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.22);
     backdrop-filter: blur(12px);
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     cursor: pointer;
-    z-index: 10;
+    z-index: 20;
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
-    </style>
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .section {
+        padding: 30px 22px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="hero">
-        <p>Mis XV Años</p>
-        <h1>Renata Paola</h1>
-        <p>4 de julio, 2026</p>
-    </div>
+<!-- Fondo playa -->
+<div class="beach-bg">
+    <img class="water-layer" src="https://i.postimg.cc/6pbNdcYT/Chat-GPT-Image-11-jun-2026-08-19-00-a-m.png" alt="">
+    <div id="floatingElements"></div>
+</div>
 
-<!-- Foto Renata -->
+<div class="hero">
+    <p>Mis XV Años</p>
+    <h1>Renata Paola</h1>
+    <p>4 de julio, 2026</p>
+</div>
+
 <div class="section photo-section">
     <div class="photo-frame">
         <img src="https://i.postimg.cc/WpxsQ36z/Foto-Renata-Paola.jpg" alt="Renata Paola">
     </div>
 </div>
 
-<!-- Música -->
 <audio id="bgMusic" loop>
     <source src="Hoy El Aire Huele a Ti.mp3" type="audio/mpeg">
 </audio>
 
 <button id="musicBtn">♫</button>
-    <div class="section">
-        <h2>Cuenta Regresiva</h2>
-        <div id="countdown" style="font-size: 1.5rem; font-weight: bold;"></div>
-    </div>
 
-    <div class="section">
-        <h2>Mis Padres</h2>
-        <p class="data">Vicente García Juárez<br>Ericka Lopez Butron</p>
-    </div>
+<div class="section">
+    <h2>Cuenta Regresiva</h2>
+    <div id="countdown" style="font-size: 1.5rem; font-weight: bold;"></div>
+</div>
 
-    <div class="section">
-        <h2>Mis Padrinos</h2>
-        <p class="data">
-            Cerecedo Guevara Apolinar & Espinoza Liscano Florentina Marlene<br><br>
-            Meza Hernández Luis Fernando & Espinosa del Ángel Dora Luz<br><br>
-            Lopez Medina Heriberto & Diaz Benítez Eugenia
-        </p>
-    </div>
+<div class="section">
+    <h2>Mis Padres</h2>
+    <p class="data">
+        Vicente García Juárez<br>
+        Ericka Lopez Butron
+    </p>
+</div>
 
-    <div class="ocean"><div class="wave"></div></div>
+<div class="section">
+    <h2>Mis Padrinos</h2>
+    <p class="data">
+        Cerecedo Guevara Apolinar & Espinoza Liscano Florentina Marlene<br><br>
+        Meza Hernández Luis Fernando & Espinosa del Ángel Dora Luz<br><br>
+        Lopez Medina Heriberto & Diaz Benítez Eugenia
+    </p>
+</div>
 
-    <script>
+<div class="section">
+    <h2>Código de Vestimenta</h2>
+    <p class="data">
+        Semiformal<br>
+        No azul 🩵💙
+    </p>
+</div>
 
-        // Música de fondo
-        const music = document.getElementById("bgMusic");
-        const musicBtn = document.getElementById("musicBtn");
+<div class="section">
+    <h2>Lluvia de Sobres</h2>
+    <p class="note">
+        El mejor regalo es tu presencia, pero si deseas tener un detalle conmigo,
+        habrá lluvia de sobres.
+    </p>
+</div>
 
-        let isPlaying = false;
+<script>
+// Música
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
-        document.body.addEventListener("click", () => {
-            if (!isPlaying) {
-                music.play();
-                isPlaying = true;
-                musicBtn.innerText = "❚❚";
-            }
-        }, { once: true });
+let isPlaying = false;
 
-        musicBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
+document.body.addEventListener("click", () => {
+    if (!isPlaying) {
+        music.play();
+        isPlaying = true;
+        musicBtn.innerText = "❚❚";
+    }
+}, { once: true });
 
-            if (music.paused) {
-                music.play();
-                musicBtn.innerText = "❚❚";
-            } else {
-                music.pause();
-                musicBtn.innerText = "♫";
-            }
-        });
-        // Animación de aparición al hacer scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.2 });
-        document.querySelectorAll('.section').forEach(s => observer.observe(s));
+musicBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
 
-        // Contador regresivo
-        const target = new Date("July 4, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = target - now;
-            const d = Math.floor(diff / (1000*60*60*24));
-            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-            document.getElementById("countdown").innerText = `${d}d ${h}h ${m}m`;
-        }, 1000);
-    </script>
+    if (music.paused) {
+        music.play();
+        musicBtn.innerText = "❚❚";
+        isPlaying = true;
+    } else {
+        music.pause();
+        musicBtn.innerText = "♫";
+        isPlaying = false;
+    }
+});
+
+// Animación de secciones
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+    });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+// Cuenta regresiva
+const target = new Date("July 4, 2026 00:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const diff = target - now;
+
+    if (diff <= 0) {
+        document.getElementById("countdown").innerText = "¡Hoy es el gran día!";
+        return;
+    }
+
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    document.getElementById("countdown").innerText = `${d}d ${h}h ${m}m`;
+}, 1000);
+
+// Elementos flotantes aleatorios
+const floatImages = [
+    "https://i.postimg.cc/yJBfz2Xs/Capa-0-copia.png",
+    "https://i.postimg.cc/Mn1sNzBC/Capa-0-copia-10.png",
+    "https://i.postimg.cc/SncZ3m8F/Capa-0-copia-11.png",
+    "https://i.postimg.cc/HrbSRT5C/Capa-0-copia-12.png",
+    "https://i.postimg.cc/mP7dJTMR/Capa-0-copia-13.png",
+    "https://i.postimg.cc/ZW6f2J34/Capa-0-copia-14.png",
+    "https://i.postimg.cc/68CHgBR6/Capa-0-copia-15.png",
+    "https://i.postimg.cc/gx3MQGRk/Capa-0-copia-16.png",
+    "https://i.postimg.cc/87Ly9TWz/Capa-0-copia-17.png",
+    "https://i.postimg.cc/B8shGRcf/Capa-0-copia-18.png",
+    "https://i.postimg.cc/kV9jdLF9/Capa-0-copia-19.png",
+    "https://i.postimg.cc/RNksgWWD/Capa-0-copia-2.png",
+    "https://i.postimg.cc/hXVC6KmC/Capa-0-copia-3.png",
+    "https://i.postimg.cc/bZ16Wqnm/Capa-0-copia-4.png",
+    "https://i.postimg.cc/VJX7pzt4/Capa-0-copia-5.png",
+    "https://i.postimg.cc/jDy8mRfZ/Capa-0-copia-6.png",
+    "https://i.postimg.cc/4Yp8qXcq/Capa-0-copia-7.png",
+    "https://i.postimg.cc/QFc6wj7z/Capa-0-copia-8.png",
+    "https://i.postimg.cc/3k2LV3Gz/Capa-0-copia-9.png"
+];
+
+const floatContainer = document.getElementById("floatingElements");
+
+floatImages.forEach((src) => {
+    const img = document.createElement("img");
+
+    img.src = src;
+    img.className = "float-item";
+
+    const size = 35 + Math.random() * 75;
+    const left = Math.random() * 100;
+    const startTop = -35 - Math.random() * 140;
+    const duration = 65 + Math.random() * 70;
+    const delay = -Math.random() * duration;
+
+    img.style.width = `${size}px`;
+    img.style.left = `${left}%`;
+    img.style.top = `${startTop}vh`;
+    img.style.animationDuration = `${duration}s`;
+    img.style.animationDelay = `${delay}s`;
+
+    floatContainer.appendChild(img);
+});
+</script>
+
 </body>
 </html>
