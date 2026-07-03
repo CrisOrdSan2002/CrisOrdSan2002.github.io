@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XV Brenda Monserrat</title>
+
+  <!-- Fuentes libres / open source desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&family=Rye&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cafe: #7a4a24;
+      --cafe-oscuro: #3b2213;
+      --beige: #f6ead7;
+      --crema: #fff8ed;
+      --dorado: #c89545;
+      --denim: #2f5f7f;
+      --rosa: #c97d7d;
+      --texto: #2e2016;
+      --sombra: 0 18px 45px rgba(45, 26, 12, 0.22);
+      --radio: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", sans-serif;
+      color: var(--texto);
+      background:
+        radial-gradient(circle at top left, rgba(200, 149, 69, .22), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(47, 95, 127, .18), transparent 28%),
+        linear-gradient(180deg, #fff8ed 0%, #f3dfc4 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      background: rgba(255, 248, 237, 0.75);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 70px rgba(59, 34, 19, .20);
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 28px 20px 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        linear-gradient(rgba(44, 26, 13, .55), rgba(44, 26, 13, .45)),
+        url("assets/iglesia-1.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    /*
+      Para usar fotos de la iglesia:
+      1. Crea una carpeta llamada assets.
+      2. Guarda tus fotos como iglesia-1.jpg, iglesia-2.jpg, iglesia-3.jpg.
+      3. Si no hay imágenes, el diseño seguirá funcionando con fondos decorativos.
+    */
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border: 2px dashed rgba(255, 248, 237, .38);
+      border-radius: 50%;
+      animation: giro 28s linear infinite;
+    }
+
+    .hero::before {
+      top: -80px;
+      left: -80px;
+    }
+
+    .hero::after {
+      right: -100px;
+      bottom: -90px;
+      animation-direction: reverse;
+    }
+
+    @keyframes giro {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-card {
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      padding: 28px 18px;
+      border-radius: 34px;
+      color: #fff8ed;
+      background: rgba(59, 34, 19, .72);
+      border: 1px solid rgba(255, 248, 237, .28);
+      box-shadow: var(--sombra);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      margin-bottom: 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      background: rgba(255, 248, 237, .15);
+      border: 1px solid rgba(255, 248, 237, .25);
+    }
+
+    .western {
+      font-family: "Rye", serif;
+      font-size: clamp(2.5rem, 13vw, 4.8rem);
+      line-height: .92;
+      color: #f7d99c;
+      text-shadow: 0 5px 0 rgba(59, 34, 19, .65);
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-family: "Cinzel", serif;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .name {
+      margin: 20px 0 12px;
+      font-family: "Cinzel", serif;
+      font-size: clamp(2rem, 10vw, 3.7rem);
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .date-pill {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--crema);
+      color: var(--cafe-oscuro);
+      font-weight: 700;
+      box-shadow: inset 0 0 0 2px rgba(200, 149, 69, .35);
+    }
+
+    .scroll {
+      margin-top: 24px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      opacity: .92;
+    }
+
+    .scroll span {
+      width: 24px;
+      height: 38px;
+      border: 2px solid rgba(255, 248, 237, .75);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .scroll span::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      background: #fff8ed;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      transform: translateX(-50%);
+      animation: bajar 1.3s infinite;
+    }
+
+    @keyframes bajar {
+      0% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, 14px); }
+    }
+
+    section {
+      padding: 42px 20px;
+    }
+
+    .section-title {
+      font-family: "Cinzel", serif;
+      font-size: 1.8rem;
+      color: var(--cafe-oscuro);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title span {
+      display: block;
+      font-family: "Rye", serif;
+      font-size: 1rem;
+      color: var(--dorado);
+      margin-bottom: 4px;
+    }
+
+    .intro {
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .divider {
+      width: 120px;
+      height: 16px;
+      margin: 22px auto;
+      background:
+        linear-gradient(90deg, transparent, var(--cafe), transparent);
+      mask-image: radial-gradient(circle, #000 42%, transparent 44%);
+      mask-size: 16px 16px;
+    }
+
+    .card {
+      border-radius: var(--radio);
+      background: rgba(255, 248, 237, .92);
+      border: 1px solid rgba(122, 74, 36, .16);
+      box-shadow: var(--sombra);
+      padding: 24px 18px;
+      margin-top: 18px;
+    }
+
+    .people-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .person-box {
+      padding: 18px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(200,149,69,.20), rgba(47,95,127,.12));
+      border: 1px solid rgba(122,74,36,.14);
+      text-align: center;
+    }
+
+    .person-box h3 {
+      font-family: "Cinzel", serif;
+      font-size: 1rem;
+      color: var(--cafe);
+      margin-bottom: 8px;
+    }
+
+    .person-box p {
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .time-box {
+      padding: 14px 6px;
+      text-align: center;
+      border-radius: 20px;
+      background: var(--cafe-oscuro);
+      color: var(--crema);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+    }
+
+    .time-box strong {
+      display: block;
+      font-family: "Cinzel", serif;
+      font-size: clamp(1.35rem, 7vw, 2.1rem);
+      color: #f7d99c;
+    }
+
+    .time-box small {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    .event-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-card::before {
+      content: "✦";
+      position: absolute;
+      top: -24px;
+      right: 18px;
+      font-size: 6rem;
+      color: rgba(200, 149, 69, .15);
+    }
+
+    .event-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 18px 0;
+    }
+
+    .icon {
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--denim);
+      color: white;
+      font-size: 20px;
+    }
+
+    .event-row h3 {
+      font-size: 1rem;
+      color: var(--cafe-oscuro);
+      margin-bottom: 4px;
+    }
+
+    .event-row p {
+      line-height: 1.55;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 260px;
+      border: 0;
+      border-radius: 22px;
+      margin-top: 18px;
+      box-shadow: var(--sombra);
+    }
+
+    .btns {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      width: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: .98rem;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(59,34,19,.18);
+    }
+
+    .btn-primary {
+      background: var(--cafe);
+      color: #fff8ed;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #073b1d;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cafe-oscuro);
+      border: 1px solid rgba(122, 74, 36, .35);
+    }
+
+    .theme-box {
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(122,74,36,.88), rgba(47,95,127,.88)),
+        url("assets/vaquera.jpg");
+      background-size: cover;
+      background-position: center;
+      color: var(--crema);
+    }
+
+    .theme-box .section-title {
+      color: var(--crema);
+    }
+
+    .theme-icons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0;
+      font-size: 2rem;
+    }
+
+    .gift {
+      text-align: center;
+      border: 2px dashed rgba(122,74,36,.35);
+      background: rgba(255,248,237,.72);
+    }
+
+    .gift .emoji {
+      font-size: 2.6rem;
+      margin-bottom: 8px;
+    }
+
+    .gallery {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .photo {
+      min-height: 220px;
+      border-radius: 26px;
+      overflow: hidden;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--sombra);
+    }
+
+    .photo:nth-child(1) {
+      background-image:
+        linear-gradient(180deg, rgba(59,34,19,.05), rgba(59,34,19,.55)),
+        url("assets/iglesia-1.jpg");
+    }
+
+    .photo:nth-child(2) {
+      background-image:
+        linear-gradient(180deg, rgba(59,34,19,.05), rgba(59,34,19,.55)),
+        url("assets/iglesia-2.jpg");
+    }
+
+    .photo:nth-child(3) {
+      background-image:
+        linear-gradient(180deg, rgba(59,34,19,.05), rgba(59,34,19,.55)),
+        url("assets/iglesia-3.jpg");
+    }
+
+    .photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(122,74,36,.45), rgba(47,95,127,.40)),
+        repeating-linear-gradient(45deg, transparent 0 16px, rgba(255,255,255,.05) 16px 18px);
+      z-index: 0;
+    }
+
+    .photo span {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1;
+      color: white;
+      font-weight: 700;
+      text-shadow: 0 3px 12px rgba(0,0,0,.45);
+    }
+
+    .footer {
+      padding: 36px 20px 90px;
+      text-align: center;
+      color: var(--crema);
+      background: var(--cafe-oscuro);
+    }
+
+    .footer h2 {
+      font-family: "Cinzel", serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #f7d99c;
+    }
+
+    .floating-confirm {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 50;
+      max-width: 488px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 700px) {
+      body {
+        padding: 28px 0;
+      }
+
+      .page {
+        border-radius: 38px;
+        overflow: hidden;
+      }
+
+      .hero {
+        min-height: 760px;
+      }
+
+      .people-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .btns {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gallery .photo:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .floating-confirm {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: 488px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+
+    <header class="hero" id="inicio">
+      <div class="hero-card">
+        <div class="badge">🤠 XV años · temática vaquera</div>
+        <div class="western">Mis XV</div>
+        <p class="subtitle">Con mucha ilusión</p>
+
+        <h1 class="name">Brenda Monserrat</h1>
+        <p>Hernandez Martinez</p>
+
+        <div class="date-pill">12 de septiembre de 2026 · 5:00 PM</div>
+
+        <a class="scroll" href="#invitacion" aria-label="Ver invitación">
+          Desliza
+          <span></span>
+        </a>
+      </div>
+    </header>
+
+    <section id="invitacion">
+      <h2 class="section-title">
+        <span>Con el corazón lleno de alegría</span>
+        Estás invitado
+      </h2>
+
+      <p class="intro">
+        Hay momentos que se sueñan toda la vida y se guardan para siempre en el corazón.
+        Me encantará compartir contigo la celebración de mis XV años.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="card">
+        <div class="people-grid">
+          <div class="person-box">
+            <h3>Mis papás</h3>
+            <p>
+              Eric Hernandez Ramirez<br>
+              Silvia Monserrat Martinez Ledesma
+            </p>
+          </div>
+
+          <div class="person-box">
+            <h3>Mis padrinos</h3>
+            <p>
+              José Gérard Velazquez Flores<br>
+              Lorena Viccon Wong
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contador">
+      <h2 class="section-title">
+        <span>Falta poco para</span>
+        El gran día
+      </h2>
+
+      <div class="card">
+        <p class="intro">Cuenta regresiva para la celebración</p>
+
+        <div class="countdown" aria-label="Contador regresivo">
+          <div class="time-box">
+            <strong id="days">00</strong>
+            <small>Días</small>
+          </div>
+          <div class="time-box">
+            <strong id="hours">00</strong>
+            <small>Horas</small>
+          </div>
+          <div class="time-box">
+            <strong id="minutes">00</strong>
+            <small>Min</small>
+          </div>
+          <div class="time-box">
+            <strong id="seconds">00</strong>
+            <small>Seg</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evento">
+      <h2 class="section-title">
+        <span>Ceremonia religiosa</span>
+        Misa
+      </h2>
+
+      <div class="card event-card">
+        <div class="event-row">
+          <div class="icon">⛪</div>
+          <div>
+            <h3>Iglesia</h3>
+            <p>Parroquia de Nuestra Señora de Guadalupe</p>
+          </div>
+        </div>
+
+        <div class="event-row">
+          <div class="icon">📍</div>
+          <div>
+            <h3>Dirección</h3>
+            <p>18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.</p>
+          </div>
+        </div>
+
+        <div class="event-row">
+          <div class="icon">🗓️</div>
+          <div>
+            <h3>Fecha y hora</h3>
+            <p>Sábado 12 de septiembre de 2026 · 5:00 PM</p>
+          </div>
+        </div>
+
+        <iframe
+          class="map-frame"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Parroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe%2C%2018%20de%20Marzo%20309%2C%20Manuel%20Avila%20Camacho%2C%20Poza%20Rica%20de%20Hidalgo%2C%20Ver.&output=embed">
+        </iframe>
+
+        <div class="btns">
+          <a class="btn btn-primary" href="https://maps.app.goo.gl/ZAFYXUNJsdaTfYmLA" target="_blank" rel="noopener">
+            Abrir en Maps
+          </a>
+
+          <button class="btn btn-outline" id="copyAddress">
+            Copiar dirección
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="tematica">
+      <div class="card theme-box">
+        <h2 class="section-title">
+          <span>Temática</span>
+          Vaquera
+        </h2>
+
+        <div class="theme-icons" aria-hidden="true">
+          <span>🤠</span>
+          <span>🐎</span>
+          <span>👢</span>
+          <span>🌵</span>
+        </div>
+
+        <p>
+          Ven con tu mejor estilo vaquero: botas, sombrero, mezclilla o detalles western.
+        </p>
+      </div>
+    </section>
+
+    <section id="regalo">
+      <div class="card gift">
+        <div class="emoji">💌</div>
+        <h2 class="section-title">
+          <span>Detalle especial</span>
+          Lluvia de sobres
+        </h2>
+
+        <p class="intro">
+          Tu presencia es el mejor regalo. Si deseas tener un detalle conmigo,
+          habrá lluvia de sobres.
+        </p>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <h2 class="section-title">
+        <span>Recuerdos del lugar</span>
+        Galería
+      </h2>
+
+      <p class="intro">
+        Coloca aquí fotos propias o autorizadas de la iglesia. Solo reemplaza los archivos
+        dentro de la carpeta <strong>assets</strong>.
+      </p>
+
+      <div class="gallery">
+        <div class="photo"><span>Foto de la iglesia · assets/iglesia-1.jpg</span></div>
+        <div class="photo"><span>Interior o fachada · assets/iglesia-2.jpg</span></div>
+        <div class="photo"><span>Detalle del lugar · assets/iglesia-3.jpg</span></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <h2>Brenda Monserrat</h2>
+      <p>Gracias por acompañarme en este día tan especial.</p>
+    </footer>
+  </main>
+
+  <div class="floating-confirm">
+    <button class="btn btn-whatsapp" id="whatsappBtn">
+      Confirmar asistencia por WhatsApp
+    </button>
+  </div>
+
+  <script>
+    /*
+      CONFIGURACIÓN RÁPIDA
+      Cambia WHATSAPP_NUMBER por el número que recibirá confirmaciones.
+      Formato: código de país + lada + número, sin +, espacios ni guiones.
+      Ejemplo México: 5217821234567
+    */
+    const WHATSAPP_NUMBER = "521XXXXXXXXXX";
+
+    const EVENT_DATE_ISO = "2026-09-12T17:00:00-06:00";
+    const EVENT_NAME = "XV años de Brenda Monserrat";
+    const MAPS_LINK = "https://maps.app.goo.gl/ZAFYXUNJsdaTfYmLA";
+    const ADDRESS = "Parroquia de Nuestra Señora de Guadalupe, 18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.";
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function updateCountdown() {
+      const eventDate = new Date(EVENT_DATE_ISO).getTime();
+      const now = new Date().getTime();
+      const distance = eventDate - now;
+
+      if (distance <= 0) {
+        daysEl.textContent = "00";
+        hoursEl.textContent = "00";
+        minutesEl.textContent = "00";
+        secondsEl.textContent = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+
+      daysEl.textContent = pad(days);
+      hoursEl.textContent = pad(hours);
+      minutesEl.textContent = pad(minutes);
+      secondsEl.textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    document.getElementById("copyAddress").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(ADDRESS);
+        alert("Dirección copiada.");
+      } catch (error) {
+        alert("No se pudo copiar automáticamente. Dirección: " + ADDRESS);
+      }
+    });
+
+    document.getElementById("whatsappBtn").addEventListener("click", () => {
+      if (WHATSAPP_NUMBER.includes("X")) {
+        alert("Configura primero el número de WhatsApp en la variable WHATSAPP_NUMBER.");
+        return;
+      }
+
+      const message =
+        `Hola, confirmo mi asistencia a ${EVENT_NAME}.%0A%0A` +
+        `Nombre: %0A` +
+        `Número de personas: %0A%0A` +
+        `Fecha: 12 de septiembre de 2026, 5:00 PM.%0A` +
+        `Lugar: ${ADDRESS}%0A` +
+        `Maps: ${MAPS_LINK}`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
+    });
+  </script>
+</body>
+</html>
