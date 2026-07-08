@@ -513,6 +513,56 @@
       margin: 0 auto;
     }
 
+
+
+    .music-toggle {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 80;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border: 1px solid rgba(255, 248, 237, .45);
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      color: var(--crema);
+      background: rgba(59, 34, 19, .78);
+      box-shadow: 0 12px 28px rgba(45, 26, 12, .25);
+      backdrop-filter: blur(10px);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .music-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(45, 26, 12, .30);
+      background: rgba(59, 34, 19, .88);
+    }
+
+    .music-toggle .music-icon {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(247, 217, 156, .22);
+      color: #f7d99c;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 420px) {
+      .music-toggle {
+        top: 12px;
+        right: 12px;
+        padding: 10px 12px;
+        font-size: .82rem;
+      }
+    }
+
     @media (min-width: 700px) {
       body {
         padding: 28px 0;
@@ -554,11 +604,20 @@
 </head>
 
 <body>
+
+  <!-- Música de fondo: coloca tu canción en assets/cancion.mp3 o cambia la ruta del src -->
+  <audio id="bgMusic" src="antiguita-calibre.mp3" loop preload="auto"></audio>
+
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Pausar música" aria-pressed="true">
+    <span class="music-icon" id="musicIcon">♫</span>
+    <span id="musicText">Pausar</span>
+  </button>
+
   <main class="page">
 
     <header class="hero" id="inicio">
       <div class="hero-card">
-        <div class="badge">🤠 XV años · temática vaquera</div>
+        <!--<div class="badge">🤠 XV años · temática vaquera</div>-->
         <div class="western">Mis XV</div>
         <p class="subtitle">Con mucha ilusión</p>
 
@@ -761,7 +820,7 @@
       Formato: código de país + lada + número, sin +, espacios ni guiones.
       Ejemplo México: 5217821234567
     */
-    const WHATSAPP_NUMBER = "521XXXXXXXXXX";
+    const WHATSAPP_NUMBER = "5217841261547";
 
     const EVENT_DATE_ISO = "2026-09-12T17:00:00-06:00";
     const EVENT_NAME = "XV años de Brenda Monserrat";
@@ -822,13 +881,53 @@
       const message =
         `Hola, confirmo mi asistencia a ${EVENT_NAME}.%0A%0A` +
         `Nombre: %0A` +
-        `Número de personas: %0A%0A` +
-        `Fecha: 12 de septiembre de 2026, 5:00 PM.%0A` +
-        `Lugar: ${ADDRESS}%0A` +
-        `Maps: ${MAPS_LINK}`;
+        `Número de personas: %0A%0A`;
 
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank");
     });
+
+
+    const bgMusic = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    const musicIcon = document.getElementById("musicIcon");
+    const musicText = document.getElementById("musicText");
+
+    function updateMusicButton() {
+      const isPaused = bgMusic.paused;
+      musicIcon.textContent = isPaused ? "▶" : "❚❚";
+      musicText.textContent = isPaused ? "Reproducir" : "Pausar";
+      musicToggle.setAttribute("aria-label", isPaused ? "Reproducir música" : "Pausar música");
+      musicToggle.setAttribute("aria-pressed", String(!isPaused));
+    }
+
+    async function playMusic() {
+      try {
+        bgMusic.volume = 0.55;
+        await bgMusic.play();
+      } catch (error) {
+        // Algunos navegadores bloquean el audio automático hasta que la persona toque la pantalla.
+      }
+
+      updateMusicButton();
+    }
+
+    musicToggle.addEventListener("click", async () => {
+      if (bgMusic.paused) {
+        await playMusic();
+      } else {
+        bgMusic.pause();
+        updateMusicButton();
+      }
+    });
+
+    window.addEventListener("load", playMusic);
+
+    document.addEventListener("pointerdown", () => {
+      if (bgMusic.paused) {
+        playMusic();
+      }
+    }, { once: true });
+
   </script>
 </body>
 </html>
