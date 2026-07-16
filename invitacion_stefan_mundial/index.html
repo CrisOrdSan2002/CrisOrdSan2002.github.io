@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#e9f7ff" />
+  <meta
+    name="description"
+    content="Invitación de cumpleaños de Stefan Alberto — 13 años, temática mundialista."
+  />
+
+  <title>Stefan Alberto | Cumple 13</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* =====================================================
+       CARRUSEL DE JUGADORES DE LA PORTADA
+       ===================================================== */
+
+    .hero-player-carousel {
+      position: relative;
+      width: 100%;
+      height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      isolation: isolate;
+    }
+
+    .hero-player-carousel::before {
+      content: "";
+      position: absolute;
+      width: min(510px, 90%);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(200, 242, 223, 0.75) 32%,
+          rgba(90, 183, 232, 0.25) 58%,
+          transparent 72%
+        );
+      filter: blur(4px);
+      z-index: -2;
+    }
+
+    .hero-player-carousel::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 55px;
+      width: min(470px, 88%);
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(12, 34, 51, 0.18);
+      filter: blur(22px);
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    .hero-carousel-stage {
+      position: relative;
+      width: min(560px, 100%);
+      height: 590px;
+      overflow: hidden;
+      border-radius: 40px;
+    }
+
+    .hero-player-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(80px) scale(0.94);
+      transition:
+        opacity 0.8s ease,
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.8s ease;
+      pointer-events: none;
+    }
+
+    .hero-player-slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+      z-index: 3;
+    }
+
+    .hero-player-slide.is-leaving {
+      opacity: 0;
+      transform: translateX(-80px) scale(0.96);
+      z-index: 2;
+    }
+
+    .hero-player-image-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .hero-player-image-wrap::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 38px;
+      width: 72%;
+      height: 64%;
+      border-radius: 50% 50% 25% 25%;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(223, 245, 106, 0.9),
+          rgba(188, 234, 255, 0.7)
+        );
+      transform: translateX(-50%) rotate(-4deg);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 25px 70px rgba(22, 91, 126, 0.16);
+      z-index: -1;
+    }
+
+    .hero-player-slide:nth-child(even)
+      .hero-player-image-wrap::before {
+      transform: translateX(-50%) rotate(4deg);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(200, 242, 223, 0.95),
+          rgba(223, 245, 106, 0.72)
+        );
+    }
+
+    .hero-player-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: drop-shadow(0 28px 24px rgba(12, 34, 51, 0.22));
+      animation: heroPlayerFloat 4.8s ease-in-out infinite;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hero-player-slide:nth-child(2) .hero-player-image {
+      animation-delay: -1s;
+    }
+
+    .hero-player-slide:nth-child(3) .hero-player-image {
+      animation-delay: -2s;
+    }
+
+    .hero-player-slide:nth-child(4) .hero-player-image {
+      animation-delay: -3s;
+    }
+
+    .hero-player-slide:nth-child(5) .hero-player-image {
+      animation-delay: -4s;
+    }
+
+    .hero-player-country {
+      position: absolute;
+      top: 34px;
+      left: 28px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      border: 1px solid rgba(12, 34, 51, 0.11);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 9px 25px rgba(12, 34, 51, 0.1);
+      font-family:
+        "Monument Extended",
+        "Barlow Condensed",
+        Impact,
+        sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-player-number {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 1;
+      font-family:
+        "Monument Extended",
+        "Barlow Condensed",
+        Impact,
+        sans-serif;
+      font-size: clamp(90px, 10vw, 145px);
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.56);
+      -webkit-text-stroke: 1px rgba(12, 34, 51, 0.1);
+    }
+
+    .hero-player-info {
+      position: absolute;
+      right: 18px;
+      bottom: 27px;
+      left: 18px;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 19px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 22px;
+      background: rgba(12, 34, 51, 0.84);
+      color: white;
+      backdrop-filter: blur(13px);
+      box-shadow: 0 15px 35px rgba(12, 34, 51, 0.2);
+    }
+
+    .hero-player-info div {
+      min-width: 0;
+    }
+
+    .hero-player-info b {
+      display: block;
+      font-family:
+        "Monument Extended",
+        "Barlow Condensed",
+        Impact,
+        sans-serif;
+      font-size: clamp(20px, 3vw, 28px);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .hero-player-info span {
+      display: block;
+      margin-top: 7px;
+      color: #dceaf1;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+    }
+
+    .hero-player-position {
+      flex-shrink: 0;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: ##020b11;
+      color: #020b11;
+      font-family:
+        "Monument Extended",
+        "Barlow Condensed",
+        Impact,
+        sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-carousel-controls {
+      position: absolute;
+      right: 0;
+      bottom: 6px;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .hero-carousel-button {
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      border: 1px solid rgba(12, 34, 51, 0.15);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.82);
+      color: #0c2233;
+      font-size: 20px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 20px rgba(12, 34, 51, 0.1);
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .hero-carousel-button:hover {
+      transform: scale(1.08);
+      background: white;
+    }
+
+    .hero-carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-carousel-dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(12, 34, 51, 0.25);
+      cursor: pointer;
+      transition:
+        width 0.35s ease,
+        background 0.35s ease;
+    }
+
+    .hero-carousel-dot.is-active {
+      width: 25px;
+      background: #0c2233;
+    }
+
+    .hero-carousel-progress {
+      display: none;
+      position: absolute;
+      right: 20px;
+      bottom: 86px;
+      left: 20px;
+      z-index: 8;
+      height: 3px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .hero-carousel-progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #dff56a;
+    }
+
+    .hero-carousel-progress.is-running span {
+      animation: heroCarouselProgress 5s linear forwards;
+    }
+
+    .hero-carousel-ball {
+      position: absolute;
+      z-index: 8;
+      font-size: 47px;
+      filter: drop-shadow(0 12px 15px rgba(12, 34, 51, 0.2));
+      pointer-events: none;
+    }
+
+    .hero-carousel-ball-one {
+      left: -5px;
+      bottom: 115px;
+      animation: heroBallBounce 3.2s ease-in-out infinite;
+    }
+
+    .hero-carousel-ball-two {
+      top: 120px;
+      right: -5px;
+      font-size: 33px;
+      animation: heroBallBounce 3.6s ease-in-out infinite -1.2s;
+    }
+
+    @keyframes heroPlayerFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-13px);
+      }
+    }
+
+    @keyframes heroBallBounce {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-10deg);
+      }
+
+      50% {
+        transform: translateY(-25px) rotate(12deg);
+      }
+    }
+
+    @keyframes heroCarouselProgress {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    /* =====================================================
+       AJUSTES RESPONSIVE ADICIONALES
+       ===================================================== */
+
+    @media (max-width: 980px) {
+      .hero-player-carousel {
+        height: 600px;
+        margin-top: 10px;
+      }
+
+      .hero-carousel-stage {
+        width: min(570px, 100%);
+        height: 550px;
+      }
+
+      .hero-player-image-wrap::before {
+        width: 66%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-player-carousel {
+        width: calc(100% + 10px);
+        height: 490px;
+        margin-left: -5px;
+      }
+
+      .hero-carousel-stage {
+        height: 450px;
+        border-radius: 28px;
+      }
+
+      .hero-player-image-wrap {
+        padding: 5px 15px 0;
+      }
+
+      .hero-player-image-wrap::before {
+        bottom: 35px;
+        width: 78%;
+        height: 57%;
+      }
+
+      .hero-player-image {
+        max-width: 390px;
+      }
+
+      .hero-player-country {
+        top: 20px;
+        left: 14px;
+        padding: 7px 10px;
+        font-size: 9px;
+      }
+
+      .hero-player-number {
+        top: 25px;
+        right: 12px;
+        font-size: 80px;
+      }
+
+      .hero-player-info {
+        right: 10px;
+        bottom: 30px;
+        left: 10px;
+        padding: 15px 14px;
+        border-radius: 17px;
+      }
+
+      .hero-player-info b {
+        font-size: 19px;
+      }
+
+      .hero-player-info span {
+        max-width: 180px;
+        font-size: 8px;
+      }
+
+      .hero-player-position {
+        padding: 7px 8px;
+        font-size: 8px;
+      }
+
+      .hero-carousel-controls {
+        bottom: -2px;
+      }
+
+      .hero-carousel-button {
+        width: 38px;
+        height: 38px;
+      }
+
+      .hero-carousel-progress {
+        right: 13px;
+        bottom: 80px;
+        left: 13px;
+      }
+
+      .hero-carousel-ball-one {
+        left: 2px;
+        bottom: 110px;
+        font-size: 35px;
+      }
+
+      .hero-carousel-ball-two {
+        top: 105px;
+        right: 2px;
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .hero-player-carousel {
+        height: 445px;
+      }
+
+      .hero-carousel-stage {
+        height: 410px;
+      }
+
+      .hero-player-image {
+        max-width: 330px;
+      }
+
+      .hero-player-info b {
+        font-size: 17px;
+      }
+
+      .hero-player-info span {
+        max-width: 150px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-player-image,
+      .hero-carousel-ball {
+        animation: none !important;
+      }
+
+      .hero-player-slide {
+        transition-duration: 0.01ms !important;
+      }
+
+      .hero-carousel-progress span {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="stadium-lights" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <header class="hero" id="inicio">
+    <nav class="nav container">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-ball">⚽</span>
+        <span>STEFAN 13</span>
+      </a>
+
+      <a class="nav-cta" href="#confirmar">
+        Confirmar asistencia
+      </a>
+    </nav>
+
+    <div class="hero-grid container">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">
+          CONVOCATORIA OFICIAL · TEMPORADA 2026
+        </p>
+
+        <h1 class="reveal delay-1">
+          <span>STEFAN</span>
+          <strong>ALBERTO</strong>
+        </h1>
+
+        <div class="age-badge reveal delay-2">
+          <span>CUMPLE</span>
+          <strong>13</strong>
+          <span>AÑOS</span>
+        </div>
+
+        <p class="hero-lead reveal delay-3">
+          La cancha está lista, la afición también. Acompáñanos a
+          celebrar una tarde de fútbol, emoción y goles.
+        </p>
+
+        <div class="hero-actions reveal delay-4">
+          <a class="btn btn-primary" href="#detalles">
+            Ver detalles
+          </a>
+
+          <button
+            class="btn btn-ghost"
+            id="soundButton"
+            type="button"
+            aria-pressed="false"
+          >
+            <span class="sound-icon">🔊</span>
+            Activar ambiente
+          </button>
+        </div>
+      </div>
+
+      <!-- =================================================
+           CARRUSEL AUTOMÁTICO DE JUGADORES
+           ================================================= -->
+
+      <div
+        class="hero-visual reveal delay-2"
+        aria-label="Carrusel de jugadores invitados"
+      >
+        <div
+          class="hero-player-carousel"
+          id="heroPlayerCarousel"
+          aria-roledescription="carrusel"
+        >
+          <div class="orbit orbit-one" aria-hidden="true"></div>
+          <div class="orbit orbit-two" aria-hidden="true"></div>
+
+          <div class="hero-carousel-stage">
+            <!-- HAALAND -->
+            <article
+              class="hero-player-slide is-active"
+              data-player-slide
+              aria-hidden="false"
+            >
+              <span class="hero-player-country">
+                🇳🇴 NORUEGA
+              </span>
+
+              <span class="hero-player-number" aria-hidden="true">
+                09
+              </span>
+
+              <div class="hero-player-image-wrap">
+                <img
+                  class="hero-player-image"
+                  src="assets/jugadores/haaland_full.png"
+                  alt="Erling Haaland con el uniforme de Noruega"
+                  loading="eager"
+                />
+              </div>
+
+              <div class="hero-player-info">
+                <div>
+                  <b>Erling Haaland</b>
+                  <span>NORUEGA · DELANTERO</span>
+                </div>
+
+                <span class="hero-player-position">
+                  GOLEADOR
+                </span>
+              </div>
+            </article>
+
+            <!-- CRISTIANO -->
+            <article
+              class="hero-player-slide"
+              data-player-slide
+              aria-hidden="true"
+            >
+              <span class="hero-player-country">
+                🇵🇹 PORTUGAL
+              </span>
+
+              <span class="hero-player-number" aria-hidden="true">
+                07
+              </span>
+
+              <div class="hero-player-image-wrap">
+                <img
+                  class="hero-player-image"
+                  src="assets/jugadores/cristiano_full.png"
+                  alt="Cristiano Ronaldo con el uniforme de Portugal"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="hero-player-info">
+                <div>
+                  <b>Cristiano Ronaldo</b>
+                  <span>PORTUGAL · DELANTERO</span>
+                </div>
+
+                <span class="hero-player-position">
+                  CAPITÁN
+                </span>
+              </div>
+            </article>
+
+            <!-- MBAPPÉ -->
+            <article
+              class="hero-player-slide"
+              data-player-slide
+              aria-hidden="true"
+            >
+              <span class="hero-player-country">
+                🇫🇷 FRANCIA
+              </span>
+
+              <span class="hero-player-number" aria-hidden="true">
+                10
+              </span>
+
+              <div class="hero-player-image-wrap">
+                <img
+                  class="hero-player-image"
+                  src="assets/jugadores/mbappe_full.png"
+                  alt="Kylian Mbappé con el uniforme de Francia"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="hero-player-info">
+                <div>
+                  <b>Kylian Mbappé</b>
+                  <span>FRANCIA · DELANTERO</span>
+                </div>
+
+                <span class="hero-player-position">
+                  VELOCIDAD
+                </span>
+              </div>
+            </article>
+
+            <!-- LAMINE YAMAL -->
+            <article
+              class="hero-player-slide"
+              data-player-slide
+              aria-hidden="true"
+            >
+              <span class="hero-player-country">
+                🇪🇸 ESPAÑA
+              </span>
+
+              <span class="hero-player-number" aria-hidden="true">
+                19
+              </span>
+
+              <div class="hero-player-image-wrap">
+                <img
+                  class="hero-player-image"
+                  src="assets/jugadores/lamine.png"
+                  alt="Lamine Yamal con el uniforme de España"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="hero-player-info">
+                <div>
+                  <b>Lamine Yamal</b>
+                  <span>ESPAÑA · EXTREMO</span>
+                </div>
+
+                <span class="hero-player-position">
+                  TALENTO
+                </span>
+              </div>
+            </article>
+
+            <!-- JULIÁN QUIÑONES -->
+            <article
+              class="hero-player-slide"
+              data-player-slide
+              aria-hidden="true"
+            >
+              <span class="hero-player-country">
+                🇲🇽 MÉXICO
+              </span>
+
+              <span class="hero-player-number" aria-hidden="true">
+                09
+              </span>
+
+              <div class="hero-player-image-wrap">
+                <img
+                  class="hero-player-image"
+                  src="assets/jugadores/brian.png"
+                  alt="Julián Quiñones con el uniforme de México"
+                  loading="lazy"
+                />
+              </div>
+
+              <div class="hero-player-info">
+                <div>
+                  <b>Julián Quiñones</b>
+                  <span>MÉXICO · DELANTERO</span>
+                </div>
+
+                <span class="hero-player-position">
+                  TRICOLOR
+                </span>
+              </div>
+            </article>
+          </div>
+
+          <div
+            class="hero-carousel-progress is-running"
+            id="heroCarouselProgress"
+            aria-hidden="true"
+          >
+            <span></span>
+          </div>
+
+          <div class="hero-carousel-controls">
+            <button
+              class="hero-carousel-button"
+              id="heroCarouselPrevious"
+              type="button"
+              aria-label="Mostrar jugador anterior"
+            >
+              ‹
+            </button>
+
+            <div
+              class="hero-carousel-dots"
+              id="heroCarouselDots"
+              aria-label="Seleccionar jugador"
+            ></div>
+
+            <button
+              class="hero-carousel-button"
+              id="heroCarouselNext"
+              type="button"
+              aria-label="Mostrar siguiente jugador"
+            >
+              ›
+            </button>
+          </div>
+
+          <div
+            class="hero-carousel-ball hero-carousel-ball-one"
+            aria-hidden="true"
+          >
+            ⚽
+          </div>
+
+          <div
+            class="hero-carousel-ball hero-carousel-ball-two"
+            aria-hidden="true"
+          >
+            ⚽
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>STEFAN 13</span>
+        <i>★</i>
+        <span>8 AGOSTO 2026</span>
+        <i>★</i>
+        <span>2:00 PM</span>
+        <i>★</i>
+
+        <span>STEFAN 13</span>
+        <i>★</i>
+        <span>8 AGOSTO 2026</span>
+        <i>★</i>
+        <span>2:00 PM</span>
+        <i>★</i>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="details section" id="detalles">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">DATOS DEL PARTIDO</p>
+
+          <h2>La cita mundialista</h2>
+
+          <p>
+            Guarda la fecha y llega listo para vivir los 90 minutos
+            más divertidos del año.
+          </p>
+        </div>
+
+        <div class="detail-grid">
+          <article class="detail-card reveal">
+            <span class="detail-icon">📅</span>
+            <p>FECHA</p>
+            <h3>8 de agosto</h3>
+            <small>Sábado · 2026</small>
+          </article>
+
+          <article class="detail-card reveal delay-1">
+            <span class="detail-icon">⏱️</span>
+            <p>HORA DE INICIO</p>
+            <h3>2:00 PM</h3>
+            <small>Llega con tiempo para la alineación</small>
+          </article>
+
+          <article class="detail-card reveal delay-2">
+            <span class="detail-icon">🎂</span>
+            <p>CELEBRAMOS</p>
+            <h3>13 años</h3>
+            <small>de Stefan Alberto</small>
+          </article>
+
+          <article class="detail-card reveal delay-3">
+            <span class="detail-icon">📍</span>
+            <p>SEDE</p>
+            <h3 id="venueName">Nombre del lugar</h3>
+            <small id="venueAddress">
+              Agrega aquí la dirección completa
+            </small>
+          </article>
+        </div>
+
+        <div class="countdown reveal" aria-label="Cuenta regresiva">
+          <div>
+            <strong id="days">00</strong>
+            <span>DÍAS</span>
+          </div>
+
+          <div>
+            <strong id="hours">00</strong>
+            <span>HORAS</span>
+          </div>
+
+          <div>
+            <strong id="minutes">00</strong>
+            <span>MIN</span>
+          </div>
+
+          <div>
+            <strong id="seconds">00</strong>
+            <span>SEG</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lineup section">
+      <div class="container">
+        <div class="section-heading center reveal">
+          <p class="eyebrow">ALINEACIÓN ESTELAR</p>
+
+          <h2>Jugadores convocados</h2>
+
+          <p>
+            Una selección internacional elegida especialmente para
+            esta celebración.
+          </p>
+        </div>
+
+        <div class="lineup-grid">
+          <article class="lineup-card reveal">
+            <div class="flag">🇳🇴</div>
+
+            <div class="lineup-photo">
+              <img
+                src="assets/jugadores/haaland.png"
+                alt="Erling Haaland"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="lineup-info">
+              <b>ERLING HAALAND</b>
+              <small>NORUEGA · DELANTERO</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal delay-1">
+            <div class="flag">🇵🇹</div>
+
+            <div class="lineup-photo">
+              <img
+                src="assets/jugadores/cristiano.png"
+                alt="Cristiano Ronaldo"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="lineup-info">
+              <b>CRISTIANO RONALDO</b>
+              <small>PORTUGAL · DELANTERO</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal delay-2">
+            <div class="flag">🇫🇷</div>
+
+            <div class="lineup-photo">
+              <img
+                src="assets/jugadores/mbappe.png"
+                alt="Kylian Mbappé"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="lineup-info">
+              <b>KYLIAN MBAPPÉ</b>
+              <small>FRANCIA · DELANTERO</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal">
+            <div class="flag">🇪🇸</div>
+
+            <div class="lineup-photo">
+              <img
+                src="assets/jugadores/lamine.png"
+                alt="Lamine Yamal"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="lineup-info">
+              <b>LAMINE YAMAL</b>
+              <small>ESPAÑA · EXTREMO</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal delay-1">
+            <div class="flag">🇲🇽</div>
+
+            <div class="lineup-photo">
+              <img
+                src="assets/jugadores/brian.png"
+                alt="Julián Quiñones"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="lineup-info">
+              <b>JULIÁN QUIÑONES</b>
+              <small>MÉXICO · DELANTERO</small>
+            </div>
+          </article>
+
+          <article class="lineup-card mystery reveal delay-2">
+            <div class="flag">🤫</div>
+
+            <div class="mystery-mark">?</div>
+
+            <div class="lineup-info">
+              <b>INVITADO SORPRESA</b>
+              <small>¿MESSI? SOLO SI QUEDA ESPACIO 😄</small>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dress-code section">
+      <div class="container dress-grid">
+        <div class="dress-copy reveal">
+          <p class="eyebrow">CÓDIGO DE AFICIÓN</p>
+
+          <h2>Ven con tu camiseta favorita</h2>
+
+          <p>
+            Usa la playera de tu selección o club favorito. También
+            puedes venir con ropa cómoda y colores deportivos. Lo
+            importante es traer toda la actitud.
+          </p>
+
+          <div class="mini-tags">
+            <span>⚽ Jersey</span>
+            <span>👟 Tenis</span>
+            <span>🏆 Actitud de campeón</span>
+          </div>
+        </div>
+
+        <div class="jersey reveal delay-2" aria-hidden="true">
+          <div class="jersey-neck"></div>
+          <span class="jersey-name">STEFAN</span>
+          <strong>13</strong>
+          <small>SELECCIÓN CUMPLEAÑERA</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="location section" id="ubicacion">
+      <div class="container location-grid">
+        <div class="map-card reveal">
+          <iframe
+            id="mapFrame"
+            title="Mapa de la fiesta"
+            src="https://www.google.com/maps?q=Ciudad+de+Mexico&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <div class="location-copy reveal delay-2">
+          <p class="eyebrow">ESTADIO SEDE</p>
+
+          <h2>¿Cómo llegar?</h2>
+
+          <h3 id="locationTitle">
+            Nombre del salón o domicilio
+          </h3>
+
+          <p id="locationText">
+            Agrega aquí calle, número, colonia, ciudad y referencias.
+          </p>
+
+          <a
+            class="btn btn-primary"
+            id="mapsButton"
+            href="https://maps.google.com/?q=Ciudad+de+Mexico"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Abrir en Google Maps
+          </a>
+
+          <p class="edit-note">
+            Edita el nombre, la dirección y los enlaces dentro de
+            <code>script.js</code>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp section" id="confirmar">
+      <div class="container rsvp-card reveal">
+        <div>
+          <p class="eyebrow">CONFIRMA TU ASISTENCIA</p>
+
+          <h2>¿Te unes a la selección?</h2>
+
+          <p>
+            Confirma tu asistencia para reservar tu lugar en la
+            alineación.
+          </p>
+        </div>
+
+        <a
+          class="btn btn-dark"
+          id="whatsappButton"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Confirmar por WhatsApp
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <b>STEFAN ALBERTO · 13</b>
+        <span>8 AGOSTO 2026 · 2:00 PM</span>
+      </div>
+
+      <a href="#inicio">
+        Volver al inicio ↑
+      </a>
+    </div>
+  </footer>
+
+  <audio id="stadiumAudio" loop preload="none">
+    <source
+      src="assets/ambiente-estadio.mp3"
+      type="audio/mpeg"
+    />
+  </audio>
+
+  <script src="script.js"></script>
+
+  <script>
+    /* =====================================================
+       CARRUSEL AUTOMÁTICO DE JUGADORES
+       ===================================================== */
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const carousel = document.getElementById(
+        "heroPlayerCarousel"
+      );
+
+      if (!carousel) {
+        return;
+      }
+
+      const slides = Array.from(
+        carousel.querySelectorAll("[data-player-slide]")
+      );
+
+      const dotsContainer =
+        document.getElementById("heroCarouselDots");
+
+      const previousButton =
+        document.getElementById("heroCarouselPrevious");
+
+      const nextButton =
+        document.getElementById("heroCarouselNext");
+
+      const progress =
+        document.getElementById("heroCarouselProgress");
+
+      const autoplayDelay = 3000;
+
+      let activeIndex = 0;
+      let autoplayTimer = null;
+      let isPaused = false;
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      function createDots() {
+        slides.forEach((slide, index) => {
+          const dot = document.createElement("button");
+
+          dot.type = "button";
+          dot.className = "hero-carousel-dot";
+          dot.setAttribute(
+            "aria-label",
+            `Mostrar jugador ${index + 1}`
+          );
+
+          if (index === activeIndex) {
+            dot.classList.add("is-active");
+          }
+
+          dot.addEventListener("click", () => {
+            showSlide(index);
+            restartAutoplay();
+          });
+
+          dotsContainer.appendChild(dot);
+        });
+      }
+
+      function updateDots() {
+        const dots = dotsContainer.querySelectorAll(
+          ".hero-carousel-dot"
+        );
+
+        dots.forEach((dot, index) => {
+          dot.classList.toggle(
+            "is-active",
+            index === activeIndex
+          );
+        });
+      }
+
+      function restartProgress() {
+        if (!progress) {
+          return;
+        }
+
+        progress.classList.remove("is-running");
+
+        void progress.offsetWidth;
+
+        if (!isPaused) {
+          progress.classList.add("is-running");
+        }
+      }
+
+      function showSlide(newIndex) {
+        if (newIndex === activeIndex) {
+          return;
+        }
+
+        const currentSlide = slides[activeIndex];
+        const nextSlide = slides[newIndex];
+
+        currentSlide.classList.remove("is-active");
+        currentSlide.classList.add("is-leaving");
+        currentSlide.setAttribute("aria-hidden", "true");
+
+        nextSlide.classList.remove("is-leaving");
+        nextSlide.classList.add("is-active");
+        nextSlide.setAttribute("aria-hidden", "false");
+
+        window.setTimeout(() => {
+          currentSlide.classList.remove("is-leaving");
+        }, 900);
+
+        activeIndex = newIndex;
+
+        updateDots();
+        restartProgress();
+      }
+
+      function showNextSlide() {
+        const nextIndex =
+          (activeIndex + 1) % slides.length;
+
+        showSlide(nextIndex);
+      }
+
+      function showPreviousSlide() {
+        const previousIndex =
+          (activeIndex - 1 + slides.length) %
+          slides.length;
+
+        showSlide(previousIndex);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+
+        if (isPaused) {
+          return;
+        }
+
+        autoplayTimer = window.setInterval(
+          showNextSlide,
+          autoplayDelay
+        );
+
+        restartProgress();
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) {
+          window.clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      }
+
+      function restartAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      previousButton.addEventListener("click", () => {
+        showPreviousSlide();
+        restartAutoplay();
+      });
+
+      nextButton.addEventListener("click", () => {
+        showNextSlide();
+        restartAutoplay();
+      });
+
+      carousel.addEventListener("mouseenter", () => {
+        isPaused = true;
+        stopAutoplay();
+
+        if (progress) {
+          progress.classList.remove("is-running");
+        }
+      });
+
+      carousel.addEventListener("mouseleave", () => {
+        isPaused = false;
+        startAutoplay();
+      });
+
+      carousel.addEventListener("focusin", () => {
+        isPaused = true;
+        stopAutoplay();
+
+        if (progress) {
+          progress.classList.remove("is-running");
+        }
+      });
+
+      carousel.addEventListener("focusout", event => {
+        if (
+          carousel.contains(event.relatedTarget)
+        ) {
+          return;
+        }
+
+        isPaused = false;
+        startAutoplay();
+      });
+
+      carousel.addEventListener(
+        "touchstart",
+        event => {
+          touchStartX =
+            event.changedTouches[0].screenX;
+        },
+        {
+          passive: true
+        }
+      );
+
+      carousel.addEventListener(
+        "touchend",
+        event => {
+          touchEndX =
+            event.changedTouches[0].screenX;
+
+          const swipeDistance =
+            touchEndX - touchStartX;
+
+          if (Math.abs(swipeDistance) < 45) {
+            return;
+          }
+
+          if (swipeDistance < 0) {
+            showNextSlide();
+          } else {
+            showPreviousSlide();
+          }
+
+          restartAutoplay();
+        },
+        {
+          passive: true
+        }
+      );
+
+      document.addEventListener(
+        "visibilitychange",
+        () => {
+          if (document.hidden) {
+            stopAutoplay();
+          } else if (!isPaused) {
+            startAutoplay();
+          }
+        }
+      );
+
+      createDots();
+      startAutoplay();
+    });
+  </script>
+</body>
+</html>
