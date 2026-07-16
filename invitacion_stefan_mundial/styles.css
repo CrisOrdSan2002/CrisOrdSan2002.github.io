@@ -13,6 +13,8 @@
 
 
 :root {
+  color-scheme: only light;
+
   --ink: #0c2233;
   --blue: #5ab7e8;
   --blue-dark: #167cae;
@@ -21,14 +23,19 @@
   --lime: #dff56a;
   --cream: #fffdf4;
   --white: #ffffff;
-  --line: rgba(12, 34, 51, .13);
-  --shadow: 0 25px 70px rgba(22, 91, 126, .16);
+  --line: rgba(12, 34, 51, 0.13);
+  --shadow: 0 25px 70px rgba(22, 91, 126, 0.16);
   --display: "Monument Extended", "Barlow Condensed", Impact, sans-serif;
   --body: "Inter", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  color-scheme: only light;
+  background: #fffdf4;
+}
+
 body {
   margin: 0;
   color: var(--ink);
