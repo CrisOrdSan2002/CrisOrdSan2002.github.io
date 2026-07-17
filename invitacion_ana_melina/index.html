@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fff8eb" />
+  <meta name="description" content="Invitación de Ana Melina Bock Verá — 1 de agosto de 2026" />
+  <title>Ana Melina · 1 de agosto</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;600;700;800;900&display=swap');
+    :root{
+      --ink:#27485a;
+      --deep:#173b4d;
+      --cream:#fff8eb;
+      --sand:#f6dfad;
+      --coral:#ee8f78;
+      --pink:#f9c8c2;
+      --aqua:#8fd6d2;
+      --leaf:#5f9d7d;
+      --card:rgba(255,255,255,.82);
+      --shadow:0 22px 60px rgba(30,79,93,.16);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(143,214,210,.35), transparent 28%),
+        radial-gradient(circle at 90% 25%, rgba(249,200,194,.42), transparent 26%),
+        linear-gradient(180deg,#fff9ef 0%,#fff6e7 46%,#edf9f6 100%);
+      font-family:"Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      min-height:100vh;
+      overflow-x:hidden;
+      background:#79d8ed;
+    }
+    /* Playa dibujada completamente con CSS */
+    .beach-bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:linear-gradient(#8ddff0 0 38%,#44bfdc 38% 63%,#f5d59b 63% 100%)}
+    .sky-glow{position:absolute;inset:0 0 62%;background:radial-gradient(circle at 76% 20%,#fff6bc 0 7%,rgba(255,246,188,.45) 8% 15%,transparent 16%),linear-gradient(180deg,#8fdff0,#c9f3f6)}
+    .cloud{position:absolute;width:92px;height:25px;border-radius:999px;background:rgba(255,255,255,.72);filter:blur(.2px)}
+    .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+    .cloud::before{width:37px;height:37px;left:15px;bottom:5px}.cloud::after{width:50px;height:50px;right:10px;bottom:4px}
+    .cloud.one{top:12%;left:-12px;animation:cloudMove 28s linear infinite}.cloud.two{top:23%;right:-32px;transform:scale(.72);animation:cloudMove2 35s linear infinite}
+    @keyframes cloudMove{to{transform:translateX(125vw)}}@keyframes cloudMove2{to{transform:translateX(-125vw) scale(.72)}}
+    .ocean{position:absolute;left:0;right:0;top:38%;height:30%;background:linear-gradient(180deg,#39bddb,#178daf);overflow:hidden}
+    .ocean::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(175deg,transparent 0 18px,rgba(255,255,255,.12) 19px 21px,transparent 22px 41px);animation:shimmer 8s linear infinite}
+    @keyframes shimmer{to{background-position:120px 0}}
+    .wave{position:absolute;left:-15%;width:130%;height:52px;border-radius:50%;background:#ecfbfa;opacity:.92}
+    .wave.back{top:57%;animation:waveBack 7s ease-in-out infinite}.wave.front{top:61%;height:64px;background:#fff;opacity:.9;animation:waveFront 5.5s ease-in-out infinite}
+    .wave::after{content:"";position:absolute;left:0;right:0;top:17px;height:38px;border-radius:50%;background:rgba(69,190,213,.33)}
+    @keyframes waveBack{50%{transform:translateX(5%) translateY(7px)}}@keyframes waveFront{50%{transform:translateX(-5%) translateY(-6px)}}
+    .sand{position:absolute;inset:63% 0 0;background:linear-gradient(180deg,#f4d191,#e9bc73)}
+    .sand::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(117,76,36,.15) 1px,transparent 1.5px),radial-gradient(rgba(255,255,255,.25) 1px,transparent 1.5px);background-position:0 0,8px 11px;background-size:23px 23px,29px 29px}
+    .shore{position:absolute;left:-10%;right:-10%;top:61%;height:70px;border-radius:50%;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.18));filter:blur(1px);animation:shore 6s ease-in-out infinite}
+    @keyframes shore{50%{transform:translateY(14px) scaleX(1.05);opacity:.7}}
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,248,235,.18) 54%,rgba(255,248,235,.5));}
+    .shell{width:min(100%,480px); margin:auto; position:relative; min-height:100vh; overflow:hidden}
+    .hero{min-height:100svh; padding:72px 22px 48px; display:flex; align-items:center; justify-content:center; position:relative}
+    .sun{position:absolute; width:240px; height:240px; border-radius:50%; background:rgba(246,223,173,.55); top:-70px; right:-95px; filter:blur(1px)}
+    .leaf{position:absolute; width:120px; height:48px; border-radius:100% 0 100% 0; background:rgba(95,157,125,.16); transform:rotate(var(--r));}
+    .l1{left:-52px;top:18%;--r:28deg}.l2{right:-46px;top:46%;--r:-28deg}.l3{left:-55px;bottom:8%;--r:-18deg}
+    .hero-card{width:100%; position:relative; text-align:center; padding:44px 22px 32px; border:1px solid rgba(255,255,255,.9); background:var(--card); backdrop-filter:blur(18px); border-radius:34px; box-shadow:var(--shadow)}
+    .eyebrow{font-size:.75rem; letter-spacing:.28em; text-transform:uppercase; font-weight:800; color:var(--leaf); margin-bottom:16px}
+    h1{font-family:"DM Serif Display",Georgia,serif; font-weight:500; line-height:.92; font-size:clamp(3.1rem,16vw,5rem); margin:0; color:var(--deep)}
+    h1 span{display:block; font-size:.42em; margin-top:14px; letter-spacing:.05em; font-family:"Nunito",system-ui,sans-serif; font-weight:700; color:var(--coral)}
+    .date-pill{display:inline-flex; align-items:center; gap:10px; margin:24px 0 14px; padding:11px 16px; border-radius:999px; background:#fff; box-shadow:0 8px 28px rgba(39,72,90,.1); font-weight:800}
+    .date-pill i{width:8px;height:8px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 5px rgba(238,143,120,.15)}
+    .subtitle{margin:0 auto; max-width:315px; line-height:1.65; font-size:.98rem}
+    .character{position:absolute; object-fit:contain; z-index:3; filter:drop-shadow(0 14px 14px rgba(31,74,88,.15)); pointer-events:none; transform-origin:50% 88%; will-change:transform,filter}
+    .lilo{width:126px; left:-23px; bottom:-80px; animation:liloDance 4.8s ease-in-out infinite}
+    .stitch{width:132px; right:-31px; top:-56px; transform-origin:50% 72%; animation:stitchBounce 3.9s ease-in-out infinite}
+    .hero-card::after{content:"";position:absolute;right:19px;top:80px;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.82);box-shadow:19px 15px 0 -2px rgba(255,255,255,.68),-8px 26px 0 -3px rgba(255,255,255,.56);animation:sparkle 2.7s ease-in-out infinite;pointer-events:none}
+    @keyframes liloDance{
+      0%,100%{transform:translate3d(0,0,0) rotate(-6deg) scale(1)}
+      25%{transform:translate3d(3px,-7px,0) rotate(-1deg) scale(1.015)}
+      50%{transform:translate3d(-2px,-2px,0) rotate(-8deg) scale(.995)}
+      75%{transform:translate3d(2px,-9px,0) rotate(-3deg) scale(1.01)}
+    }
+    @keyframes stitchBounce{
+      0%,100%{transform:translate3d(0,0,0) rotate(5deg) scale(1)}
+      18%{transform:translate3d(-2px,-9px,0) rotate(1deg) scale(1.02)}
+      38%{transform:translate3d(2px,1px,0) rotate(7deg) scale(.985,1.015)}
+      62%{transform:translate3d(-1px,-6px,0) rotate(3deg) scale(1.015)}
+      82%{transform:translate3d(1px,0,0) rotate(6deg) scale(.995)}
+    }
+    @keyframes sparkle{0%,100%{opacity:.2;transform:scale(.65) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(25deg)}}
+    .scroll{display:inline-flex; margin-top:34px; text-decoration:none; color:var(--deep); font-size:.8rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; gap:8px; align-items:center}
+    .scroll b{animation:bob 1.7s ease-in-out infinite}@keyframes bob{50%{transform:translateY(5px)}}
+    section{padding:26px 22px}
+    .section-title{text-align:center; margin:10px 0 20px}
+    .section-title small{display:block; color:var(--coral); text-transform:uppercase; letter-spacing:.2em; font-weight:800; font-size:.7rem}
+    .section-title h2{font-family:"DM Serif Display",Georgia,serif; color:var(--deep); font-size:2.25rem; margin:7px 0}
+    .timeline{display:grid; gap:16px}
+    .event{display:grid; grid-template-columns:72px 1fr; gap:16px; background:rgba(255,255,255,.78); border:1px solid rgba(255,255,255,.95); box-shadow:0 14px 35px rgba(30,79,93,.1); border-radius:26px; padding:18px; align-items:center}
+    .time{aspect-ratio:1; border-radius:22px; display:grid; place-items:center; text-align:center; background:linear-gradient(145deg,var(--aqua),#dff5f1); color:var(--deep); font-weight:900; line-height:1.05}
+    .event:nth-child(2) .time{background:linear-gradient(145deg,var(--pink),#fff0ec)}
+    .time span{font-size:.72rem; font-weight:700}
+    .event h3{margin:0 0 5px; color:var(--deep); font-size:1rem}
+    .event p{margin:0; font-size:.87rem; line-height:1.5; opacity:.82}
+    .map-btn{display:inline-flex; margin-top:10px; align-items:center; gap:7px; font-weight:800; color:var(--leaf); text-decoration:none; font-size:.82rem}
+
+    .map-embed{margin-top:14px;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.95);box-shadow:0 12px 28px rgba(30,79,93,.12);background:rgba(255,255,255,.72)}
+    .map-embed iframe{display:block;width:100%;height:230px;border:0}
+    .map-caption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;background:rgba(255,255,255,.9);font-size:.78rem;font-weight:800;color:var(--deep)}
+    .map-caption a{color:var(--leaf);text-decoration:none;white-space:nowrap}
+    @media (min-width:420px){.map-embed iframe{height:260px}}
+    .dress{margin:18px 22px 28px; padding:28px 22px; text-align:center; background:linear-gradient(145deg,rgba(246,223,173,.7),rgba(255,255,255,.82)); border-radius:30px; box-shadow:var(--shadow)}
+    .dress .flower{font-size:2.1rem}.dress h2{font-family:"DM Serif Display",Georgia,serif;color:var(--deep);margin:8px 0 5px}.dress p{margin:0;line-height:1.6}
+    .rsvp{padding-bottom:100px;text-align:center}.rsvp-card{padding:32px 22px;border-radius:30px;background:var(--deep);color:white;box-shadow:0 24px 55px rgba(23,59,77,.25)}
+    .rsvp h2{font-family:"DM Serif Display",Georgia,serif;font-size:2.2rem;margin:0 0 10px}.rsvp p{opacity:.82;line-height:1.6;margin:0}
+    .ohana{font-weight:900;color:var(--sand);letter-spacing:.08em;margin-top:18px!important}
+    footer{text-align:center;padding:0 20px 32px;font-size:.72rem;opacity:.6}
+    .music{position:fixed;z-index:30;right:max(16px,calc((100vw - 480px)/2 + 16px));bottom:calc(16px + env(safe-area-inset-bottom));width:54px;height:54px;border:0;border-radius:50%;background:var(--deep);color:white;box-shadow:0 12px 28px rgba(23,59,77,.32);display:grid;place-items:center;font-size:1.2rem;cursor:pointer}
+    .music.playing::after{content:"";position:absolute;inset:-5px;border:2px solid rgba(95,157,125,.45);border-radius:50%;animation:pulse 1.5s infinite}@keyframes pulse{to{transform:scale(1.18);opacity:0}}
+    .welcome{position:fixed;z-index:99;inset:0;background:linear-gradient(160deg,rgba(255,248,235,.94),rgba(220,249,248,.92));backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;transition:.55s ease}
+    .welcome.hide{opacity:0;visibility:hidden;transform:scale(1.03)}
+    .welcome-card{width:min(100%,390px);text-align:center;background:rgba(255,255,255,.84);padding:38px 24px;border-radius:32px;box-shadow:var(--shadow)}
+    .welcome h2{font-family:"DM Serif Display",Georgia,serif;font-size:2.5rem;color:var(--deep);margin:8px 0}.welcome p{line-height:1.6}.open-btn{border:0;border-radius:999px;background:var(--deep);color:#fff;padding:15px 24px;font-weight:850;font-size:1rem;margin-top:10px;cursor:pointer;box-shadow:0 12px 26px rgba(23,59,77,.24)}
+    .petal{position:fixed;z-index:2;top:-30px;font-size:17px;pointer-events:none;animation:fall linear forwards;opacity:.7}@keyframes fall{to{transform:translate3d(var(--drift),110vh,0) rotate(430deg);opacity:.1}}
+    @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="beach-bg" aria-hidden="true">
+    <div class="sky-glow"></div>
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="ocean"></div>
+    <div class="wave back"></div>
+    <div class="wave front"></div>
+    <div class="shore"></div>
+    <div class="sand"></div>
+  </div>
+  <div class="welcome" id="welcome">
+    <div class="welcome-card">
+      <div style="font-size:2rem">🌺</div>
+      <div class="eyebrow">Tienes una invitación</div>
+      <h2>Ana Melina</h2>
+      <p>Acompáñanos a celebrar un día muy especial.</p>
+      <button class="open-btn" id="openInvitation">Abrir invitación · ♫</button>
+    </div>
+  </div>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="sun"></div><div class="leaf l1"></div><div class="leaf l2"></div><div class="leaf l3"></div>
+      <article class="hero-card">
+        <img src="assets/stitch.png" alt="Stitch" class="character stitch" />
+        <img src="assets/lilo.png" alt="Lilo" class="character lilo" />
+        <div class="eyebrow">Celebremos juntos</div>
+        <h1>Ana Melina<span>Bock Verá</span></h1>
+        <div class="date-pill"><i></i> Sábado · 1 de agosto · 2026</div>
+        <p class="subtitle">Una tarde con espíritu hawaiano, alegría y mucho <strong>ohana</strong>.</p>
+        <a class="scroll" href="#itinerario">Ver detalles <b>↓</b></a>
+      </article>
+    </section>
+
+    <section id="itinerario">
+      <header class="section-title"><small>Itinerario</small><h2>Nos vemos aquí</h2></header>
+      <div class="timeline">
+        <article class="event">
+          <div class="time">5:00<br><span>PM</span></div>
+          <div><h3>Parroquia Nuestra Señora de Guadalupe</h3><p>Llegada a la iglesia de La Lupita.</p><a class="map-btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/BE1soH6km8HDKzfa8">📍 Abrir ubicación</a></div>
+        </article>
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14943.93525610901!2d-97.44872267087975!3d20.547843154852178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da6aace89c1daf%3A0xfb62f7482dfdffca!2sParroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe!5e0!3m2!1ses!2smx!4v1784272066003!5m2!1ses!2smx"
+            title="Mapa de la Parroquia de Nuestra Señora de Guadalupe"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+          <div class="map-caption"><span>⛪ Parroquia de Guadalupe</span><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/BE1soH6km8HDKzfa8">Ver ruta ↗</a></div>
+        </div>
+
+        <article class="event">
+          <div class="time">6:00<br><span>PM</span></div>
+          <div><h3>Salón Samsara</h3><p>Recepción y celebración.</p><a class="map-btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/UGr6rXFFoYw5cQ7s5">📍 Abrir ubicación</a></div>
+        </article>
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.439366508934!2d-97.4383639491048!3d20.529196432152663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784272310688!5m2!1ses!2smx"
+            title="Mapa de Samsara Salón de Eventos"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+          <div class="map-caption"><span>🌺 Salón Samsara</span><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/UGr6rXFFoYw5cQ7s5">Ver ruta ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="dress">
+      <div class="flower">🌺</div><h2>Temática hawaiana</h2><p>Ven con tu mejor vibra tropical.<br>Detalles inspirados sutilmente en Lilo & Stitch.</p>
+    </aside>
+
+    <section class="rsvp">
+      <div class="rsvp-card"><h2>¡Te esperamos!</h2><p>Tu presencia hará este día todavía más especial.</p><p class="ohana">OHANA SIGNIFICA FAMILIA</p></div>
+    </section>
+    <footer>Hecho con aloha para Ana Melina · 01.08.2026</footer>
+  </main>
+
+  <audio id="bgMusic" loop preload="auto">
+  <source src="assets/somewhere_over_the_rainbow.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML.
+</audio>
+
+  <button class="music" id="musicBtn" aria-label="Pausar música" title="Pausar música">Ⅱ</button>
+
+  <script>
+  const welcome = document.getElementById('welcome');
+  const openBtn = document.getElementById('openInvitation');
+  const musicBtn = document.getElementById('musicBtn');
+  const bgMusic = document.getElementById('bgMusic');
+
+  let playing = false;
+
+  bgMusic.volume = 0.35;
+
+  async function startMusic() {
+    try {
+      await bgMusic.play();
+      playing = true;
+
+      musicBtn.textContent = 'Ⅱ';
+      musicBtn.classList.add('playing');
+      musicBtn.setAttribute('aria-label', 'Pausar música');
+      musicBtn.title = 'Pausar música';
+    } catch (error) {
+      playing = false;
+
+      musicBtn.textContent = '♪';
+      musicBtn.classList.remove('playing');
+      musicBtn.setAttribute('aria-label', 'Reproducir música');
+      musicBtn.title = 'Reproducir música';
+
+      console.log('No se pudo reproducir la música:', error);
+    }
+  }
+
+  function pauseMusic() {
+    bgMusic.pause();
+    playing = false;
+
+    musicBtn.textContent = '♪';
+    musicBtn.classList.remove('playing');
+    musicBtn.setAttribute('aria-label', 'Reproducir música');
+    musicBtn.title = 'Reproducir música';
+  }
+
+  openBtn.addEventListener('click', () => {
+    welcome.classList.add('hide');
+    startMusic();
+    scatterPetals();
+  });
+
+  musicBtn.addEventListener('click', () => {
+    playing ? pauseMusic() : startMusic();
+  });
+
+  function scatterPetals() {
+    const symbols = ['🌺', '✿', '•'];
+
+    for (let i = 0; i < 16; i++) {
+      setTimeout(() => {
+        const petal = document.createElement('span');
+
+        petal.className = 'petal';
+        petal.textContent =
+          symbols[Math.floor(Math.random() * symbols.length)];
+
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.setProperty(
+          '--drift',
+          Math.random() * 140 - 70 + 'px'
+        );
+        petal.style.animationDuration =
+          5 + Math.random() * 5 + 's';
+
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), 10500);
+      }, i * 190);
+    }
+  }
+</script>
+</body>
+</html>
