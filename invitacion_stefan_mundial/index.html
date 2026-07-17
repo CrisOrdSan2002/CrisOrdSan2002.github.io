@@ -411,6 +411,144 @@
     }
 
     /* =====================================================
+       BLOQUE DE ALBERCA
+       ===================================================== */
+
+    .pool-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.75), transparent 28%),
+        linear-gradient(135deg, #dff8ff 0%, #bfefff 46%, #dff56a 140%);
+    }
+
+    .pool-section::before,
+    .pool-section::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(12, 34, 51, .08);
+    }
+
+    .pool-section::before {
+      width: 330px;
+      height: 330px;
+      right: -120px;
+      top: -130px;
+    }
+
+    .pool-section::after {
+      width: 210px;
+      height: 210px;
+      left: -90px;
+      bottom: -95px;
+    }
+
+    .pool-card {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 36px;
+      align-items: center;
+      padding: clamp(28px, 5vw, 58px);
+      border: 1px solid rgba(255,255,255,.75);
+      border-radius: 34px;
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 24px 70px rgba(22, 91, 126, .14);
+    }
+
+    .pool-card h2 {
+      margin: 8px 0 14px;
+    }
+
+    .pool-card p {
+      max-width: 680px;
+    }
+
+    .pool-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pool-badges span {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 8px 22px rgba(12,34,51,.08);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .pool-visual {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pool-image {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  max-height: 390px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 22px 28px rgba(22, 91, 126, 0.2));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+    .pool-ring {
+      width: 210px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 42px solid #fff;
+      box-shadow: 0 22px 40px rgba(22,91,126,.18), inset 0 0 0 4px rgba(12,34,51,.06);
+      transform: rotate(-12deg);
+    }
+
+    .pool-ball {
+      position: absolute;
+      right: 12%;
+      top: 6%;
+      font-size: 62px;
+      filter: drop-shadow(0 12px 12px rgba(12,34,51,.15));
+      animation: heroBallBounce 3.5s ease-in-out infinite;
+    }
+
+    .pool-splash {
+      position: absolute;
+      left: 8%;
+      bottom: 9%;
+      font-size: 70px;
+      transform: rotate(-8deg);
+    }
+
+        @media (max-width: 780px) {
+      .pool-visual {
+        min-height: 240px;
+      }
+
+      .pool-image {
+        max-width: 420px;
+        max-height: 300px;
+      }
+    }
+    @media (max-width: 780px) {
+      .pool-card {
+        grid-template-columns: 1fr;
+      }
+
+      .pool-visual {
+        min-height: 220px;
+      }
+    }
+
+    /* =====================================================
        AJUSTES RESPONSIVE ADICIONALES
        ===================================================== */
 
@@ -572,7 +710,7 @@
     <nav class="nav container">
       <a class="brand" href="#inicio" aria-label="Ir al inicio">
         <span class="brand-ball">⚽</span>
-        <span>STEFAN 13</span>
+        <span>STEFAN 14</span>
       </a>
 
       <a class="nav-cta" href="#confirmar">
@@ -593,13 +731,13 @@
 
         <div class="age-badge reveal delay-2">
           <span>CUMPLE</span>
-          <strong>13</strong>
+          <strong>14</strong>
           <span>AÑOS</span>
         </div>
 
         <p class="hero-lead reveal delay-3">
           La cancha está lista, la afición también. Acompáñanos a
-          celebrar una tarde de fútbol, emoción y goles.
+          celebrar una tarde de fútbol, alberca, emoción y goles.
         </p>
 
         <div class="hero-actions reveal delay-4">
@@ -810,6 +948,58 @@
                 </span>
               </div>
             </article>
+
+            <!-- LIONEL MESSI -->
+            <article class="hero-player-slide" data-player-slide aria-hidden="true">
+              <span class="hero-player-country">🇦🇷 ARGENTINA</span>
+              <span class="hero-player-number" aria-hidden="true">10</span>
+              <div class="hero-player-image-wrap">
+                <img class="hero-player-image" src="assets/jugadores/messi_full.png" alt="Lionel Messi con el uniforme de Argentina" loading="lazy" />
+              </div>
+              <div class="hero-player-info">
+                <div><b>Lionel Messi</b><span>ARGENTINA · DELANTERO</span></div>
+                <span class="hero-player-position">CAMPEÓN</span>
+              </div>
+            </article>
+
+            <!-- JUDE BELLINGHAM -->
+            <article class="hero-player-slide" data-player-slide aria-hidden="true">
+              <span class="hero-player-country">🏴 INGLATERRA</span>
+              <span class="hero-player-number" aria-hidden="true">10</span>
+              <div class="hero-player-image-wrap">
+                <img class="hero-player-image" src="assets/jugadores/bellingham_full.png" alt="Jude Bellingham con el uniforme de Inglaterra" loading="lazy" />
+              </div>
+              <div class="hero-player-info">
+                <div><b>Jude Bellingham</b><span>INGLATERRA · MEDIOCAMPISTA</span></div>
+                <span class="hero-player-position">FIGURA</span>
+              </div>
+            </article>
+
+            <!-- ACHRAF HAKIMI -->
+            <article class="hero-player-slide" data-player-slide aria-hidden="true">
+              <span class="hero-player-country">🇲🇦 MARRUECOS</span>
+              <span class="hero-player-number" aria-hidden="true">02</span>
+              <div class="hero-player-image-wrap">
+                <img class="hero-player-image" src="assets/jugadores/hakimi_full.png" alt="Achraf Hakimi con el uniforme de Marruecos" loading="lazy" />
+              </div>
+              <div class="hero-player-info">
+                <div><b>Achraf Hakimi</b><span>MARRUECOS · DEFENSA</span></div>
+                <span class="hero-player-position">VELOCIDAD</span>
+              </div>
+            </article>
+
+            <!-- JÉRÉMY DOKU -->
+            <article class="hero-player-slide" data-player-slide aria-hidden="true">
+              <span class="hero-player-country">🇧🇪 BÉLGICA</span>
+              <span class="hero-player-number" aria-hidden="true">11</span>
+              <div class="hero-player-image-wrap">
+                <img class="hero-player-image" src="assets/jugadores/doku_full.png" alt="Jérémy Doku con el uniforme de Bélgica" loading="lazy" />
+              </div>
+              <div class="hero-player-info">
+                <div><b>Jérémy Doku</b><span>BÉLGICA · EXTREMO</span></div>
+                <span class="hero-player-position">REGATE</span>
+              </div>
+            </article>
           </div>
 
           <div
@@ -865,14 +1055,14 @@
 
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
-        <span>STEFAN 13</span>
+        <span>STEFAN 14</span>
         <i>★</i>
         <span>8 AGOSTO 2026</span>
         <i>★</i>
         <span>2:00 PM</span>
         <i>★</i>
 
-        <span>STEFAN 13</span>
+        <span>STEFAN 14</span>
         <i>★</i>
         <span>8 AGOSTO 2026</span>
         <i>★</i>
@@ -891,8 +1081,8 @@
           <h2>La cita mundialista</h2>
 
           <p>
-            Guarda la fecha y llega listo para vivir los 90 minutos
-            más divertidos del año.
+            Guarda la fecha y llega listo para disfrutar toda la duración
+            del salón: fútbol, alberca y diversión sin quedarnos solo en 90 minutos.
           </p>
         </div>
 
@@ -914,7 +1104,7 @@
           <article class="detail-card reveal delay-2">
             <span class="detail-icon">🎂</span>
             <p>CELEBRAMOS</p>
-            <h3>13 años</h3>
+            <h3>14 años</h3>
             <small>de Stefan Alberto</small>
           </article>
 
@@ -923,7 +1113,7 @@
             <p>SEDE</p>
             <h3 id="venueName">Nombre del lugar</h3>
             <small id="venueAddress">
-              Agrega aquí la dirección completa
+             <!-- Agrega aquí la dirección completa-->
             </small>
           </article>
         </div>
@@ -1051,16 +1241,79 @@
             </div>
           </article>
 
-          <article class="lineup-card mystery reveal delay-2">
-            <div class="flag">🤫</div>
-
-            <div class="mystery-mark">?</div>
-
+          <article class="lineup-card reveal delay-2">
+            <div class="flag">🇦🇷</div>
+            <div class="lineup-photo">
+              <img src="assets/jugadores/messi.png" alt="Lionel Messi" loading="lazy" />
+            </div>
             <div class="lineup-info">
-              <b>INVITADO SORPRESA</b>
-              <small>¿MESSI? SOLO SI QUEDA ESPACIO 😄</small>
+              <b>LIONEL MESSI</b>
+              <small>ARGENTINA · DELANTERO</small>
             </div>
           </article>
+
+          <article class="lineup-card reveal">
+            <div class="flag">🏴</div>
+            <div class="lineup-photo">
+              <img src="assets/jugadores/bellingham.png" alt="Jude Bellingham" loading="lazy" />
+            </div>
+            <div class="lineup-info">
+              <b>JUDE BELLINGHAM</b>
+              <small>INGLATERRA · MEDIOCAMPISTA</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal delay-1">
+            <div class="flag">🇲🇦</div>
+            <div class="lineup-photo">
+              <img src="assets/jugadores/hakimi.png" alt="Achraf Hakimi" loading="lazy" />
+            </div>
+            <div class="lineup-info">
+              <b>ACHRAF HAKIMI</b>
+              <small>MARRUECOS · DEFENSA</small>
+            </div>
+          </article>
+
+          <article class="lineup-card reveal delay-2">
+            <div class="flag">🇧🇪</div>
+            <div class="lineup-photo">
+              <img src="assets/jugadores/doku.png" alt="Jérémy Doku" loading="lazy" />
+            </div>
+            <div class="lineup-info">
+              <b>JÉRÉMY DOKU</b>
+              <small>BÉLGICA · EXTREMO</small>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="pool-section section" id="alberca">
+      <div class="container">
+        <div class="pool-card reveal">
+          <div>
+            <p class="eyebrow">TIEMPO EXTRA EN LA ALBERCA</p>
+            <h2>También habrá alberca 💦</h2>
+            <p>
+              La celebración continúa durante todo el tiempo reservado del salón.
+              Prepárate para nadar, jugar y refrescarte.
+            </p>
+            <div class="pool-badges">
+              <span>🩱 Traje de baño</span>
+              <span>🧴 Bloqueador</span>
+              <span>🧺 Toalla</span>
+              <span>🩴 Sandalias</span>
+            </div>
+          </div>
+          <div class="pool-visual" aria-hidden="true">
+            <img
+              class="pool-image"
+              src="assets/jugadores/alberca.png"
+              alt=""
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -1070,17 +1323,19 @@
         <div class="dress-copy reveal">
           <p class="eyebrow">CÓDIGO DE AFICIÓN</p>
 
-          <h2>Ven con tu camiseta favorita</h2>
+          <h2>Ven listo para la cancha y la alberca</h2>
 
           <p>
-            Usa la playera de tu selección o club favorito. También
-            puedes venir con ropa cómoda y colores deportivos. Lo
-            importante es traer toda la actitud.
+            Usa la playera de tu selección o club favorito y trae también
+            tu traje de baño para disfrutar la alberca. No olvides ropa cómoda,
+            toalla y toda la actitud de campeón.
           </p>
 
           <div class="mini-tags">
             <span>⚽ Jersey</span>
             <span>👟 Tenis</span>
+            <span>🩱 Traje de baño</span>
+            <span>🧺 Toalla</span>
             <span>🏆 Actitud de campeón</span>
           </div>
         </div>
@@ -1088,8 +1343,8 @@
         <div class="jersey reveal delay-2" aria-hidden="true">
           <div class="jersey-neck"></div>
           <span class="jersey-name">STEFAN</span>
-          <strong>13</strong>
-          <small>SELECCIÓN CUMPLEAÑERA</small>
+          <strong>14</strong>
+          <small>AÑOS</small>
         </div>
       </div>
     </section>
@@ -1129,10 +1384,7 @@
             Abrir en Google Maps
           </a>
 
-          <p class="edit-note">
-            Edita el nombre, la dirección y los enlaces dentro de
-            <code>script.js</code>.
-          </p>
+          
         </div>
       </div>
     </section>
@@ -1166,7 +1418,7 @@
   <footer>
     <div class="container footer-inner">
       <div>
-        <b>STEFAN ALBERTO · 13</b>
+        <b>STEFAN ALBERTO · 14</b>
         <span>8 AGOSTO 2026 · 2:00 PM</span>
       </div>
 
