@@ -67,7 +67,7 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// Animaciones al hacer scroll
+// Animaciones al hacer scrollA
 const observer = new IntersectionObserver(
   entries => {
     entries.forEach(entry => {
