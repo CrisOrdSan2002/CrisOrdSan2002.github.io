@@ -4,21 +4,21 @@
 const invitationConfig = {
   eventDate: "2026-08-08T14:00:00-06:00",
 
-  venueName: "NOMBRE DEL LUGAR",
-  venueAddress: "CALLE, NÚMERO, COLONIA, CIUDAD",
+  venueName: "SALÓN SAMSARA",
+  venueAddress: "Av. Cuauhtemoc 115, Tepeyac, 93250 Poza Rica de Hidalgo, Ver.",
 
   // Usa el enlace que Google Maps genera al pulsar “Compartir”.
-  mapsLink: "https://maps.google.com/?q=Ciudad+de+Mexico",
+  mapsLink: "https://maps.app.goo.gl/UGr6rXFFoYw5cQ7s5",
 
   // Para el mapa incrustado también puedes usar una búsqueda.
   // Sustituye los espacios por +.
-  mapsEmbed: "https://www.google.com/maps?q=Ciudad+de+Mexico&output=embed",
+  mapsEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.4393653180605!2d-97.43607868834636!3d20.52919648091882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784267831553!5m2!1ses!2smx",
 
   // Número con código de país, sin +, espacios ni guiones. Ejemplo México: 5215512345678
   whatsappNumber: "5210000000000",
 
   whatsappMessage:
-    "¡Hola! Confirmo mi asistencia al cumpleaños mundialista de Stefan Alberto el 8 de agosto a las 2:00 PM. ⚽🎉"
+    "¡Hola! Confirmo mi asistencia al cumpleaños mundialista de Stefan Alberto el 8 de agosto a las 2:00 PM."
 };
 
 // Aplicar datos editables
