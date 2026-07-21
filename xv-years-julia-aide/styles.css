@@ -342,6 +342,37 @@ body::after {
   color: rgba(53, 38, 63, .72);
 }
 
+
+.venue-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.venue-card {
+  position: relative;
+  padding: 1.2rem 1rem 1.35rem;
+  border-radius: 1.6rem;
+  background: rgba(255, 255, 255, .46);
+  border: 1px solid rgba(143, 90, 200, .14);
+}
+
+.venue-card h3 {
+  position: relative;
+  margin: 0 0 .35rem;
+  color: var(--violet-deep);
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.45rem, 6vw, 2.15rem);
+}
+
+.venue-card .map-frame {
+  margin-top: .85rem;
+}
+
+.venue-card .secondary-button {
+  width: min(100%, 22rem);
+}
+
 .map-frame {
   position: relative;
   z-index: 1;
