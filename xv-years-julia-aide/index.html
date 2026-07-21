@@ -75,18 +75,39 @@
 
     <section class="location card reveal" id="ubicacion">
       <p class="section-kicker">¿Dónde será?</p>
-      <h2>Ubicación</h2>
-      <p class="placeholder-note">Pendiente por confirmar. Cambia el enlace de Maps en el archivo <strong>script.js</strong>.</p>
-      <div class="map-frame">
-        <iframe
-          id="mapFrame"
-          title="Mapa de ubicación"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Ubicaci%C3%B3n%20pendiente&output=embed">
-        </iframe>
+      <h2>Ubicaciones</h2>
+
+      <div class="venue-list">
+        <article class="venue-card">
+          <span class="icon">⛪</span>
+          <h3>Parroquia de Nuestra Señora de Guadalupe</h3>
+          <p>Misa</p>
+          <div class="map-frame">
+            <iframe
+              id="churchMapFrame"
+              title="Mapa de la Parroquia de Nuestra Señora de Guadalupe"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <a class="secondary-button" id="churchMapsBtn" target="_blank" rel="noopener">Abrir parroquia en Google Maps</a>
+        </article>
+
+        <article class="venue-card">
+          <span class="icon">✨</span>
+          <h3>Salón Samsara</h3>
+          <p>Recepción</p>
+          <div class="map-frame">
+            <iframe
+              id="venueMapFrame"
+              title="Mapa del Salón Samsara"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          <a class="secondary-button" id="venueMapsBtn" target="_blank" rel="noopener">Abrir salón en Google Maps</a>
+        </article>
       </div>
-      <a class="secondary-button" id="mapsBtn" href="https://maps.google.com/?q=Ubicaci%C3%B3n%20pendiente" target="_blank" rel="noopener">Abrir en Google Maps</a>
     </section>
 
     <section class="confirmation card reveal" id="confirmacion">
