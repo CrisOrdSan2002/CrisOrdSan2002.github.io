@@ -70,6 +70,8 @@ const musicToggle = $("#musicToggle");
 const musicIcon = $("#musicIcon");
 const musicText = $("#musicText");
 
+let musicUnlocked = false;
+
 function setMusicState(isPlaying) {
   musicToggle.classList.toggle("playing", isPlaying);
   musicIcon.textContent = isPlaying ? "Ⅱ" : "♪";
@@ -79,9 +81,13 @@ function setMusicState(isPlaying) {
 async function playMusic() {
   try {
     await music.play();
+    musicUnlocked = true;
     setMusicState(true);
+    return true;
   } catch (error) {
+    console.log("El navegador bloqueó la reproducción:", error);
     setMusicState(false);
+    return false;
   }
 }
 
@@ -89,17 +95,32 @@ function pauseMusic() {
   music.pause();
   setMusicState(false);
 }
+// Solo es un intento; en móviles normalmente será bloqueado.
+window.addEventListener("load", () => {
+  playMusic();
+});
+// Primer clic o toque válido dentro de la página.
+async function unlockMusic(event) {
+  // El botón de música administra su propio clic.
+  if (event.target.closest("#musicToggle")) return;
 
-// Muchos navegadores bloquean el autoplay con sonido. Se intenta al cargar y también al primer toque/clic.
-window.addEventListener("load", playMusic);
-document.addEventListener("pointerdown", function enableMusicOnce() {
-  if (music.paused) playMusic();
-  document.removeEventListener("pointerdown", enableMusicOnce);
-}, { once: true });
+  const started = await playMusic();
 
-musicToggle.addEventListener("click", () => {
+  // Solo retiramos los eventos cuando realmente comenzó.
+  if (started) {
+    document.removeEventListener("click", unlockMusic);
+    document.removeEventListener("touchend", unlockMusic);
+  }
+}
+
+document.addEventListener("click", unlockMusic);
+document.addEventListener("touchend", unlockMusic, { passive: true });
+
+musicToggle.addEventListener("click", async (event) => {
+  event.stopPropagation();
+
   if (music.paused) {
-    playMusic();
+    await playMusic();
   } else {
     pauseMusic();
   }
