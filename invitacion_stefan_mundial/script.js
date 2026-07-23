@@ -8,22 +8,10 @@ const invitationConfig = {
   venueAddress:
     "Av. Cuauhtemoc 115, Tepeyac, 93250 Poza Rica de Hidalgo, Ver.",
 
-  // Usa el enlace que Google Maps genera al pulsar “Compartir”.
   mapsLink: "https://maps.app.goo.gl/UGr6rXFFoYw5cQ7s5",
 
-  // Enlace para mostrar el mapa incrustado.
   mapsEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.4393653180605!2d-97.43607868834636!3d20.52919648091882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784267831553!5m2!1ses!2smx",
-
-  // ====================================================
-  // WHATSAPP DESACTIVADO
-  // ====================================================
-
-  // Número con código de país, sin +, espacios ni guiones.
-  // whatsappNumber: "5210000000000",
-
-  // whatsappMessage:
-  //   "¡Hola! Confirmo mi asistencia al cumpleaños mundialista de Stefan Alberto el 8 de agosto a las 2:00 PM."
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.4393653180605!2d-97.43607868834636!3d20.52919648091882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784267831553!5m2!1ses!2smx"
 };
 
 // ======================================================
@@ -48,20 +36,11 @@ document.getElementById("mapFrame").src =
   invitationConfig.mapsEmbed;
 
 // ======================================================
-// BOTÓN DE WHATSAPP DESACTIVADO
-// ======================================================
-//
-// const whatsappButton = document.getElementById("whatsappButton");
-//
-// whatsappButton.href =
-//   `https://wa.me/${invitationConfig.whatsappNumber}?text=${encodeURIComponent(
-//     invitationConfig.whatsappMessage
-//   )}`;
-
-// ======================================================
 // CUENTA REGRESIVA
 // ======================================================
-const eventTime = new Date(invitationConfig.eventDate).getTime();
+const eventTime = new Date(
+  invitationConfig.eventDate
+).getTime();
 
 const countdownEls = {
   days: document.getElementById("days"),
@@ -81,13 +60,18 @@ function updateCountdown() {
     return;
   }
 
-  const days = Math.floor(distance / 86400000);
+  const days = Math.floor(
+    distance / 86400000
+  );
+
   const hours = Math.floor(
     (distance % 86400000) / 3600000
   );
+
   const minutes = Math.floor(
     (distance % 3600000) / 60000
   );
+
   const seconds = Math.floor(
     (distance % 60000) / 1000
   );
@@ -132,14 +116,7 @@ document
   });
 
 // ======================================================
-// MÚSICA DE FONDO AUTOMÁTICA
-//
-// Algunos navegadores bloquean el audio automático con
-// sonido hasta que el usuario toca, hace clic o presiona
-// una tecla.
-//
-// El código intenta reproducirlo automáticamente.
-// Si se bloquea, comienza en la primera interacción.
+// MÚSICA DE FONDO
 // ======================================================
 const soundButton =
   document.getElementById("soundButton");
@@ -147,13 +124,20 @@ const soundButton =
 const stadiumAudio =
   document.getElementById("stadiumAudio");
 
-stadiumAudio.volume = 0.32;
+const NORMAL_VOLUME = 0.32;
 
-// Actualiza el estado visual y accesible del botón.
-function updateSoundButton(isPlaying) {
-  if (!soundButton) {
+let userPausedAudio = false;
+
+if (stadiumAudio) {
+  stadiumAudio.volume = NORMAL_VOLUME;
+}
+
+function updateSoundButton() {
+  if (!soundButton || !stadiumAudio) {
     return;
   }
+
+  const isPlaying = !stadiumAudio.paused;
 
   soundButton.classList.toggle(
     "is-playing",
@@ -168,46 +152,42 @@ function updateSoundButton(isPlaying) {
   soundButton.setAttribute(
     "aria-label",
     isPlaying
-      ? "Pausar música de fondo"
-      : "Reproducir música de fondo"
+      ? "Pausar música"
+      : "Reproducir música"
   );
-
-  soundButton.title = isPlaying
-    ? "Pausar música"
-    : "Reproducir música";
 }
 
-// Intenta reproducir la música.
 async function playBackgroundMusic() {
+  if (!stadiumAudio) {
+    return false;
+  }
+
   try {
+    stadiumAudio.muted = false;
+    stadiumAudio.volume = NORMAL_VOLUME;
+
     await stadiumAudio.play();
-    updateSoundButton(true);
+
+    userPausedAudio = false;
+    updateSoundButton();
+
     return true;
   } catch (error) {
-    updateSoundButton(false);
+    updateSoundButton();
     return false;
   }
 }
 
-// Intento inicial de reproducción automática.
-playBackgroundMusic();
-
-// Si el navegador bloquea el autoplay, se intenta iniciar
-// cuando el visitante interactúe por primera vez.
-async function unlockAudio() {
-  if (!stadiumAudio.paused) {
-    removeUnlockListeners();
+function pauseBackgroundMusic() {
+  if (!stadiumAudio) {
     return;
   }
 
-  const started = await playBackgroundMusic();
-
-  if (started) {
-    removeUnlockListeners();
-  }
+  userPausedAudio = true;
+  stadiumAudio.pause();
+  updateSoundButton();
 }
 
-// Elimina los eventos después de iniciar el audio.
 function removeUnlockListeners() {
   document.removeEventListener(
     "pointerdown",
@@ -218,78 +198,86 @@ function removeUnlockListeners() {
     "keydown",
     unlockAudio
   );
-
-  document.removeEventListener(
-    "touchstart",
-    unlockAudio
-  );
 }
 
-// Eventos para desbloquear el audio.
+async function unlockAudio(event) {
+  if (
+    !stadiumAudio ||
+    !stadiumAudio.paused ||
+    userPausedAudio
+  ) {
+    return;
+  }
+
+  // Evita que el desbloqueo y el botón se ejecuten
+  // al mismo tiempo.
+  if (
+    soundButton &&
+    event.target instanceof Node &&
+    soundButton.contains(event.target)
+  ) {
+    return;
+  }
+
+  const started =
+    await playBackgroundMusic();
+
+  if (started) {
+    removeUnlockListeners();
+  }
+}
+
+// Intenta iniciar automáticamente.
+window.addEventListener("load", () => {
+  playBackgroundMusic();
+});
+
+// Si el navegador bloquea el autoplay,
+// comienza con la primera interacción.
 document.addEventListener(
   "pointerdown",
-  unlockAudio,
-  {
-    once: true
-  }
+  unlockAudio
 );
 
 document.addEventListener(
   "keydown",
-  unlockAudio,
-  {
-    once: true
-  }
+  unlockAudio
 );
 
-document.addEventListener(
-  "touchstart",
-  unlockAudio,
-  {
-    once: true,
-    passive: true
-  }
-);
-
-// Botón para pausar o reanudar la música.
-if (soundButton) {
+// Botón único de reproducción y pausa.
+if (soundButton && stadiumAudio) {
   soundButton.addEventListener(
     "click",
     async event => {
+      event.preventDefault();
       event.stopPropagation();
 
       if (stadiumAudio.paused) {
         await playBackgroundMusic();
+        removeUnlockListeners();
       } else {
-        stadiumAudio.pause();
-        updateSoundButton(false);
+        pauseBackgroundMusic();
       }
     }
   );
+
+  stadiumAudio.addEventListener(
+    "play",
+    updateSoundButton
+  );
+
+  stadiumAudio.addEventListener(
+    "pause",
+    updateSoundButton
+  );
+
+  stadiumAudio.addEventListener(
+    "ended",
+    updateSoundButton
+  );
 }
 
-// Mantiene sincronizado el botón con el estado real del audio.
-stadiumAudio.addEventListener(
-  "play",
-  () => {
-    updateSoundButton(true);
-  }
-);
-
-stadiumAudio.addEventListener(
-  "pause",
-  () => {
-    updateSoundButton(false);
-  }
-);
-
-// Si la música termina por alguna razón, actualiza el botón.
-stadiumAudio.addEventListener(
-  "ended",
-  () => {
-    updateSoundButton(false);
-  }
-);
+updateSoundButton();
 
 // ======================================================
 // PARALLAX SUAVE EN ESCRITORIO
