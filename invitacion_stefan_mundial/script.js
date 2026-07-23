@@ -11,10 +11,9 @@ const invitationConfig = {
   // Usa el enlace que Google Maps genera al pulsar “Compartir”.
   mapsLink: "https://maps.app.goo.gl/UGr6rXFFoYw5cQ7s5",
 
-  // Para el mapa incrustado también puedes usar una búsqueda.
-  // Sustituye los espacios por +.
+  // Enlace para mostrar el mapa incrustado.
   mapsEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.4393653180605!2d-97.43607868834636!3d20.52919648091882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784267831553!5m2!1ses!2smx"
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.4393653180605!2d-97.43607868834636!3d20.52919648091882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e0!3m2!1ses!2smx!4v1784267831553!5m2!1ses!2smx",
 
   // ====================================================
   // WHATSAPP DESACTIVADO
@@ -83,14 +82,27 @@ function updateCountdown() {
   }
 
   const days = Math.floor(distance / 86400000);
-  const hours = Math.floor((distance % 86400000) / 3600000);
-  const minutes = Math.floor((distance % 3600000) / 60000);
-  const seconds = Math.floor((distance % 60000) / 1000);
+  const hours = Math.floor(
+    (distance % 86400000) / 3600000
+  );
+  const minutes = Math.floor(
+    (distance % 3600000) / 60000
+  );
+  const seconds = Math.floor(
+    (distance % 60000) / 1000
+  );
 
-  countdownEls.days.textContent = String(days).padStart(2, "0");
-  countdownEls.hours.textContent = String(hours).padStart(2, "0");
-  countdownEls.minutes.textContent = String(minutes).padStart(2, "0");
-  countdownEls.seconds.textContent = String(seconds).padStart(2, "0");
+  countdownEls.days.textContent =
+    String(days).padStart(2, "0");
+
+  countdownEls.hours.textContent =
+    String(hours).padStart(2, "0");
+
+  countdownEls.minutes.textContent =
+    String(minutes).padStart(2, "0");
+
+  countdownEls.seconds.textContent =
+    String(seconds).padStart(2, "0");
 }
 
 updateCountdown();
@@ -113,58 +125,203 @@ const observer = new IntersectionObserver(
   }
 );
 
-document.querySelectorAll(".reveal").forEach(element => {
-  observer.observe(element);
-});
+document
+  .querySelectorAll(".reveal")
+  .forEach(element => {
+    observer.observe(element);
+  });
 
 // ======================================================
-// AUDIO OPCIONAL
-// Agrega el archivo assets/ambiente-estadio.mp3
+// MÚSICA DE FONDO AUTOMÁTICA
+//
+// Algunos navegadores bloquean el audio automático con
+// sonido hasta que el usuario toca, hace clic o presiona
+// una tecla.
+//
+// El código intenta reproducirlo automáticamente.
+// Si se bloquea, comienza en la primera interacción.
 // ======================================================
-const soundButton = document.getElementById("soundButton");
-const stadiumAudio = document.getElementById("stadiumAudio");
+const soundButton =
+  document.getElementById("soundButton");
 
-let soundActive = false;
+const stadiumAudio =
+  document.getElementById("stadiumAudio");
 
-soundButton.addEventListener("click", async () => {
-  try {
-    if (!soundActive) {
-      stadiumAudio.volume = 0.32;
-      await stadiumAudio.play();
+stadiumAudio.volume = 0.32;
 
-      soundActive = true;
-
-      soundButton.setAttribute("aria-pressed", "true");
-      soundButton.innerHTML =
-        '<span class="sound-icon">🔇</span> Pausar ambiente';
-    } else {
-      stadiumAudio.pause();
-
-      soundActive = false;
-
-      soundButton.setAttribute("aria-pressed", "false");
-      soundButton.innerHTML =
-        '<span class="sound-icon">🔊</span> Activar ambiente';
-    }
-  } catch {
-    alert(
-      "Agrega el archivo assets/ambiente-estadio.mp3 para activar el sonido."
-    );
+// Actualiza el estado visual y accesible del botón.
+function updateSoundButton(isPlaying) {
+  if (!soundButton) {
+    return;
   }
-});
+
+  soundButton.classList.toggle(
+    "is-playing",
+    isPlaying
+  );
+
+  soundButton.setAttribute(
+    "aria-pressed",
+    String(isPlaying)
+  );
+
+  soundButton.setAttribute(
+    "aria-label",
+    isPlaying
+      ? "Pausar música de fondo"
+      : "Reproducir música de fondo"
+  );
+
+  soundButton.title = isPlaying
+    ? "Pausar música"
+    : "Reproducir música";
+}
+
+// Intenta reproducir la música.
+async function playBackgroundMusic() {
+  try {
+    await stadiumAudio.play();
+    updateSoundButton(true);
+    return true;
+  } catch (error) {
+    updateSoundButton(false);
+    return false;
+  }
+}
+
+// Intento inicial de reproducción automática.
+playBackgroundMusic();
+
+// Si el navegador bloquea el autoplay, se intenta iniciar
+// cuando el visitante interactúe por primera vez.
+async function unlockAudio() {
+  if (!stadiumAudio.paused) {
+    removeUnlockListeners();
+    return;
+  }
+
+  const started = await playBackgroundMusic();
+
+  if (started) {
+    removeUnlockListeners();
+  }
+}
+
+// Elimina los eventos después de iniciar el audio.
+function removeUnlockListeners() {
+  document.removeEventListener(
+    "pointerdown",
+    unlockAudio
+  );
+
+  document.removeEventListener(
+    "keydown",
+    unlockAudio
+  );
+
+  document.removeEventListener(
+    "touchstart",
+    unlockAudio
+  );
+}
+
+// Eventos para desbloquear el audio.
+document.addEventListener(
+  "pointerdown",
+  unlockAudio,
+  {
+    once: true
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  unlockAudio,
+  {
+    once: true
+  }
+);
+
+document.addEventListener(
+  "touchstart",
+  unlockAudio,
+  {
+    once: true,
+    passive: true
+  }
+);
+
+// Botón para pausar o reanudar la música.
+if (soundButton) {
+  soundButton.addEventListener(
+    "click",
+    async event => {
+      event.stopPropagation();
+
+      if (stadiumAudio.paused) {
+        await playBackgroundMusic();
+      } else {
+        stadiumAudio.pause();
+        updateSoundButton(false);
+      }
+    }
+  );
+}
+
+// Mantiene sincronizado el botón con el estado real del audio.
+stadiumAudio.addEventListener(
+  "play",
+  () => {
+    updateSoundButton(true);
+  }
+);
+
+stadiumAudio.addEventListener(
+  "pause",
+  () => {
+    updateSoundButton(false);
+  }
+);
+
+// Si la música termina por alguna razón, actualiza el botón.
+stadiumAudio.addEventListener(
+  "ended",
+  () => {
+    updateSoundButton(false);
+  }
+);
 
 // ======================================================
 // PARALLAX SUAVE EN ESCRITORIO
 // ======================================================
-const visual = document.querySelector(".hero-visual");
+const visual =
+  document.querySelector(".hero-visual");
 
-window.addEventListener("pointermove", event => {
-  if (window.innerWidth < 980 || !visual) {
-    return;
+window.addEventListener(
+  "pointermove",
+  event => {
+    if (
+      window.innerWidth < 980 ||
+      !visual
+    ) {
+      return;
+    }
+
+    const x =
+      (
+        event.clientX /
+        window.innerWidth -
+        0.5
+      ) * 10;
+
+    const y =
+      (
+        event.clientY /
+        window.innerHeight -
+        0.5
+      ) * 10;
+
+    visual.style.transform =
+      `translate3d(${x}px, ${y}px, 0)`;
   }
-
-  const x = (event.clientX / window.innerWidth - 0.5) * 10;
-  const y = (event.clientY / window.innerHeight - 0.5) * 10;
-
-  visual.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-});
+);
