@@ -693,6 +693,69 @@
         animation: none !important;
       }
     }
+
+
+    /* =====================================================
+       BOTÓN FLOTANTE DE MÚSICA
+       ===================================================== */
+    .music-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9999;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 50%;
+      background: rgba(12, 34, 51, 0.9);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(12, 34, 51, 0.28);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.08);
+      background: #0c2233;
+    }
+
+    .music-toggle:focus-visible {
+      outline: 3px solid #dff56a;
+      outline-offset: 3px;
+    }
+
+    .music-toggle svg {
+      width: 25px;
+      height: 25px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .music-toggle .icon-play,
+    .music-toggle.is-playing .icon-pause {
+      display: block;
+    }
+
+    .music-toggle .icon-pause,
+    .music-toggle.is-playing .icon-play {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .music-toggle {
+        right: 14px;
+        bottom: 14px;
+        width: 48px;
+        height: 48px;
+      }
+    }
   </style>
 </head>
 
@@ -745,15 +808,7 @@
             Ver detalles
           </a>
 
-          <button
-            class="btn btn-ghost"
-            id="soundButton"
-            type="button"
-            aria-pressed="false"
-          >
-            <span class="sound-icon">🔊</span>
-            Activar ambiente
-          </button>
+
         </div>
       </div>
 
@@ -1429,7 +1484,25 @@
     </div>
   </footer>
 
-  <audio id="stadiumAudio" loop preload="none">
+
+  <button
+    class="music-toggle"
+    id="soundButton"
+    type="button"
+    aria-label="Pausar música de fondo"
+    aria-pressed="true"
+    title="Pausar música"
+  >
+    <!-- SVG libres basados en Heroicons (MIT) -->
+    <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 5v14M16 5v14"></path>
+    </svg>
+    <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 5v14l11-7-11-7z"></path>
+    </svg>
+  </button>
+
+  <audio id="stadiumAudio" loop preload="auto" autoplay>
     <source
       src="assets/ambiente-estadio.mp3"
       type="audio/mpeg"
