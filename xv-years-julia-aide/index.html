@@ -10,6 +10,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Tres unidades arriba; dos tarjetas de 1.5 unidades abajo */
+    .details-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .details-grid > .detail-card {
+      grid-column: span 2;
+    }
+
+    .details-grid > .detail-card.detail-card--wide {
+      grid-column: span 3;
+    }
+
+    @media (max-width: 760px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .details-grid > .detail-card,
+      .details-grid > .detail-card.detail-card--wide {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="aurora" aria-hidden="true"></div>
@@ -36,6 +61,7 @@
         <span class="butterfly-mark">✦</span>
       </div>
       <p class="date">22 de agosto · 2026</p>
+      <p class="intro"><strong>Misa 4:00 p. m. · Recepción 5:30 p. m.</strong></p>
       <p class="intro">Hay momentos que se sueñan una vida entera. Hoy quiero compartir contigo la alegría de celebrar mis XV años.</p>
       <a class="primary-button" href="#confirmacion">Confirmar asistencia</a>
     </section>
@@ -71,6 +97,18 @@
         <p>Semi formal</p>
         <small>Favor de no vestir morado 💜</small>
       </article>
+
+      <article class="detail-card detail-card--wide reveal">
+        <span class="icon">✉️</span>
+        <h3>Regalo</h3>
+        <p>Lluvia de sobres o regalo</p>
+      </article>
+
+      <article class="detail-card detail-card--wide reveal">
+        <span class="icon">🏊‍♀️</span>
+        <h3>Albercada</h3>
+        <p>Traer traje de baño</p>
+      </article>
     </section>
 
     <section class="location card reveal" id="ubicacion">
@@ -80,12 +118,12 @@
       <div class="venue-list">
         <article class="venue-card">
           <span class="icon">⛪</span>
-          <h3>Iglesia de la Divina Providencia</h3>
-          <p>Misa</p>
+          <h3>Iglesia San Martín de Porres</h3>
+          <p>Misa · 4:00 p. m.</p>
           <div class="map-frame">
             <iframe
               id="churchMapFrame"
-              title="Mapa de la Iglesia de la Divina Providencia"
+              title="Mapa de la Iglesia San Martín de Porres"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -96,7 +134,7 @@
         <article class="venue-card">
           <span class="icon">✨</span>
           <h3>Salón Samsara</h3>
-          <p>Recepción</p>
+          <p>Recepción · 5:30 p. m.</p>
           <div class="map-frame">
             <iframe
               id="venueMapFrame"
