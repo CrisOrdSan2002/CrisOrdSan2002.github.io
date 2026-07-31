@@ -6,7 +6,7 @@ const CHURCH_MAPS_URL = "https://maps.app.goo.gl/NFpcwpykohk7ton3A";
 const CHURCH_MAPS_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2182.2544848240223!2d-97.44298003015456!3d20.550815273041607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da6ab159300cf9%3A0x6366da6f5a1c83ef!2sIglesia%20San%20Mart%C3%ADn%20de%20Porres!5e1!3m2!1ses!2smx!4v1785470450103!5m2!1ses!2smx";
 const VENUE_MAPS_URL = "https://maps.app.goo.gl/SoKTaF3D4cuVYh368";
 const VENUE_MAPS_EMBED = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10216.826389541577!2d-97.43607868804817!3d20.529196480918756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85da41d32e2fd45b%3A0x646179e226f67a39!2sSamsara%20Sal%C3%B3n%20de%20Eventos!5e1!3m2!1ses!2smx!4v1784668723497!5m2!1ses!2smx";
-const WHATSAPP_CONFIRM_URL = "https://wa.me/5217841261547?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Julia%20Aid%C3%A9.%20";
+const WHATSAPP_CONFIRM_URL = "https://wa.me/5217821091369?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Julia%20Aid%C3%A9.%20";
 
 const $ = (selector) => document.querySelector(selector);
 
