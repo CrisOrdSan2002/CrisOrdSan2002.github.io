@@ -1,1332 +1,1006 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#2a160d">
-  <title>XV Brenda Monserrat</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#382015">
+  <title>XV años de MONSE</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Rye&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Rye&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --cafe: #7a4726;
-      --cafe-2: #9f673a;
-      --cafe-oscuro: #2a160d;
-      --madera: #4c2b18;
-      --crema: #fff5e4;
-      --beige: #ead4b2;
-      --dorado: #e4b15f;
-      --dorado-claro: #ffe0a0;
-      --denim: #315e77;
-      --rosa: #bb7d79;
-      --verde: #73824b;
-      --texto: #2e2016;
-      --sombra: 0 24px 60px rgba(40, 20, 8, .26);
-      --radio: 28px;
+      --wood-dark: #2b160d;
+      --wood: #5a321d;
+      --wood-light: #7e4a2b;
+      --ink: #382015;
+      --ink-soft: #6b432b;
+      --paper: #ead6ac;
+      --paper-light: #f7e9c8;
+      --paper-dark: #c89d67;
+      --gold: #c78b40;
+      --cream: #fff4d9;
+      --denim: #284c5f;
+      --green: #50613d;
+      --shadow: 0 24px 50px rgba(24, 10, 4, .38);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
+      margin: 0;
       min-height: 100vh;
-      overflow-x: hidden;
-      font-family: "Poppins", sans-serif;
-      color: var(--texto);
+      color: var(--ink);
+      font-family: "DM Sans", Arial, sans-serif;
       background:
-        radial-gradient(circle at 12% 5%, rgba(228, 177, 95, .25), transparent 26%),
-        radial-gradient(circle at 90% 40%, rgba(49, 94, 119, .16), transparent 25%),
-        linear-gradient(180deg, #2a160d 0, #6c4226 40%, #ead4b2 100%);
+        radial-gradient(circle at 20% 0%, rgba(224, 156, 74, .17), transparent 24%),
+        linear-gradient(180deg, #1c0f09, #4b2918 60%, #1c0f09);
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      pointer-events: none;
       z-index: 999;
-      opacity: .10;
-      background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: .12;
       mix-blend-mode: soft-light;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
 
     .page {
-      width: 100%;
-      max-width: 560px;
+      width: min(100%, 620px);
       margin: 0 auto;
-      overflow: hidden;
-      position: relative;
-      background:
-        linear-gradient(rgba(255, 247, 232, .95), rgba(245, 226, 194, .96)),
-        repeating-linear-gradient(90deg, rgba(122, 71, 38, .025) 0 2px, transparent 2px 8px);
-      box-shadow: 0 0 90px rgba(19, 8, 2, .55);
-    }
-
-    .ambient-lights,
-    .dust {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .ambient-lights {
-      z-index: 100;
-      background:
-        radial-gradient(circle at 14% 18%, rgba(255, 221, 153, .16), transparent 13%),
-        radial-gradient(circle at 86% 60%, rgba(255, 221, 153, .12), transparent 15%);
-      mix-blend-mode: screen;
-    }
-
-    .dust {
-      z-index: 101;
-      overflow: hidden;
-    }
-
-    .dust i {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: rgba(255, 224, 160, .75);
-      box-shadow: 0 0 9px rgba(255, 224, 160, .8);
-      animation: floatDust linear infinite;
-    }
-
-    @keyframes floatDust {
-      from { transform: translate3d(0, 15vh, 0) scale(.5); opacity: 0; }
-      15% { opacity: .85; }
-      to { transform: translate3d(25px, -110vh, 0) scale(1.2); opacity: 0; }
-    }
-
-    .music-toggle {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 150;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 13px;
-      border: 1px solid rgba(255, 244, 222, .35);
-      border-radius: 999px;
-      color: var(--crema);
-      background: rgba(42, 22, 13, .78);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      font-weight: 700;
-      transition: .25s ease;
-    }
-
-    .music-toggle:hover {
-      transform: translateY(-2px) scale(1.02);
-      background: rgba(42, 22, 13, .92);
-    }
-
-    .music-icon {
-      width: 26px;
-      height: 26px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: var(--dorado-claro);
-      background: rgba(228, 177, 95, .18);
-    }
-
-    .hero {
-      min-height: 100svh;
       position: relative;
       overflow: hidden;
-      display: grid;
-      place-items: center;
-      padding: 56px 20px 42px;
-      text-align: center;
-      color: var(--crema);
+      box-shadow: 0 0 90px rgba(0, 0, 0, .68);
+      background: var(--wood-dark);
+    }
+
+    .wood-stage {
+      position: relative;
       isolation: isolate;
+      overflow: hidden;
+      padding: 78px 18px;
       background:
-        linear-gradient(180deg, rgba(25, 12, 6, .30), rgba(25, 12, 6, .74)),
-        url("assets/iglesia-1.jpg") center / cover no-repeat;
+        linear-gradient(90deg, rgba(23, 10, 4, .27), transparent 7%, transparent 93%, rgba(23, 10, 4, .30)),
+        repeating-linear-gradient(90deg,
+          #482818 0 62px,
+          #5c341f 62px 66px,
+          #3e2215 66px 70px,
+          #6c3d24 70px 130px,
+          #4b2818 130px 134px);
     }
 
-    .hero::before {
+    .wood-stage::before {
       content: "";
       position: absolute;
       inset: 0;
       z-index: -2;
+      opacity: .48;
       background:
-        radial-gradient(circle at 50% 25%, rgba(255, 217, 145, .18), transparent 34%),
-        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 2px, transparent 2px 36px);
+        repeating-radial-gradient(ellipse at 50% 8%, transparent 0 24px, rgba(255,255,255,.035) 25px 27px, transparent 28px 54px),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.22));
+      mix-blend-mode: overlay;
     }
 
-    .hero::after {
+    .paper {
+      width: min(100%, 520px);
+      margin: 0 auto;
+      position: relative;
+      z-index: 4;
+      padding: 42px 30px;
+      border: 1px solid rgba(86, 51, 29, .35);
+      border-radius: 7px 14px 9px 13px;
+      background:
+        radial-gradient(circle at 17% 14%, rgba(255,255,255,.32), transparent 22%),
+        radial-gradient(circle at 78% 78%, rgba(114,70,38,.10), transparent 30%),
+        linear-gradient(145deg, rgba(255,246,217,.95), rgba(225,196,145,.98));
+      box-shadow:
+        0 2px 0 rgba(255,255,255,.25) inset,
+        0 0 0 8px rgba(56, 31, 18, .15),
+        var(--shadow);
+    }
+
+    .paper::before,
+    .paper::after {
       content: "";
       position: absolute;
-      left: -10%;
-      right: -10%;
-      bottom: -120px;
-      height: 230px;
-      z-index: -1;
-      background:
-        radial-gradient(ellipse at center, rgba(12, 6, 3, .82) 0 50%, transparent 51%);
-      filter: blur(8px);
+      pointer-events: none;
     }
 
-    .string-lights {
+    .paper::before {
+      inset: 12px;
+      border: 1px solid rgba(96, 55, 30, .22);
+      border-radius: 4px 10px 6px 8px;
+    }
+
+    .paper::after {
+      inset: 0;
+      opacity: .25;
+      mix-blend-mode: multiply;
+    }
+
+    .paper > * { position: relative; z-index: 2; }
+
+    .lights {
       position: absolute;
-      left: -5%;
-      right: -5%;
-      top: 12px;
-      height: 120px;
-      z-index: 14;
-      transform: translateY(-90px) rotate(-2deg);
-      border-top: 2px solid rgba(45, 25, 14, .9);
-      opacity: 0;
-      animation: lightsDrop .9s .15s cubic-bezier(.16,.84,.3,1.18) forwards;
+      top: 0;
+      left: -3%;
+      width: 106%;
+      height: 95px;
+      z-index: 10;
+      border-top: 3px solid #23130c;
+      transform: rotate(-1deg);
+      pointer-events: none;
     }
 
-    @keyframes lightsDrop {
-      to { opacity: 1; transform: translateY(0) rotate(-2deg); }
-    }
-
-    .string-lights span {
+    .lights i {
       position: absolute;
       top: -2px;
-      width: 14px;
-      height: 21px;
-      border-radius: 50% 50% 45% 45%;
-      background: #ffd986;
-      box-shadow:
-        0 0 8px #ffd986,
-        0 0 22px rgba(255, 190, 75, .9);
-      transform-origin: top center;
-      animation: lightSwing 2.8s ease-in-out infinite alternate;
+      width: 13px;
+      height: 19px;
+      border-radius: 50% 50% 48% 48%;
+      background: #ffd487;
+      box-shadow: 0 0 9px #ffc65e, 0 0 23px rgba(255, 177, 54, .92);
+      transform-origin: 50% -18px;
+      animation: bulbSwing 3s ease-in-out infinite alternate;
     }
 
-    .string-lights span::before {
+    .lights i::before {
       content: "";
       position: absolute;
-      width: 2px;
-      height: 22px;
       left: 6px;
       top: -20px;
-      background: #302015;
+      width: 2px;
+      height: 21px;
+      background: #27160e;
     }
 
-    @keyframes lightSwing {
-      to { transform: rotate(7deg); }
+    @keyframes bulbSwing { to { transform: rotate(6deg); } }
+
+    .hero {
+      min-height: 850px;
+      display: grid;
+      place-items: center;
+      padding-top: 105px;
+      padding-bottom: 115px;
     }
 
-    .decor {
-      position: absolute;
-      z-index: 18;
-      user-select: none;
-      pointer-events: none;
-      opacity: 0;
-      filter: drop-shadow(0 18px 18px rgba(0,0,0,.42));
-      will-change: transform, opacity;
+    .hero .paper {
+      width: min(88%, 485px);
+      padding: 58px 28px 50px;
+      text-align: center;
+      border: 3px double rgba(92, 51, 27, .55);
+      border-radius: 13px;
+      transform: rotate(-.35deg);
     }
 
-    .decor.hat {
-      top: 11%;
-      left: -4px;
-      font-size: clamp(4.5rem, 18vw, 7rem);
-      animation:
-        hatEntrance 1s .38s cubic-bezier(.18,.9,.25,1.2) forwards,
-        decorFloat 4.2s 1.45s ease-in-out infinite;
-    }
-
-    @keyframes hatEntrance {
-      from { opacity: 0; transform: translate(-120px,-70px) rotate(-48deg) scale(.45); }
-      to { opacity: 1; transform: translate(0,0) rotate(-18deg) scale(1); }
-    }
-
-    .decor.cactus {
-      right: -4px;
-      bottom: 7%;
-      font-size: clamp(5rem, 20vw, 8rem);
-      animation:
-        cactusEntrance 1s .72s cubic-bezier(.18,.9,.25,1.2) forwards,
-        decorFloat 4.5s 1.8s ease-in-out infinite;
-    }
-
-    @keyframes cactusEntrance {
-      from { opacity: 0; transform: translate(120px,90px) rotate(18deg) scale(.45); }
-      to { opacity: 1; transform: translate(0,0) rotate(0) scale(1); }
-    }
-
-    .decor.boots {
-      left: 2px;
-      bottom: 3%;
-      font-size: clamp(4rem, 17vw, 7rem);
-      animation:
-        bootsEntrance 1s .92s cubic-bezier(.18,.9,.25,1.2) forwards,
-        decorFloat 4s 2s ease-in-out infinite;
-    }
-
-    @keyframes bootsEntrance {
-      from { opacity: 0; transform: translate(-110px,100px) rotate(-24deg) scale(.45); }
-      to { opacity: 1; transform: translate(0,0) rotate(0) scale(1); }
-    }
-
-    @keyframes decorFloat {
-      0%, 100% { translate: 0 0; }
-      50% { translate: 0 -10px; }
-    }
-
-    .hero-content {
-      width: min(100%, 480px);
-      position: relative;
-      z-index: 10;
-      padding: 48px 18px 34px;
-      opacity: 0;
-      transform: translateY(-120px) rotate(-3deg) scale(.82);
-      animation: signDrop 1.05s .55s cubic-bezier(.16,.9,.28,1.18) forwards;
-      will-change: transform, opacity;
-    }
-
-    @keyframes signDrop {
-      0% { opacity: 0; transform: translateY(-120px) rotate(-3deg) scale(.82); }
-      72% { opacity: 1; transform: translateY(10px) rotate(1deg) scale(1.02); }
-      100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
-    }
-
-    .rope-frame {
-      position: absolute;
-      inset: 0;
-      border: 8px double rgba(236, 203, 147, .85);
-      border-radius: 40px 40px 52px 52px;
-      box-shadow:
-        inset 0 0 0 3px rgba(65, 35, 18, .8),
-        0 24px 50px rgba(0,0,0,.34);
-      background:
-        linear-gradient(180deg, rgba(68, 37, 19, .90), rgba(40, 20, 11, .92)),
-        repeating-linear-gradient(90deg, transparent 0 28px, rgba(255,255,255,.025) 28px 30px);
-      transform: perspective(900px) rotateX(1deg);
-    }
-
-    .rope-frame::before,
-    .rope-frame::after {
-      content: "";
-      position: absolute;
-      top: -64px;
-      width: 4px;
-      height: 70px;
-      background: linear-gradient(#6b4b2d, #c99a58);
-      box-shadow: 0 0 0 2px rgba(40,20,10,.35);
-    }
-
-    .rope-frame::before { left: 24%; }
-    .rope-frame::after { right: 24%; }
-
-    .hero-copy {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-copy > * {
-      opacity: 0;
-      transform: translateY(22px) scale(.96);
-      animation: copyAssemble .65s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    .hero-copy .eyebrow { animation-delay: 1.15s; }
-    .hero-copy .western { animation-delay: 1.32s; }
-    .hero-copy .subtitle { animation-delay: 1.48s; }
-    .hero-copy .name { animation-delay: 1.65s; }
-    .hero-copy .surname { animation-delay: 1.82s; }
-    .hero-copy .date-pill { animation-delay: 2s; }
-
-    @keyframes copyAssemble {
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    .hero .paper::before {
+      inset: 15px;
+      border: 2px solid rgba(80, 42, 21, .28);
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      padding: 8px 14px;
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 16px;
+      border: 1px solid rgba(75, 40, 19, .35);
       border-radius: 999px;
-      font-size: .74rem;
+      font-family: "Cinzel", serif;
+      font-size: .72rem;
+      font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
-      border: 1px solid rgba(255, 229, 181, .28);
-      background: rgba(255, 241, 213, .08);
+      color: var(--ink-soft);
+      background: rgba(255,255,255,.24);
     }
 
-    .western {
-      font-family: "Rye", serif;
-      font-size: clamp(3.2rem, 16vw, 5.8rem);
-      line-height: .9;
-      color: var(--dorado-claro);
-      text-shadow:
-        0 4px 0 #6d3a1f,
-        0 7px 0 #2c160b,
-        0 16px 26px rgba(0,0,0,.38);
-      animation:
-        copyAssemble .65s cubic-bezier(.2,.8,.2,1) 1.32s forwards,
-        titlePulse 3s ease-in-out 2.05s infinite;
+    .hero-kicker {
+      margin: 0;
+      font-family: "Rye", Georgia, serif;
+      font-size: clamp(3.2rem, 14vw, 5.6rem);
+      line-height: .94;
+      color: #6b361c;
+      text-shadow: 0 2px 0 rgba(255,255,255,.45), 0 5px 0 rgba(82, 40, 18, .12);
     }
 
-    @keyframes titlePulse {
-      0%,100% { filter: drop-shadow(0 0 0 rgba(255,218,143,0)); }
-      50% { filter: drop-shadow(0 0 12px rgba(255,218,143,.38)); }
-    }
-
-    .subtitle {
-      margin-top: 14px;
+    .hero-small {
+      margin: 18px 0 8px;
       font-family: "Cinzel", serif;
-      font-size: .9rem;
-      letter-spacing: 4px;
+      font-size: .83rem;
+      letter-spacing: 5px;
       text-transform: uppercase;
     }
 
-    .name {
-      margin: 22px 0 6px;
+    .hero-name {
+      margin: 0;
       font-family: "Cinzel", serif;
-      font-size: clamp(2.15rem, 10vw, 4rem);
-      line-height: 1.02;
+      font-size: clamp(3rem, 15vw, 5.5rem);
+      line-height: 1;
       font-weight: 800;
-      text-wrap: balance;
-      color: #fff8e8;
+      color: var(--ink);
+      letter-spacing: .04em;
     }
 
-    .surname {
-      font-size: .96rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      opacity: .92;
-    }
-
-    .date-pill {
+    .date-seal {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 22px;
-      padding: 12px 18px;
+      justify-content: center;
+      margin-top: 27px;
+      min-height: 48px;
+      padding: 11px 20px;
+      border: 1px solid rgba(71, 39, 20, .35);
       border-radius: 999px;
-      color: var(--cafe-oscuro);
-      background: linear-gradient(180deg, #fff6df, #e8c890);
-      box-shadow:
-        inset 0 0 0 2px rgba(126, 75, 35, .28),
-        0 8px 24px rgba(0,0,0,.22);
+      color: var(--cream);
+      background: linear-gradient(180deg, #714125, #3a2013);
+      box-shadow: 0 7px 0 rgba(46, 23, 11, .24), 0 12px 23px rgba(46, 23, 11, .20);
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .ornament {
+      position: absolute;
+      z-index: 6;
+      pointer-events: none;
+      user-select: none;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 16px rgba(0,0,0,.42));
+    }
+
+    .hero-skull { width: 145px; top: 67px; left: -20px; transform: rotate(-8deg); }
+    .hero-hat { width: 150px; top: 88px; right: -20px; transform: rotate(12deg); }
+    .hero-boots { width: 205px; bottom: -1px; left: -33px; transform: rotate(-5deg); }
+    .hero-rope { width: 150px; right: -19px; bottom: 28px; transform: rotate(13deg); }
+
+    .section-title {
+      margin: 0 0 16px;
+      text-align: center;
+      color: var(--ink);
+      font-family: "Cinzel", serif;
+      font-size: clamp(1.75rem, 7vw, 2.45rem);
+      line-height: 1.16;
       font-weight: 800;
     }
 
-    .scene-divider {
-      height: 70px;
-      position: relative;
-      margin-top: -1px;
-      background: var(--crema);
-      clip-path: polygon(0 55%, 10% 43%, 22% 60%, 35% 42%, 48% 60%, 63% 40%, 76% 58%, 90% 42%, 100% 54%, 100% 100%, 0 100%);
-    }
-
-    section {
-      position: relative;
-      padding: 48px 20px;
-    }
-
-    section:nth-of-type(even) {
-      background: rgba(255, 249, 238, .56);
-    }
-
-    .section-title {
-      text-align: center;
-      font-family: "Cinzel", serif;
-      font-size: clamp(1.8rem, 7vw, 2.4rem);
-      line-height: 1.18;
-      color: var(--cafe-oscuro);
-      margin-bottom: 17px;
-    }
-
-    .section-title span {
+    .section-title small {
       display: block;
-      margin-bottom: 5px;
-      font-family: "Rye", serif;
-      font-size: .95rem;
-      color: var(--dorado);
+      margin-bottom: 7px;
+      font-family: "Rye", Georgia, serif;
+      font-size: .88rem;
+      font-weight: 400;
+      letter-spacing: .04em;
+      color: #9b5f2b;
     }
 
-    .intro {
-      max-width: 460px;
-      margin-inline: auto;
+    .lead {
+      max-width: 430px;
+      margin: 0 auto;
       text-align: center;
-      line-height: 1.85;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #4c3325;
     }
 
-    .divider {
-      width: 150px;
+    .brand-divider {
+      width: 160px;
       height: 22px;
-      margin: 24px auto 4px;
+      margin: 25px auto;
       position: relative;
     }
 
-    .divider::before,
-    .divider::after {
+    .brand-divider::before,
+    .brand-divider::after {
       content: "";
       position: absolute;
       top: 10px;
-      width: 58px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cafe));
+      width: 64px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #8a542c);
     }
 
-    .divider::before { left: 0; }
-    .divider::after { right: 0; transform: scaleX(-1); }
+    .brand-divider::before { left: 0; }
+    .brand-divider::after { right: 0; transform: scaleX(-1); }
 
-    .divider span {
+    .brand-divider span {
       position: absolute;
+      top: 2px;
       left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-      color: var(--dorado);
-      font-size: 20px;
-    }
-
-    .card {
-      position: relative;
-      margin-top: 20px;
-      padding: 25px 19px;
-      overflow: hidden;
-      border: 1px solid rgba(122, 71, 38, .18);
-      border-radius: var(--radio);
-      background:
-        linear-gradient(160deg, rgba(255,255,255,.96), rgba(248,230,201,.94));
-      box-shadow: var(--sombra);
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: 8px;
-      pointer-events: none;
-      border: 1px dashed rgba(123, 73, 37, .25);
-      border-radius: calc(var(--radio) - 8px);
+      width: 18px;
+      height: 18px;
+      transform: translateX(-50%) rotate(45deg);
+      border: 1px solid #8a542c;
+      background: rgba(255,255,255,.18);
     }
 
     .people-grid {
       display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
-      position: relative;
-      z-index: 1;
+      margin-top: 28px;
     }
 
-    .person-box {
-      padding: 19px 15px;
+    .person {
+      min-height: 150px;
+      padding: 20px 15px;
+      display: grid;
+      align-content: center;
       text-align: center;
-      border-radius: 22px;
-      background:
-        linear-gradient(135deg, rgba(228,177,95,.17), rgba(49,94,119,.10));
-      border: 1px solid rgba(122,71,38,.13);
+      border: 1px solid rgba(88, 49, 25, .22);
+      border-radius: 12px;
+      background: rgba(255,255,255,.23);
     }
 
-    .person-box h3 {
-      margin-bottom: 8px;
+    .person h3 {
+      margin: 0 0 9px;
       font-family: "Cinzel", serif;
-      color: var(--cafe);
+      font-size: 1rem;
+      color: #7b451f;
     }
 
-    .person-box p {
-      line-height: 1.7;
-      font-weight: 500;
-    }
+    .person p { margin: 0; line-height: 1.65; font-weight: 600; }
+
+    .side-horse { width: 170px; right: -55px; bottom: 12px; transform: rotate(-4deg); opacity: .92; }
+    .side-revolver { width: 155px; left: -51px; top: 42px; transform: rotate(-20deg); opacity: .78; }
 
     .countdown {
       display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 8px;
-      margin-top: 24px;
-      position: relative;
-      z-index: 1;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 28px;
     }
 
     .time-box {
-      padding: 17px 5px 13px;
+      padding: 18px 4px 14px;
       text-align: center;
-      color: var(--crema);
-      border-radius: 18px;
-      background:
-        linear-gradient(180deg, #5d351f, #29150c);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.12),
-        0 10px 22px rgba(51,25,11,.22);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 11px;
+      background: linear-gradient(180deg, #684027, #321d12);
+      box-shadow: 0 9px 16px rgba(46, 22, 10, .21);
     }
 
     .time-box strong {
       display: block;
       font-family: "Cinzel", serif;
-      font-size: clamp(1.35rem, 7vw, 2.15rem);
-      color: var(--dorado-claro);
+      font-size: clamp(1.35rem, 7vw, 2.25rem);
+      color: #f7d999;
     }
 
-    .time-box small {
-      font-size: .66rem;
-      letter-spacing: .8px;
+    .time-box span {
+      display: block;
+      margin-top: 2px;
+      font-size: .64rem;
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    .event-card::before {
-      content: "✦";
-      position: absolute;
-      top: -27px;
-      right: 12px;
-      font-size: 7rem;
-      color: rgba(228, 177, 95, .16);
+    .count-boots { width: 150px; right: -38px; bottom: -12px; transform: rotate(7deg); }
+
+    .event-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 26px;
     }
 
     .event-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      margin: 18px 0;
-      position: relative;
-      z-index: 1;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(87, 49, 25, .18);
+      background: rgba(255,255,255,.24);
     }
 
-    .icon {
-      flex: 0 0 48px;
+    .event-icon {
       width: 48px;
       height: 48px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      color: white;
-      font-size: 21px;
-      background: linear-gradient(145deg, #3d718c, #244b61);
-      box-shadow: 0 9px 18px rgba(35,72,93,.25);
+      color: #f8e9c5;
+      background: linear-gradient(180deg, #315b6f, #203c4a);
+      box-shadow: 0 8px 15px rgba(37, 67, 80, .23);
     }
 
-    .event-row h3 {
-      margin-bottom: 4px;
-      color: var(--cafe-oscuro);
-      font-size: 1rem;
-    }
-
-    .event-row p {
-      line-height: 1.58;
-    }
+    .event-icon svg { width: 24px; height: 24px; stroke: currentColor; }
+    .event-row h3 { margin: 0 0 4px; font-family: "Cinzel", serif; font-size: .92rem; }
+    .event-row p { margin: 0; line-height: 1.55; color: #513727; }
 
     .map-frame {
       width: 100%;
-      height: 270px;
-      margin-top: 18px;
-      position: relative;
-      z-index: 1;
+      height: 255px;
+      margin-top: 17px;
       border: 0;
-      border-radius: 22px;
-      box-shadow: var(--sombra);
+      border-radius: 12px;
+      box-shadow: 0 16px 30px rgba(56, 30, 15, .20);
     }
 
-    .btns {
+    .button-row {
       display: grid;
-      gap: 12px;
-      margin-top: 22px;
-      position: relative;
-      z-index: 1;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      margin-top: 17px;
     }
 
     .btn {
-      min-height: 54px;
+      min-height: 52px;
       display: inline-flex;
       justify-content: center;
       align-items: center;
       gap: 9px;
-      padding: 14px 18px;
-      border: none;
+      border: 0;
       border-radius: 999px;
+      padding: 13px 17px;
       cursor: pointer;
+      text-align: center;
       font-weight: 800;
-      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.04);
-      box-shadow: 0 14px 28px rgba(59,34,19,.22);
-    }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.04); box-shadow: 0 12px 22px rgba(53, 27, 13, .22); }
+    .btn svg { width: 19px; height: 19px; stroke: currentColor; }
+    .btn-primary { color: var(--cream); background: linear-gradient(180deg, #7e4b2c, #4b2a19); }
+    .btn-secondary { color: #402517; border: 1px solid rgba(76, 42, 22, .36); background: rgba(255,255,255,.28); }
 
-    .btn-primary {
-      color: var(--crema);
-      background: linear-gradient(180deg, #97603a, #63371f);
-    }
+    .event-rope { width: 145px; left: -45px; bottom: -6px; transform: rotate(-14deg); opacity: .9; }
+    .reception-skull { width: 132px; right: -33px; bottom: -12px; transform: rotate(8deg); }
 
-    .btn-outline {
-      color: var(--cafe-oscuro);
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(122,71,38,.35);
-    }
-
-    .btn-whatsapp {
-      position: relative;
-      overflow: hidden;
-      color: #062d18;
-      background: linear-gradient(180deg, #55e586, #25d366);
-      box-shadow: 0 16px 34px rgba(23, 126, 63, .35);
-    }
-
-    .btn-whatsapp::after {
-      content: "";
-      position: absolute;
-      top: -40%;
-      left: -25%;
-      width: 20%;
-      height: 180%;
-      transform: rotate(22deg);
-      background: rgba(255,255,255,.45);
-      animation: buttonShine 3.2s infinite;
-    }
-
-    @keyframes buttonShine {
-      0%, 55% { left: -30%; }
-      75%, 100% { left: 120%; }
-    }
-
-    .theme-box {
-      color: var(--crema);
-      text-align: center;
+    .dress-card {
+      color: var(--cream);
+      border-color: rgba(255,255,255,.15);
       background:
-        linear-gradient(160deg, rgba(50,25,12,.72), rgba(39,72,91,.72)),
-        url("assets/vaquera.jpg") center / cover no-repeat;
+        radial-gradient(circle at 50% 0, rgba(215, 158, 78, .16), transparent 35%),
+        linear-gradient(155deg, rgba(55, 30, 18, .98), rgba(30, 50, 58, .96));
     }
 
-    .theme-box::after {
-      border-color: rgba(255,245,220,.22);
+    .dress-card::before { border-color: rgba(255,255,255,.16); }
+    .dress-card .section-title { color: var(--cream); }
+    .dress-card .section-title small { color: #e0b36d; }
+    .dress-card .lead { color: #f2e5c9; }
+
+    .dress-badge {
+      width: fit-content;
+      max-width: 100%;
+      margin: 22px auto 0;
+      padding: 11px 17px;
+      border: 1px solid rgba(238, 199, 130, .55);
+      border-radius: 999px;
+      color: #f7d99c;
+      background: rgba(20, 10, 6, .35);
+      font-weight: 800;
     }
 
-    .theme-box .section-title {
-      color: var(--crema);
+    .dress-hat { width: 135px; right: -30px; top: 6px; transform: rotate(12deg); }
+    .dress-revolver { width: 145px; left: -54px; bottom: 5px; transform: rotate(18deg); opacity: .8; }
+
+    .gift-wrap { text-align: center; }
+    .gift-number { margin: 13px 0 21px; font-family: "Cinzel", serif; font-weight: 700; color: #74451f; }
+
+    .gift-button {
+      width: min(100%, 320px);
+      min-height: 58px;
+      margin: 4px auto 0;
+      color: var(--cream);
+      background: linear-gradient(180deg, #b17535, #70401f);
+      box-shadow: 0 8px 0 #4f2b17, 0 16px 27px rgba(59, 31, 15, .25);
     }
 
-    .theme-icons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 18px 0;
-      font-size: 2.25rem;
-    }
+    .gift-button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #4f2b17, 0 14px 25px rgba(59,31,15,.27); }
+    .gift-rope { width: 148px; left: -36px; top: -4px; transform: rotate(-14deg); }
+    .gift-boots { width: 145px; right: -37px; bottom: -10px; transform: rotate(8deg); }
 
-    .theme-icons span {
-      display: inline-block;
-      animation: iconBounce 2.6s ease-in-out infinite;
-    }
+    .gallery-paper { padding-bottom: 34px; }
+    .gallery-intro { margin-bottom: 26px; }
 
-    .theme-icons span:nth-child(2) { animation-delay: -.5s; }
-    .theme-icons span:nth-child(3) { animation-delay: -1s; }
-    .theme-icons span:nth-child(4) { animation-delay: -1.5s; }
-
-    @keyframes iconBounce {
-      0%,100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-8px) rotate(3deg); }
-    }
-
-    .gift {
-      text-align: center;
-      background:
-        radial-gradient(circle at 50% 0, rgba(228,177,95,.23), transparent 35%),
-        rgba(255,248,236,.94);
-    }
-
-    .gift-emoji {
-      font-size: 2.8rem;
-      margin-bottom: 8px;
-      animation: envelope 2.8s ease-in-out infinite;
-    }
-
-    @keyframes envelope {
-      0%,100% { transform: rotate(-3deg) scale(1); }
-      50% { transform: rotate(3deg) scale(1.08); }
-    }
-
-    .gallery {
+    .gallery-grid {
       display: grid;
-      gap: 16px;
-      margin-top: 24px;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      align-items: stretch;
     }
 
-    .photo {
-      min-height: 235px;
+    .gallery-item {
       position: relative;
+      min-height: 380px;
       overflow: hidden;
-      border: 9px solid #f3dfbd;
-      border-radius: 20px;
-      background-position: center;
-      background-size: cover;
-      box-shadow:
-        0 17px 35px rgba(61,34,16,.24),
-        inset 0 0 0 1px rgba(80,45,22,.18);
-      transform: rotate(-1deg);
-      transition: transform .45s ease;
+      border: 9px solid #f7e7c6;
+      border-radius: 6px;
+      padding: 0;
+      background: #ddd;
+      box-shadow: 0 16px 28px rgba(52, 26, 12, .27);
+      cursor: zoom-in;
+      transform: rotate(-.8deg);
+      transition: transform .25s ease, box-shadow .25s ease;
     }
 
-    .photo:nth-child(even) {
-      transform: rotate(1.2deg);
-    }
+    .gallery-item:nth-child(2) { transform: rotate(1.2deg); }
+    .gallery-item:hover { transform: rotate(0) scale(1.012); box-shadow: 0 22px 34px rgba(52,26,12,.32); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item:first-child img { object-position: 50% 48%; }
+    .gallery-item:nth-child(2) img { object-position: 50% 28%; }
 
-    .photo:hover {
-      transform: rotate(0) scale(1.02);
-    }
-
-    .photo:nth-child(1) {
-      background-image:
-        linear-gradient(180deg, rgba(42,22,13,.02), rgba(42,22,13,.58)),
-        url("https://i.postimg.cc/0jTg2GqT/iglesia-1.jpg");
-    }
-
-    .photo:nth-child(2) {
-      background-image:
-        linear-gradient(180deg, rgba(42,22,13,.02), rgba(42,22,13,.58)),
-        url("https://i.postimg.cc/xdtWbV2F/iglesia-2.jpg");
-    }
-
-    .photo:nth-child(3) {
-      background-image:
-        linear-gradient(180deg, rgba(42,22,13,.02), rgba(42,22,13,.58)),
-        url("https://i.postimg.cc/XvYnP8NL/images.jpg");
-    }
-
-    .photo span {
+    .gallery-item::after {
+      content: "Ver foto";
       position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: #fff6dd;
+      background: rgba(42, 21, 11, .72);
+      backdrop-filter: blur(8px);
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .25s ease;
+    }
+
+    .gallery-item:hover::after { opacity: 1; transform: none; }
+    .gallery-hat { width: 112px; right: -22px; top: 3px; transform: rotate(12deg); }
+
+    .footer {
+      position: relative;
+      padding: 72px 22px 115px;
+      text-align: center;
+      color: var(--cream);
+      background:
+        linear-gradient(180deg, rgba(33,17,10,.75), rgba(28,13,7,.95)),
+        repeating-linear-gradient(90deg, #4b2919 0 62px, #5b321e 62px 66px, #392015 66px 70px);
+    }
+
+    .footer h2 { margin: 0 0 8px; font-family: "Cinzel", serif; font-size: 2.25rem; color: #f0cf8e; }
+    .footer p { margin: 0; color: #f2e4c5; }
+    .footer-horse { width: 130px; left: -25px; bottom: 0; transform: rotate(-5deg); opacity: .76; }
+    .footer-skull { width: 115px; right: -22px; bottom: 5px; transform: rotate(7deg); opacity: .74; }
+
+    .music-toggle {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 120;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      min-height: 46px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      color: #fff0d1;
+      background: rgba(41, 21, 12, .84);
+      box-shadow: 0 10px 24px rgba(0,0,0,.26);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .music-toggle svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .floating-confirm {
+      position: fixed;
       left: 14px;
       right: 14px;
-      bottom: 14px;
-      color: white;
-      font-weight: 700;
-      text-shadow: 0 3px 13px rgba(0,0,0,.55);
+      bottom: 12px;
+      z-index: 115;
+      width: min(calc(100% - 28px), 520px);
+      margin: 0 auto;
+    }
+
+    .whatsapp-btn {
+      width: 100%;
+      color: #0b2d1a;
+      background: linear-gradient(180deg, #61e58b, #25d366);
+      box-shadow: 0 14px 31px rgba(16, 101, 49, .34);
+    }
+
+    .whatsapp-btn svg { fill: currentColor; stroke: none; }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(18, 8, 4, .92);
+      backdrop-filter: blur(9px);
+    }
+
+    .lightbox.open { display: grid; }
+    .lightbox img { max-width: min(96vw, 980px); max-height: 86vh; object-fit: contain; border: 8px solid #f5e3bd; box-shadow: 0 24px 70px rgba(0,0,0,.58); }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      color: #fff4da;
+      background: rgba(75, 40, 22, .8);
+      cursor: pointer;
+      font-size: 1.7rem;
+      line-height: 1;
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(38px) scale(.975);
-      transition:
-        opacity .8s ease,
-        transform .8s cubic-bezier(.2,.8,.2,1);
+      transform: translateY(28px);
+      transition: opacity .72s ease, transform .72s ease;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .reveal-left {
-      transform: translateX(-42px) rotate(-1deg);
-    }
-
-    .reveal-right {
-      transform: translateX(42px) rotate(1deg);
-    }
-
-    .reveal-left.visible,
-    .reveal-right.visible {
-      transform: none;
-    }
-
-    .footer {
-      position: relative;
-      overflow: hidden;
-      padding: 55px 20px 105px;
-      text-align: center;
-      color: var(--crema);
-      background:
-        linear-gradient(rgba(34,17,9,.92), rgba(34,17,9,.96)),
-        repeating-linear-gradient(90deg, #4e2c19 0 34px, #5d3520 34px 68px);
-    }
-
-    .footer::before {
-      content: "★";
-      position: absolute;
-      top: -55px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 9rem;
-      color: rgba(228,177,95,.10);
-    }
-
-    .footer h2 {
-      position: relative;
-      font-family: "Cinzel", serif;
-      font-size: 2rem;
-      color: var(--dorado-claro);
-      margin-bottom: 9px;
-    }
-
-    .floating-confirm {
-      position: fixed;
-      left: 15px;
-      right: 15px;
-      bottom: 13px;
-      z-index: 140;
-      max-width: 520px;
-      margin: 0 auto;
-    }
+    .reveal.visible { opacity: 1; transform: none; }
 
     @media (min-width: 700px) {
       body { padding: 28px 0; }
-
-      .page {
-        border-radius: 36px;
-      }
-
-      .hero {
-        min-height: 820px;
-      }
-
-      .people-grid,
-      .btns,
-      .gallery {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .gallery .photo:first-child {
-        grid-column: 1 / -1;
-      }
-
-      .floating-confirm {
-        left: 50%;
-        right: auto;
-        width: 520px;
-        transform: translateX(-50%);
-      }
+      .page { border-radius: 30px; }
     }
 
-    @media (max-width: 420px) {
-      .music-toggle {
-        top: 10px;
-        right: 10px;
-        font-size: .78rem;
-      }
-
-      .hero {
-        padding-inline: 14px;
-      }
-
-      .hero-content {
-        padding-inline: 13px;
-      }
-
-      .countdown {
-        gap: 6px;
-      }
-
-      .time-box {
-        padding-inline: 2px;
-      }
+    @media (max-width: 540px) {
+      .wood-stage { padding-inline: 14px; }
+      .paper { padding: 38px 22px; }
+      .hero { min-height: 760px; }
+      .hero .paper { width: 88%; padding: 52px 19px 44px; }
+      .hero-skull { width: 112px; left: -27px; }
+      .hero-hat { width: 118px; right: -29px; }
+      .hero-boots { width: 165px; left: -37px; }
+      .hero-rope { width: 118px; right: -26px; }
+      .people-grid, .button-row { grid-template-columns: 1fr; }
+      .countdown { gap: 6px; }
+      .time-box { padding-inline: 1px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item { min-height: 360px; }
+      .gallery-item:first-child { min-height: 270px; }
+      .side-revolver, .event-rope, .dress-revolver, .gift-rope { left: -72px; opacity: .58; }
+      .side-horse, .count-boots, .reception-skull, .dress-hat, .gift-boots, .gallery-hat { right: -55px; opacity: .68; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .001ms !important;
-      }
-
-      .reveal,
-      .hero-content,
-      .hero-copy > *,
-      .string-lights,
-      .decor {
-        opacity: 1;
-        transform: none;
-      }
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
-
 <body>
-  <audio id="bgMusic" src="antiguita-calibre.mp3" loop preload="auto"></audio>
+  <audio id="bgMusic" src="brooklyn-baby.mp3" loop preload="auto" autoplay></audio>
 
-  <div class="ambient-lights" aria-hidden="true"></div>
-  <div class="dust" id="dust" aria-hidden="true"></div>
-
-  <button class="music-toggle" id="musicToggle" type="button" aria-label="Reproducir música" aria-pressed="false">
-    <span class="music-icon" id="musicIcon">▶</span>
-    <span id="musicText">Reproducir</span>
+  <button class="music-toggle" id="musicToggle" type="button" aria-label="Pausar música" aria-pressed="true" title="Reproducir o pausar música">
+    <svg id="musicIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
   </button>
 
   <main class="page">
-    <header class="hero" id="inicio">
-      <div class="string-lights" aria-hidden="true">
-        <span style="left:8%"></span>
-        <span style="left:22%; animation-delay:-.4s"></span>
-        <span style="left:37%; animation-delay:-1.1s"></span>
-        <span style="left:52%; animation-delay:-.7s"></span>
-        <span style="left:68%; animation-delay:-1.5s"></span>
-        <span style="left:84%; animation-delay:-.2s"></span>
+    <header class="wood-stage hero" id="inicio">
+      <div class="lights" aria-hidden="true">
+        <i style="left:8%;animation-delay:-.2s"></i><i style="left:23%;animation-delay:-1s"></i>
+        <i style="left:39%;animation-delay:-.5s"></i><i style="left:55%;animation-delay:-1.4s"></i>
+        <i style="left:71%;animation-delay:-.8s"></i><i style="left:88%;animation-delay:-1.8s"></i>
       </div>
 
-      <div class="decor hat" aria-hidden="true">🤠</div>
-      <div class="decor boots" aria-hidden="true">👢</div>
-      <div class="decor cactus" aria-hidden="true">🌵</div>
+      <img class="ornament hero-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
+      <img class="ornament hero-hat" src="https://i.postimg.cc/0QQpyLp1/cowboy-hat-png-2.png" alt="" aria-hidden="true">
+      <img class="ornament hero-boots" src="https://i.postimg.cc/k5wQ9nt3/59ac2e1ea242c6528702d919.png" alt="" aria-hidden="true">
+      <img class="ornament hero-rope" src="https://i.postimg.cc/8CwRD1rV/a-rope-is-wrapped-on-transparent-background-free-png.webp" alt="" aria-hidden="true">
 
-      <div class="hero-content" id="heroContent">
-        <div class="rope-frame" aria-hidden="true"></div>
-
-        <div class="hero-copy">
-          <div class="eyebrow">✦ Una noche inolvidable ✦</div>
-          <div class="western">XV años</div>
-          <p class="subtitle">Con mucha ilusión</p>
-
-          <h1 class="name">Brenda Monserrat</h1>
-          <p class="surname">Hernández Martínez</p>
-
-          <div class="date-pill">★ 12 de septiembre de 2026 · 5:00 PM</div>
-
-        </div>
+      <div class="paper reveal">
+        <span class="eyebrow">Una noche inolvidable</span>
+        <p class="hero-kicker">XV años</p>
+        <p class="hero-small">Con mucha ilusión</p>
+        <h1 class="hero-name">MONSE</h1>
+        <div class="date-seal">12 de septiembre de 2026 · 5:00 PM</div>
       </div>
     </header>
 
-    <div class="scene-divider" aria-hidden="true"></div>
-
-    <section id="invitacion">
-      <div class="reveal">
-        <h2 class="section-title">
-          <span>Con el corazón lleno de alegría</span>
-          Estás invitado
-        </h2>
-
-        <p class="intro">
-          Hay momentos que se sueñan toda la vida y se guardan para siempre en el corazón.
-          Me encantará compartir contigo la celebración de mis XV años.
-        </p>
-
-        <div class="divider"><span>✦</span></div>
-      </div>
-
-      <div class="card reveal reveal-left">
-        <div class="people-grid">
-          <div class="person-box">
-            <h3>Mis papás</h3>
-            <p>
-              Eric Hernández Ramírez<br>
-              Silvia Monserrat Martínez Ledesma
-            </p>
-          </div>
-
-          <div class="person-box">
-            <h3>Mis padrinos</h3>
-            <p>
-              José Gérard Velázquez Flores<br>
-              Lorena Viccon Wong
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contador">
-      <div class="reveal">
-        <h2 class="section-title">
-          <span>Falta poco para</span>
-          El gran día
-        </h2>
-      </div>
-
-      <div class="card reveal reveal-right">
-        <p class="intro">Cuenta regresiva para la celebración</p>
-
-        <div class="countdown" aria-label="Contador regresivo">
-          <div class="time-box"><strong id="days">00</strong><small>Días</small></div>
-          <div class="time-box"><strong id="hours">00</strong><small>Horas</small></div>
-          <div class="time-box"><strong id="minutes">00</strong><small>Min</small></div>
-          <div class="time-box"><strong id="seconds">00</strong><small>Seg</small></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="evento">
-      <div class="reveal">
-        <h2 class="section-title">
-          <span>Ceremonia religiosa</span>
-          Misa
-        </h2>
-      </div>
-
-      <div class="card event-card reveal">
-        <div class="event-row">
-          <div class="icon">⛪</div>
-          <div>
-            <h3>Iglesia</h3>
-            <p>Parroquia de Nuestra Señora de Guadalupe</p>
-          </div>
-        </div>
-
-        <div class="event-row">
-          <div class="icon">📍</div>
-          <div>
-            <h3>Dirección</h3>
-            <p>18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.</p>
-          </div>
-        </div>
-
-        <div class="event-row">
-          <div class="icon">🗓️</div>
-          <div>
-            <h3>Fecha y hora</h3>
-            <p>Sábado 12 de septiembre de 2026 · 5:00 PM</p>
-          </div>
-        </div>
-
-        <iframe
-          class="map-frame"
-          title="Mapa de la parroquia"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Parroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe%2C%2018%20de%20Marzo%20309%2C%20Manuel%20Avila%20Camacho%2C%20Poza%20Rica%20de%20Hidalgo%2C%20Ver.&output=embed">
-        </iframe>
-
-        <div class="btns">
-          <a class="btn btn-primary" href="https://maps.app.goo.gl/ZAFYXUNJsdaTfYmLA" target="_blank" rel="noopener noreferrer">
-            📍 Abrir en Maps
-          </a>
-
-          <button class="btn btn-outline" id="copyAddress" type="button">
-            📋 Copiar dirección
+    <section class="wood-stage" id="galeria">
+      <img class="ornament gallery-hat" src="https://i.postimg.cc/0QQpyLp1/cowboy-hat-png-2.png" alt="" aria-hidden="true">
+      <div class="paper gallery-paper reveal">
+        <h2 class="section-title"><small>Momentos especiales</small>Galería de MONSE</h2>
+        <p class="lead gallery-intro">Dos momentos especiales que forman parte de este sueño.</p>
+        <div class="gallery-grid">
+          <button class="gallery-item" type="button" data-photo="0" aria-label="Abrir primera fotografía de MONSE">
+            <img src="https://i.postimg.cc/gcqDmXxd/Inv-1.jpg" alt="MONSE con atuendo vaquero">
+          </button>
+          <button class="gallery-item" type="button" data-photo="1" aria-label="Abrir segunda fotografía de MONSE">
+            <img src="https://i.postimg.cc/XNc84Gr0/Inv-2.jpg" alt="Retrato de MONSE con atuendo vaquero">
           </button>
         </div>
       </div>
     </section>
 
-    <section id="tematica">
-      <div class="card theme-box reveal">
-        <h2 class="section-title">
-          <span>Temática</span>
-          Vaquera
-        </h2>
 
-        <div class="theme-icons" aria-hidden="true">
-          <span>🤠</span>
-          <span>🐎</span>
-          <span>👢</span>
-          <span>🌵</span>
+    <section class="wood-stage" id="invitacion">
+      <img class="ornament side-revolver" src="https://i.postimg.cc/FKGym9JF/gun-PNG1389.png" alt="" aria-hidden="true">
+      <img class="ornament side-horse" src="https://i.postimg.cc/W4SGj2qB/580b57fbd9996e24bc43bc29.png" alt="" aria-hidden="true">
+
+      <div class="paper reveal">
+        <h2 class="section-title"><small>Con el corazón lleno de alegría</small>Estás invitado</h2>
+        <p class="lead">Hay momentos que se sueñan toda la vida y se guardan para siempre en el corazón. Me encantará compartir contigo la celebración de mis XV años.</p>
+        <div class="brand-divider" aria-hidden="true"><span></span></div>
+
+        <div class="people-grid">
+          <article class="person">
+            <h3>Mis papás</h3>
+            <p>Eric Hernández Ramírez<br>Silvia Monserrat Martínez Ledesma</p>
+          </article>
+          <article class="person">
+            <h3>Mis padrinos</h3>
+            <p>José Gerardo Velázquez Flores<br>Lorena Viccon Wong</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wood-stage" id="contador">
+      <img class="ornament count-boots" src="https://i.postimg.cc/V66jk3j8/5c5a9e908c21c9029a0f4923.png" alt="" aria-hidden="true">
+      <div class="paper reveal">
+        <h2 class="section-title"><small>Falta poco para</small>El gran día</h2>
+        <p class="lead">Cuenta regresiva para la celebración.</p>
+        <div class="countdown" aria-label="Cuenta regresiva">
+          <div class="time-box"><strong id="days">00</strong><span>Días</span></div>
+          <div class="time-box"><strong id="hours">00</strong><span>Horas</span></div>
+          <div class="time-box"><strong id="minutes">00</strong><span>Minutos</span></div>
+          <div class="time-box"><strong id="seconds">00</strong><span>Segundos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wood-stage" id="evento">
+      <img class="ornament event-rope" src="https://i.postimg.cc/8CwRD1rV/a-rope-is-wrapped-on-transparent-background-free-png.webp" alt="" aria-hidden="true">
+      <div class="paper reveal">
+        <h2 class="section-title"><small>Ceremonia religiosa</small>Misa</h2>
+
+        <div class="event-list">
+          <div class="event-row">
+            <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 21h16M6 21V9l6-5 6 5v12M9 21v-7h6v7M12 4V1M10.5 2.5h3"></path></svg></span>
+            <div><h3>Iglesia</h3><p>Parroquia de Nuestra Señora de Guadalupe</p></div>
+          </div>
+          <div class="event-row">
+            <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg></span>
+            <div><h3>Dirección</h3><p>18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.</p></div>
+          </div>
+          <div class="event-row">
+            <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg></span>
+            <div><h3>Fecha y hora</h3><p>Sábado 12 de septiembre de 2026 · 5:00 PM</p></div>
+          </div>
         </div>
 
-        <p>
-          Ven con tu mejor estilo vaquero: botas, sombrero, mezclilla o detalles western.
-        </p>
+        <iframe class="map-frame" title="Mapa de la parroquia" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Parroquia%20de%20Nuestra%20Se%C3%B1ora%20de%20Guadalupe%2C%2018%20de%20Marzo%20309%2C%20Manuel%20Avila%20Camacho%2C%20Poza%20Rica%20de%20Hidalgo%2C%20Ver.&output=embed"></iframe>
+
+        <div class="button-row">
+          <a class="btn btn-primary" href="https://maps.app.goo.gl/ZAFYXUNJsdaTfYmLA" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+            Abrir en Maps
+          </a>
+          <button class="btn btn-secondary" id="copyAddress" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"></path></svg>
+            Copiar dirección
+          </button>
+        </div>
       </div>
     </section>
 
-    <section id="regalo">
-      <div class="card gift reveal reveal-left">
-        <div class="gift-emoji">💌</div>
-        <h2 class="section-title">
-          <span>Detalle especial</span>
-          Lluvia de sobres
-        </h2>
+    <section class="wood-stage" id="recepcion">
+      <img class="ornament reception-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
+      <div class="paper reveal">
+        <h2 class="section-title"><small>Después de la ceremonia</small>Recepción</h2>
+        <div class="event-row">
+          <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 21V8l8-5 8 5v13M8 21v-7h8v7M7 10h2M15 10h2"></path></svg></span>
+          <div><h3>Salón Samsara</h3><p>Samsara Salón de Eventos</p></div>
+        </div>
 
-        <p class="intro">
-          Tu presencia es el mejor regalo. Si deseas tener un detalle conmigo,
-          habrá lluvia de sobres.
-        </p>
+        <iframe class="map-frame" title="Mapa de Salón Samsara" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Samsara%20Sal%C3%B3n%20de%20Eventos%2C%20Poza%20Rica%2C%20Veracruz&z=17&output=embed"></iframe>
+
+        <div class="button-row" style="grid-template-columns:1fr">
+          <a class="btn btn-primary" href="https://maps.app.goo.gl/eYQptMHX14NEq9zC9" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+            Abrir ubicación
+          </a>
+        </div>
       </div>
     </section>
 
-    <section id="galeria">
-      <div class="reveal">
-        <h2 class="section-title">
-          <span>Recuerdos del lugar</span>
-          Galería
-        </h2>
-
-        <p class="intro">
-          Reemplaza estas imágenes por fotografías propias o autorizadas dentro de la carpeta
-          <strong>assets</strong>.
-        </p>
+    <section class="wood-stage" id="tematica">
+      <img class="ornament dress-hat" src="https://i.postimg.cc/0QQpyLp1/cowboy-hat-png-2.png" alt="" aria-hidden="true">
+      <img class="ornament dress-revolver" src="https://i.postimg.cc/FKGym9JF/gun-PNG1389.png" alt="" aria-hidden="true">
+      <div class="paper dress-card reveal">
+        <h2 class="section-title"><small>Código de vestimenta</small>Vaquera</h2>
+        <p class="lead">Botas, sombrero, mezclilla o detalles western.</p>
+        <p class="dress-badge">No usar color blanco ni beige.</p>
       </div>
+    </section>
 
-      <div class="gallery">
-        <div class="photo reveal reveal-left"><span></span></div>
-        <div class="photo reveal reveal-right"><span></span></div>
-        <div class="photo reveal reveal-left"><span></span></div>
+    <section class="wood-stage" id="regalos">
+      <img class="ornament gift-rope" src="https://i.postimg.cc/8CwRD1rV/a-rope-is-wrapped-on-transparent-background-free-png.webp" alt="" aria-hidden="true">
+      <img class="ornament gift-boots" src="https://i.postimg.cc/k5wQ9nt3/59ac2e1ea242c6528702d919.png" alt="" aria-hidden="true">
+      <div class="paper gift-wrap reveal">
+        <h2 class="section-title"><small>Detalle especial</small>Lluvia de sobres</h2>
+        <p class="lead">Tu presencia es el mejor regalo. Si deseas tener un detalle conmigo, habrá lluvia de sobres.</p>
+        <p class="gift-number">Mesa de regalos · Evento 60009165</p>
+        <a class="btn gift-button" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60009165" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"></rect><path d="M12 8v13M3 12h18M7.5 8C5 8 4 6.7 4 5.5S5 3 6.5 3C9 3 12 8 12 8M16.5 8C19 8 20 6.7 20 5.5S19 3 17.5 3C15 3 12 8 12 8"></path></svg>
+          Ver mesa de regalos
+        </a>
       </div>
     </section>
 
     <footer class="footer">
-      <h2>Brenda Monserrat</h2>
+      <img class="ornament footer-horse" src="https://i.postimg.cc/W4SGj2qB/580b57fbd9996e24bc43bc29.png" alt="" aria-hidden="true">
+      <img class="ornament footer-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
+      <h2>MONSE</h2>
       <p>Gracias por acompañarme en este día tan especial.</p>
     </footer>
   </main>
 
   <div class="floating-confirm">
-    <button class="btn btn-whatsapp" id="whatsappBtn" type="button">
-      💬 Confirmar asistencia por WhatsApp
+    <button class="btn whatsapp-btn" id="whatsappBtn" type="button">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M19.11 17.34c-.27-.14-1.6-.79-1.85-.88-.25-.09-.43-.14-.61.14-.18.27-.7.88-.86 1.06-.16.18-.32.2-.59.07-.27-.14-1.14-.42-2.17-1.34-.8-.71-1.34-1.59-1.5-1.86-.16-.27-.02-.42.12-.55.12-.12.27-.32.41-.48.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.48-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.61-.47h-.52c-.18 0-.48.07-.73.34-.25.27-.95.93-.95 2.27s.98 2.63 1.11 2.81c.14.18 1.92 2.93 4.65 4.11.65.28 1.16.45 1.56.58.66.21 1.25.18 1.72.11.52-.08 1.6-.65 1.83-1.29.23-.63.23-1.18.16-1.29-.07-.11-.25-.18-.52-.32z"></path><path d="M26.7 5.3A14.9 14.9 0 0 0 3.25 23.26L1.2 30.8l7.72-2.03A14.92 14.92 0 0 0 30.8 15.6c0-3.98-1.55-7.72-4.1-10.3zm-10.83 23a12.4 12.4 0 0 1-6.33-1.73l-.45-.27-4.58 1.2 1.22-4.46-.29-.46a12.43 12.43 0 1 1 10.43 5.72z"></path></svg>
+      Confirmar asistencia por WhatsApp
     </button>
   </div>
 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotografía ampliada">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Cerrar">×</button>
+    <img id="lightboxImage" alt="Fotografía ampliada de MONSE">
+  </div>
+
   <script>
-    const WHATSAPP_NUMBER = "5217841261547";
+    const WHATSAPP_NUMBER = "527821018440";
     const EVENT_DATE_ISO = "2026-09-12T17:00:00-06:00";
-    const EVENT_NAME = "XV años de Brenda Monserrat";
+    const EVENT_NAME = "XV años de MONSE";
     const ADDRESS = "Parroquia de Nuestra Señora de Guadalupe, 18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.";
 
-    const daysEl = document.getElementById("days");
-    const hoursEl = document.getElementById("hours");
-    const minutesEl = document.getElementById("minutes");
-    const secondsEl = document.getElementById("seconds");
-
-    function pad(value) {
-      return String(value).padStart(2, "0");
-    }
+    const pad = value => String(value).padStart(2, "0");
+    const countdownNodes = {
+      days: document.getElementById("days"),
+      hours: document.getElementById("hours"),
+      minutes: document.getElementById("minutes"),
+      seconds: document.getElementById("seconds")
+    };
 
     function updateCountdown() {
-      const eventDate = new Date(EVENT_DATE_ISO).getTime();
-      const distance = eventDate - Date.now();
-
+      const distance = new Date(EVENT_DATE_ISO).getTime() - Date.now();
       if (distance <= 0) {
-        daysEl.textContent = "00";
-        hoursEl.textContent = "00";
-        minutesEl.textContent = "00";
-        secondsEl.textContent = "00";
+        Object.values(countdownNodes).forEach(node => node.textContent = "00");
         return;
       }
-
-      daysEl.textContent = pad(Math.floor(distance / 86400000));
-      hoursEl.textContent = pad(Math.floor((distance % 86400000) / 3600000));
-      minutesEl.textContent = pad(Math.floor((distance % 3600000) / 60000));
-      secondsEl.textContent = pad(Math.floor((distance % 60000) / 1000));
+      countdownNodes.days.textContent = pad(Math.floor(distance / 86400000));
+      countdownNodes.hours.textContent = pad(Math.floor((distance % 86400000) / 3600000));
+      countdownNodes.minutes.textContent = pad(Math.floor((distance % 3600000) / 60000));
+      countdownNodes.seconds.textContent = pad(Math.floor((distance % 60000) / 1000));
     }
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    document.getElementById("copyAddress").addEventListener("click", async () => {
+    document.getElementById("copyAddress").addEventListener("click", async event => {
       try {
         await navigator.clipboard.writeText(ADDRESS);
-        alert("Dirección copiada.");
+        event.currentTarget.lastChild.textContent = " Dirección copiada";
       } catch {
-        alert("No se pudo copiar automáticamente. Dirección: " + ADDRESS);
+        window.prompt("Copia la dirección:", ADDRESS);
       }
     });
 
     document.getElementById("whatsappBtn").addEventListener("click", () => {
-      const message = encodeURIComponent(
-        `Hola, confirmo mi asistencia a ${EVENT_NAME}.\n\nNombre:\nNúmero de personas:\n`
-      );
-
-      window.open(
-        `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`,
-        "_blank",
-        "noopener,noreferrer"
-      );
+      const message = encodeURIComponent(`Hola, confirmo mi asistencia a ${EVENT_NAME}.\n\nNombre:\nNúmero de personas:\n`);
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, "_blank", "noopener,noreferrer");
     });
 
     const bgMusic = document.getElementById("bgMusic");
     const musicToggle = document.getElementById("musicToggle");
     const musicIcon = document.getElementById("musicIcon");
-    const musicText = document.getElementById("musicText");
 
     function updateMusicButton() {
       const paused = bgMusic.paused;
-      musicIcon.textContent = paused ? "▶" : "❚❚";
-      musicText.textContent = paused ? "Reproducir" : "Pausar";
-      musicToggle.setAttribute("aria-label", paused ? "Reproducir música" : "Pausar música");
+      musicIcon.innerHTML = paused
+        ? '<path d="M8 5v14l11-7z"></path>'
+        : '<path d="M6 5h4v14H6zM14 5h4v14h-4z"></path>';
       musicToggle.setAttribute("aria-pressed", String(!paused));
+      musicToggle.setAttribute("aria-label", paused ? "Reproducir música" : "Pausar música");
     }
 
-    async function playMusic() {
-      try {
-        bgMusic.volume = 0.55;
-        await bgMusic.play();
-      } catch {
-        // Los navegadores móviles pueden pedir una interacción antes de reproducir audio.
+    let musicStartedByInteraction = false;
+
+    async function startMusic() {
+      if (!bgMusic.paused || musicStartedByInteraction) {
+        updateMusicButton();
+        return;
       }
 
+      try {
+        bgMusic.volume = .55;
+        await bgMusic.play();
+        musicStartedByInteraction = true;
+        removeFirstInteractionListeners();
+      } catch {
+        // El navegador permitirá reproducirla durante una interacción válida.
+      }
       updateMusicButton();
     }
 
+    function playOnFirstInteraction(event) {
+      // El botón conserva su función normal y no debe reproducir y pausar en el mismo clic.
+      if (event.target.closest && event.target.closest("#musicToggle")) return;
+      startMusic();
+    }
+
+    function removeFirstInteractionListeners() {
+      document.removeEventListener("pointerdown", playOnFirstInteraction, true);
+      document.removeEventListener("touchstart", playOnFirstInteraction, true);
+      document.removeEventListener("keydown", playOnFirstInteraction, true);
+      document.removeEventListener("click", playOnFirstInteraction, true);
+    }
+
+    document.addEventListener("pointerdown", playOnFirstInteraction, true);
+    document.addEventListener("touchstart", playOnFirstInteraction, true);
+    document.addEventListener("keydown", playOnFirstInteraction, true);
+    document.addEventListener("click", playOnFirstInteraction, true);
+
     musicToggle.addEventListener("click", async () => {
       if (bgMusic.paused) {
-        await playMusic();
+        try {
+          bgMusic.volume = .55;
+          await bgMusic.play();
+          musicStartedByInteraction = true;
+          removeFirstInteractionListeners();
+        } catch {}
       } else {
         bgMusic.pause();
-        updateMusicButton();
       }
+      updateMusicButton();
     });
 
-    window.addEventListener("load", playMusic);
+    // Se intenta al cargar; si el navegador lo bloquea, inicia con la primera interacción.
+    window.addEventListener("DOMContentLoaded", startMusic);
+    window.addEventListener("load", startMusic, { once: true });
+    bgMusic.addEventListener("play", updateMusicButton);
+    bgMusic.addEventListener("pause", updateMusicButton);
+    bgMusic.addEventListener("error", () => {
+      musicToggle.title = "Coloca el archivo brooklyn-baby.mp3 junto al HTML";
+      updateMusicButton();
+    });
 
-    document.addEventListener("pointerdown", () => {
-      if (bgMusic.paused) playMusic();
-    }, { once: true });
-
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.14 }
-    );
+        const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
 
     document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 
-    const hero = document.querySelector(".hero");
-    const heroContent = document.getElementById("heroContent");
-    const decorItems = document.querySelectorAll(".decor");
-    let introFinished = false;
+    const galleryImages = ["https://i.postimg.cc/gcqDmXxd/Inv-1.jpg", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const closeLightbox = () => {
+      lightbox.classList.remove("open");
+      document.body.style.overflow = "";
+    };
 
-    window.setTimeout(() => {
-      introFinished = true;
-    }, 2400);
-
-    window.addEventListener("pointermove", event => {
-      if (window.innerWidth < 760 || !introFinished) return;
-
-      const x = (event.clientX / window.innerWidth - 0.5);
-      const y = (event.clientY / window.innerHeight - 0.5);
-
-      heroContent.style.transform =
-        `translate3d(${x * 10}px, ${y * 8}px, 0)`;
-
-      decorItems.forEach((item, index) => {
-        const force = 8 + index * 5;
-        item.style.marginLeft = `${x * force}px`;
-        item.style.marginTop = `${y * force}px`;
+    document.querySelectorAll(".gallery-item").forEach(button => {
+      button.addEventListener("click", () => {
+        lightboxImage.src = galleryImages[Number(button.dataset.photo)];
+        lightbox.classList.add("open");
+        document.body.style.overflow = "hidden";
       });
     });
 
-    window.addEventListener("scroll", () => {
-      const offset = Math.min(window.scrollY * 0.18, 90);
-      hero.style.backgroundPosition = `center calc(50% + ${offset}px)`;
-    }, { passive: true });
-
-    const dust = document.getElementById("dust");
-
-    for (let i = 0; i < 24; i++) {
-      const particle = document.createElement("i");
-      particle.style.left = `${Math.random() * 100}%`;
-      particle.style.bottom = `${-10 - Math.random() * 30}%`;
-      particle.style.animationDuration = `${7 + Math.random() * 9}s`;
-      particle.style.animationDelay = `${-Math.random() * 12}s`;
-      particle.style.opacity = `${0.25 + Math.random() * 0.65}`;
-      dust.appendChild(particle);
-    }
+    document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", event => { if (event.target === lightbox) closeLightbox(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeLightbox(); });
   </script>
 </body>
 </html>
