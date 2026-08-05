@@ -612,13 +612,64 @@
       z-index: 300;
       display: none;
       place-items: center;
-      padding: 24px;
+      padding: 76px 12px 24px;
+      overflow: hidden;
       background: rgba(18, 8, 4, .92);
       backdrop-filter: blur(9px);
     }
 
     .lightbox.open { display: grid; }
-    .lightbox img { max-width: min(96vw, 980px); max-height: 86vh; object-fit: contain; border: 8px solid #f5e3bd; box-shadow: 0 24px 70px rgba(0,0,0,.58); }
+
+    .lightbox-stage {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .lightbox-stage.dragging { cursor: grabbing; }
+
+    .lightbox img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: calc(100vw - 24px);
+      max-height: calc(100vh - 116px);
+      object-fit: contain;
+      border: 8px solid #f5e3bd;
+      box-shadow: 0 24px 70px rgba(0,0,0,.58);
+      transform: translate3d(0, 0, 0) scale(1);
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+    }
+
+    .zoom-controls {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      z-index: 2;
+      display: flex;
+      gap: 8px;
+      transform: translateX(-50%);
+    }
+
+    .zoom-controls button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 50%;
+      color: #fff4da;
+      background: rgba(75, 40, 22, .88);
+      cursor: pointer;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
 
     .lightbox-close {
       position: absolute;
@@ -851,7 +902,14 @@
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotografía ampliada">
     <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Cerrar">×</button>
-    <img id="lightboxImage" alt="Fotografía ampliada de MONSE">
+    <div class="lightbox-stage" id="lightboxStage" aria-label="Usa dos dedos o los botones para ampliar la fotografía">
+      <img id="lightboxImage" alt="Fotografía ampliada de MONSE" draggable="false">
+    </div>
+    <div class="zoom-controls" aria-label="Controles de zoom">
+      <button id="zoomOut" type="button" aria-label="Alejar">−</button>
+      <button id="zoomReset" type="button" aria-label="Restablecer zoom">↺</button>
+      <button id="zoomIn" type="button" aria-label="Acercar">+</button>
+    </div>
   </div>
 
   <script>
@@ -984,19 +1042,101 @@
 
     const galleryImages = ["https://i.postimg.cc/gcqDmXxd/Inv-1.jpg", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
     const lightbox = document.getElementById("lightbox");
+    const lightboxStage = document.getElementById("lightboxStage");
     const lightboxImage = document.getElementById("lightboxImage");
+    const pointers = new Map();
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let startX = 0;
+    let startY = 0;
+    let startTranslateX = 0;
+    let startTranslateY = 0;
+    let pinchStartDistance = 0;
+    let pinchStartScale = 1;
+
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const applyTransform = () => {
+      if (scale <= 1) { translateX = 0; translateY = 0; }
+      lightboxImage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
+    };
+    const resetZoom = () => {
+      scale = 1; translateX = 0; translateY = 0;
+      applyTransform();
+    };
+    const setZoom = nextScale => {
+      scale = clamp(nextScale, 1, 4);
+      applyTransform();
+    };
     const closeLightbox = () => {
       lightbox.classList.remove("open");
       document.body.style.overflow = "";
+      pointers.clear();
+      resetZoom();
     };
 
     document.querySelectorAll(".gallery-item").forEach(button => {
       button.addEventListener("click", () => {
+        resetZoom();
         lightboxImage.src = galleryImages[Number(button.dataset.photo)];
         lightbox.classList.add("open");
         document.body.style.overflow = "hidden";
       });
     });
+
+    document.getElementById("zoomIn").addEventListener("click", event => { event.stopPropagation(); setZoom(scale + .5); });
+    document.getElementById("zoomOut").addEventListener("click", event => { event.stopPropagation(); setZoom(scale - .5); });
+    document.getElementById("zoomReset").addEventListener("click", event => { event.stopPropagation(); resetZoom(); });
+
+    lightboxStage.addEventListener("wheel", event => {
+      event.preventDefault();
+      setZoom(scale + (event.deltaY < 0 ? .25 : -.25));
+    }, { passive: false });
+
+    lightboxStage.addEventListener("dblclick", event => {
+      event.preventDefault();
+      setZoom(scale > 1 ? 1 : 2);
+    });
+
+    lightboxStage.addEventListener("pointerdown", event => {
+      lightboxStage.setPointerCapture(event.pointerId);
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      lightboxStage.classList.add("dragging");
+      if (pointers.size === 1) {
+        startX = event.clientX; startY = event.clientY;
+        startTranslateX = translateX; startTranslateY = translateY;
+      } else if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        pinchStartDistance = Math.hypot(a.x - b.x, a.y - b.y);
+        pinchStartScale = scale;
+      }
+    });
+
+    lightboxStage.addEventListener("pointermove", event => {
+      if (!pointers.has(event.pointerId)) return;
+      pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        const distance = Math.hypot(a.x - b.x, a.y - b.y);
+        if (pinchStartDistance) setZoom(pinchStartScale * distance / pinchStartDistance);
+      } else if (pointers.size === 1 && scale > 1) {
+        translateX = startTranslateX + event.clientX - startX;
+        translateY = startTranslateY + event.clientY - startY;
+        applyTransform();
+      }
+    });
+
+    const releasePointer = event => {
+      pointers.delete(event.pointerId);
+      if (!pointers.size) lightboxStage.classList.remove("dragging");
+      if (pointers.size === 1) {
+        const remaining = [...pointers.values()][0];
+        startX = remaining.x; startY = remaining.y;
+        startTranslateX = translateX; startTranslateY = translateY;
+      }
+    };
+    lightboxStage.addEventListener("pointerup", releasePointer);
+    lightboxStage.addEventListener("pointercancel", releasePointer);
 
     document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
     lightbox.addEventListener("click", event => { if (event.target === lightbox) closeLightbox(); });
