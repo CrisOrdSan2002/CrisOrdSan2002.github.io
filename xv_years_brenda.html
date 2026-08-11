@@ -691,6 +691,71 @@
 
     .reveal.visible { opacity: 1; transform: none; }
 
+    .invitation-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 24px 18px;
+      overflow: auto;
+      text-align: center;
+      color: var(--cream);
+      background:
+        radial-gradient(circle at 50% 28%, rgba(199, 139, 64, .18), transparent 28%),
+        linear-gradient(180deg, rgba(28, 15, 9, .97), rgba(75, 41, 24, .98) 58%, rgba(28, 15, 9, .98));
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+
+    .invitation-gate.is-open { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .gate-content {
+      width: min(100%, 500px);
+      padding: 34px 22px 30px;
+      border: 1px solid rgba(247, 217, 153, .28);
+      border-radius: 22px;
+      background: rgba(43, 22, 13, .42);
+      box-shadow: 0 26px 70px rgba(0,0,0,.42);
+      backdrop-filter: blur(8px);
+    }
+
+    .gate-title {
+      margin: 0 0 22px;
+      font-family: "Cinzel", serif;
+      font-size: clamp(1.25rem, 5vw, 1.75rem);
+      line-height: 1.35;
+      color: #f7d999;
+    }
+
+    .envelope-button {
+      width: min(100%, 390px);
+      margin: 0 auto;
+      padding: 0;
+      border: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      background: transparent;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+      transition: transform .25s ease, filter .25s ease;
+    }
+
+    .envelope-button:hover { transform: translateY(-3px) scale(1.01); filter: brightness(1.04); }
+    .envelope-button:active { transform: scale(.99); }
+    .envelope-button img { width: 100%; height: auto; }
+
+    .pass-label {
+      margin: 24px 0 0;
+      font-family: "Cinzel", serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #f7d999;
+    }
+
+    .pass-note { margin: 7px 0 0; color: #f4e5c5; font-size: .95rem; }
+
     @media (min-width: 700px) {
       body { padding: 28px 0; }
       .page { border-radius: 30px; }
@@ -720,7 +785,18 @@
     }
   </style>
 </head>
-<body>
+<body style="overflow:hidden;">
+  <div class="invitation-gate" id="invitationGate" role="dialog" aria-modal="true" aria-label="Abrir invitación">
+    <div class="gate-content">
+      <p class="gate-title">Toca el sobre para abrir la invitación</p>
+      <button class="envelope-button" id="openInvitation" type="button" aria-label="Abrir invitación">
+        <img src="https://i.postimg.cc/TwZKzHZT/Chat-GPT-Image-11-ago-2026-12-49-32-p-m.png" alt="Sobre de invitación">
+      </button>
+      <p class="pass-label">Pase Personal</p>
+      <p class="pass-note">Pase válido para una persona</p>
+    </div>
+  </div>
+
   <audio id="bgMusic" src="brooklyn-baby.mp3" loop preload="auto" autoplay></audio>
 
   <button class="music-toggle" id="musicToggle" type="button" aria-label="Pausar música" aria-pressed="true" title="Reproducir o pausar música">
@@ -731,7 +807,7 @@
     <section class="wood-stage" id="foto-inicial">
       <div class="paper gallery-paper reveal" style="padding:18px;">
         <button class="gallery-item" type="button" data-photo="0" aria-label="Abrir primera fotografía de MONSE" style="min-height:480px; width:100%;">
-          <img src="https://i.postimg.cc/gcqDmXxd/Inv-1.jpg" alt="MONSE con atuendo vaquero" style="object-position:50% 50%; transform:scale(1.48); transform-origin:center center;">
+          <img src="https://i.postimg.cc/tCc3X2PM/Whats-App-Image-2026-08-06-at-6-49-52-PM-(1).jpg" alt="MONSE con atuendo vaquero" style="object-position:50% 50%; transform:scale(1.48); transform-origin:center center;">
         </button>
       </div>
     </section>
@@ -911,6 +987,15 @@
     const EVENT_NAME = "XV años de MONSE";
     const ADDRESS = "Parroquia de Nuestra Señora de Guadalupe, 18 de Marzo 309, Manuel Ávila Camacho, Poza Rica de Hidalgo, Ver.";
 
+    const invitationGate = document.getElementById("invitationGate");
+    const openInvitation = document.getElementById("openInvitation");
+
+    openInvitation.addEventListener("click", () => {
+      invitationGate.classList.add("is-open");
+      document.body.style.overflow = "";
+      window.setTimeout(() => invitationGate.remove(), 600);
+    });
+
     const pad = value => String(value).padStart(2, "0");
     const countdownNodes = {
       days: document.getElementById("days"),
@@ -1033,7 +1118,7 @@
 
     document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 
-    const galleryImages = ["https://i.postimg.cc/gcqDmXxd/Inv-1.jpg", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
+    const galleryImages = ["https://i.postimg.cc/tCc3X2PM/Whats-App-Image-2026-08-06-at-6-49-52-PM-(1).jpg", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
     const lightbox = document.getElementById("lightbox");
     const lightboxStage = document.getElementById("lightboxStage");
     const lightboxImage = document.getElementById("lightboxImage");
