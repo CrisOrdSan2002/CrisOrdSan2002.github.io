@@ -254,7 +254,6 @@
       filter: drop-shadow(0 14px 16px rgba(0,0,0,.42));
     }
 
-    .hero-skull { width: 145px; top: 67px; left: -20px; transform: rotate(-8deg); }
     .hero-hat { width: 150px; top: 88px; right: -20px; transform: rotate(12deg); }
     .hero-boots { width: 205px; bottom: -1px; left: -33px; transform: rotate(-5deg); }
     .hero-rope { width: 150px; right: -19px; bottom: 28px; transform: rotate(13deg); }
@@ -452,7 +451,6 @@
     .btn-secondary { color: #402517; border: 1px solid rgba(76, 42, 22, .36); background: rgba(255,255,255,.28); }
 
     .event-rope { width: 145px; left: -45px; bottom: -6px; transform: rotate(-14deg); opacity: .9; }
-    .reception-skull { width: 132px; right: -33px; bottom: -12px; transform: rotate(8deg); }
 
     .dress-card {
       color: var(--cream);
@@ -561,7 +559,6 @@
     .footer h2 { margin: 0 0 8px; font-family: "Cinzel", serif; font-size: 2.25rem; color: #f0cf8e; }
     .footer p { margin: 0; color: #f2e4c5; }
     .footer-horse { width: 130px; left: -25px; bottom: 0; transform: rotate(-5deg); opacity: .76; }
-    .footer-skull { width: 115px; right: -22px; bottom: 5px; transform: rotate(7deg); opacity: .74; }
 
     .music-toggle {
       position: fixed;
@@ -704,7 +701,6 @@
       .paper { padding: 38px 22px; }
       .hero { min-height: 760px; }
       .hero .paper { width: 88%; padding: 52px 19px 44px; }
-      .hero-skull { width: 112px; left: -27px; }
       .hero-hat { width: 118px; right: -29px; }
       .hero-boots { width: 165px; left: -37px; }
       .hero-rope { width: 118px; right: -26px; }
@@ -715,7 +711,7 @@
       .gallery-item { min-height: 360px; }
       .gallery-item:first-child { min-height: 270px; }
       .side-revolver, .event-rope, .dress-revolver, .gift-rope { left: -72px; opacity: .58; }
-      .side-horse, .count-boots, .reception-skull, .dress-hat, .gift-boots, .gallery-hat { right: -55px; opacity: .68; }
+      .side-horse, .count-boots, .dress-hat, .gift-boots, .gallery-hat { right: -55px; opacity: .68; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -732,14 +728,20 @@
   </button>
 
   <main class="page">
+    <section class="wood-stage" id="foto-inicial">
+      <div class="paper gallery-paper reveal" style="padding:18px;">
+        <button class="gallery-item" type="button" data-photo="0" aria-label="Abrir primera fotografía de MONSE" style="min-height:480px; width:100%;">
+          <img src="https://i.postimg.cc/gcqDmXxd/Inv-1.jpg" alt="MONSE con atuendo vaquero" style="object-position:50% 50%; transform:scale(1.48); transform-origin:center center;">
+        </button>
+      </div>
+    </section>
+
     <header class="wood-stage hero" id="inicio">
       <div class="lights" aria-hidden="true">
         <i style="left:8%;animation-delay:-.2s"></i><i style="left:23%;animation-delay:-1s"></i>
         <i style="left:39%;animation-delay:-.5s"></i><i style="left:55%;animation-delay:-1.4s"></i>
         <i style="left:71%;animation-delay:-.8s"></i><i style="left:88%;animation-delay:-1.8s"></i>
       </div>
-
-      <img class="ornament hero-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
       <img class="ornament hero-hat" src="https://i.postimg.cc/0QQpyLp1/cowboy-hat-png-2.png" alt="" aria-hidden="true">
       <img class="ornament hero-boots" src="https://i.postimg.cc/k5wQ9nt3/59ac2e1ea242c6528702d919.png" alt="" aria-hidden="true">
       <img class="ornament hero-rope" src="https://i.postimg.cc/8CwRD1rV/a-rope-is-wrapped-on-transparent-background-free-png.webp" alt="" aria-hidden="true">
@@ -752,22 +754,6 @@
         <div class="date-seal">12 de septiembre de 2026 · 5:00 PM</div>
       </div>
     </header>
-
-    <section class="wood-stage" id="galeria">
-      <img class="ornament gallery-hat" src="https://i.postimg.cc/0QQpyLp1/cowboy-hat-png-2.png" alt="" aria-hidden="true">
-      <div class="paper gallery-paper reveal">
-        <h2 class="section-title"><small>Momentos especiales</small>Galería de MONSE</h2>
-        <p class="lead gallery-intro">Dos momentos especiales que forman parte de este sueño.</p>
-        <div class="gallery-grid">
-          <button class="gallery-item" type="button" data-photo="0" aria-label="Abrir primera fotografía de MONSE">
-            <img src="https://i.postimg.cc/QxkrkMpg/imagen-2026-08-06-230036052.png" alt="MONSE con atuendo vaquero">
-          </button>
-          <button class="gallery-item" type="button" data-photo="1" aria-label="Abrir segunda fotografía de MONSE">
-            <img src="https://i.postimg.cc/XNc84Gr0/Inv-2.jpg" alt="Retrato de MONSE con atuendo vaquero">
-          </button>
-        </div>
-      </div>
-    </section>
 
 
     <section class="wood-stage" id="invitacion">
@@ -842,12 +828,15 @@
     </section>
 
     <section class="wood-stage" id="recepcion">
-      <img class="ornament reception-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
       <div class="paper reveal">
         <h2 class="section-title"><small>Después de la ceremonia</small>Recepción</h2>
         <div class="event-row">
           <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 21V8l8-5 8 5v13M8 21v-7h8v7M7 10h2M15 10h2"></path></svg></span>
           <div><h3>Salón Samsara</h3><p>Samsara Salón de Eventos</p></div>
+        </div>
+        <div class="event-row">
+          <span class="event-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+          <div><h3>Hora de recepción</h3><p>18:00 hrs</p></div>
         </div>
 
         <iframe class="map-frame" title="Mapa de Salón Samsara" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Samsara%20Sal%C3%B3n%20de%20Eventos%2C%20Poza%20Rica%2C%20Veracruz&z=17&output=embed"></iframe>
@@ -887,7 +876,11 @@
 
     <footer class="footer">
       <img class="ornament footer-horse" src="https://i.postimg.cc/W4SGj2qB/580b57fbd9996e24bc43bc29.png" alt="" aria-hidden="true">
-      <img class="ornament footer-skull" src="https://i.postimg.cc/xdgvY0N6/vecteezy-a-skull-of-a-bull-with-horns-isolated-on-transparent-background-72881314.png" alt="" aria-hidden="true">
+      <div class="paper gallery-paper reveal" style="margin-bottom:34px; padding:18px;">
+        <button class="gallery-item" type="button" data-photo="1" aria-label="Abrir segunda fotografía de MONSE" style="min-height:420px; width:100%;">
+          <img src="https://i.postimg.cc/XNc84Gr0/Inv-2.jpg" alt="Retrato de MONSE con atuendo vaquero">
+        </button>
+      </div>
       <h2>MONSE</h2>
       <p>Gracias por acompañarme en este día tan especial.</p>
     </footer>
@@ -1040,7 +1033,7 @@
 
     document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 
-    const galleryImages = ["https://i.postimg.cc/QxkrkMpg/imagen-2026-08-06-230036052.png", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
+    const galleryImages = ["https://i.postimg.cc/gcqDmXxd/Inv-1.jpg", "https://i.postimg.cc/XNc84Gr0/Inv-2.jpg"];
     const lightbox = document.getElementById("lightbox");
     const lightboxStage = document.getElementById("lightboxStage");
     const lightboxImage = document.getElementById("lightboxImage");
