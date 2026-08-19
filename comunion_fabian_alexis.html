@@ -1023,6 +1023,82 @@
 }
 
     /* ========================================
+       PASE DE ENTRADA + MÚSICA
+    ======================================== */
+
+    .invitation-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(248, 248, 239, .97);
+      backdrop-filter: blur(8px);
+      transition: opacity .55s ease, visibility .55s ease;
+    }
+
+    .invitation-gate.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .invitation-pass {
+      width: min(92vw, 520px);
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      filter: drop-shadow(0 22px 45px rgba(36, 93, 50, .18));
+      transition: transform .25s ease;
+    }
+
+    .invitation-pass:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .invitation-pass:focus-visible {
+      outline: 3px solid var(--dorado);
+      outline-offset: 8px;
+      border-radius: 18px;
+    }
+
+    .invitation-pass img {
+      width: 100%;
+      height: auto;
+    }
+
+    .music-toggle {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      height: 48px;
+      padding: 0 15px;
+      border: 1px solid rgba(36, 93, 50, .15);
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      color: var(--verde);
+      box-shadow: 0 8px 24px rgba(36, 93, 50, .14);
+      backdrop-filter: blur(8px);
+      font-family: "Montserrat", sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      cursor: pointer;
+    }
+
+    .music-toggle.visible {
+      display: inline-flex;
+    }
+
+    /* ========================================
        ANIMACIONES DE SCROLL
     ======================================== */
 
@@ -1100,6 +1176,34 @@
 
 <body>
 
+  <!-- Pase personal de entrada -->
+  <div class="invitation-gate" id="invitationGate">
+    <button
+      class="invitation-pass"
+      id="openInvitation"
+      type="button"
+      aria-label="Abrir invitación y reproducir música"
+    >
+      <img
+        src="https://i.postimg.cc/sX8MGd4G/Chat-GPT-Image-18-ago-2026-10-37-29-p-m.png"
+        alt="Pase personal de invitación"
+      >
+    </button>
+  </div>
+
+  <audio id="backgroundMusic" preload="auto" loop>
+    <source src="ave_maria.mp3" type="audio/mpeg">
+  </audio>
+
+  <button
+    class="music-toggle"
+    id="musicToggle"
+    type="button"
+    aria-label="Pausar música"
+  >
+    ⏸ Música
+  </button>
+
   <!-- ======================================
        PORTADA
   ======================================= -->
@@ -1154,7 +1258,7 @@
 >
   <img
     class="portrait"
-    src="https://i.postimg.cc/qMQJ53tT/Whats-App-Image-2026-08-17-at-9-10-15-AM.jpg"
+    src="https://i.postimg.cc/3Rw8ZSxF/Whats-App-Image-2026-08-18-at-6-52-40-PM.jpg"
     alt="Fabián Alexis"
   />
 </div>
@@ -1641,6 +1745,59 @@
 
 
   <script>
+
+    /* ======================================
+       PASE DE ENTRADA + MÚSICA
+    ======================================= */
+
+    const invitationGate =
+      document.getElementById("invitationGate");
+
+    const openInvitation =
+      document.getElementById("openInvitation");
+
+    const backgroundMusic =
+      document.getElementById("backgroundMusic");
+
+    const musicToggle =
+      document.getElementById("musicToggle");
+
+    function updateMusicButton() {
+      const paused = backgroundMusic.paused;
+      musicToggle.textContent = paused ? "▶ Música" : "⏸ Música";
+      musicToggle.setAttribute(
+        "aria-label",
+        paused ? "Reanudar música" : "Pausar música"
+      );
+    }
+
+    openInvitation.addEventListener("click", async () => {
+      invitationGate.classList.add("hidden");
+      musicToggle.classList.add("visible");
+
+      try {
+        await backgroundMusic.play();
+      } catch (error) {
+        console.warn("No se pudo iniciar la música:", error);
+      }
+
+      updateMusicButton();
+    });
+
+    musicToggle.addEventListener("click", async () => {
+      if (backgroundMusic.paused) {
+        try {
+          await backgroundMusic.play();
+        } catch (error) {
+          console.warn("No se pudo reanudar la música:", error);
+        }
+      } else {
+        backgroundMusic.pause();
+      }
+
+      updateMusicButton();
+    });
+
 
     /* ======================================
        ANIMACIONES AL HACER SCROLL
