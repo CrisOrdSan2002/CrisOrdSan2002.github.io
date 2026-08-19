@@ -1070,6 +1070,28 @@
       height: auto;
     }
 
+    .pass-label {
+      display: block;
+      margin-bottom: 14px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.35rem, 5vw, 2rem);
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--verde);
+    }
+
+    .pass-hint {
+      display: block;
+      margin-top: 14px;
+      font-family: "Montserrat", sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--dorado);
+    }
+
     .music-toggle {
       position: fixed;
       top: 14px;
@@ -1184,10 +1206,12 @@
       type="button"
       aria-label="Abrir invitación y reproducir música"
     >
+      <span class="pass-label">Pase personal</span>
       <img
         src="https://i.postimg.cc/sX8MGd4G/Chat-GPT-Image-18-ago-2026-10-37-29-p-m.png"
         alt="Pase personal de invitación"
       >
+      <span class="pass-hint">Clic para ver la invitación</span>
     </button>
   </div>
 
