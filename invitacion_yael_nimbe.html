@@ -574,6 +574,111 @@ footer strong{
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+
+/* ===== Pantalla de entrada / sobre ===== */
+.envelope-gate{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:#f4efdf;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  overflow:hidden;
+  transition:opacity .65s ease, visibility .65s ease;
+}
+.envelope-gate.closing{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.envelope-gate-inner{
+  width:min(100%,430px);
+  height:min(100dvh - 36px,820px);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border-radius:24px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 10%,rgba(201,162,207,.17),transparent 32%),
+    linear-gradient(180deg,#fbf7ed,#f1ead7);
+  box-shadow:0 22px 60px rgba(60,45,65,.2);
+  border:1px solid rgba(154,109,163,.12);
+}
+.envelope-gate-copy{
+  width:100%;
+  padding:26px 24px 14px;
+  position:relative;
+  z-index:2;
+}
+.envelope-kicker{
+  margin:0 0 4px;
+  font:400 1.45rem "Parisienne",cursive;
+  color:var(--lila-dark);
+}
+.envelope-title{
+  margin:0;
+  font:400 clamp(2.2rem,10vw,3.7rem)/1.02 "Parisienne",cursive;
+  color:#3d303f;
+}
+.envelope-image-wrap{
+  width:100%;
+  max-width:390px;
+  padding:8px 18px 0;
+  display:flex;
+  justify-content:center;
+  position:relative;
+  z-index:1;
+}
+.envelope-image{
+  width:100%;
+  max-height:440px;
+  object-fit:contain;
+  filter:drop-shadow(0 16px 24px rgba(66,47,69,.18));
+}
+.open-invite-btn{
+  margin:18px 0 6px;
+  border:1px solid rgba(255,255,255,.65);
+  background:var(--lila);
+  color:#fff;
+  min-width:220px;
+  padding:13px 25px;
+  border-radius:30px;
+  font:400 1.25rem "Parisienne",cursive;
+  cursor:pointer;
+  box-shadow:0 10px 24px rgba(154,109,163,.22);
+  transition:transform .2s ease, background .2s ease;
+}
+.open-invite-btn:hover{
+  transform:translateY(-2px);
+  background:var(--lila-dark);
+}
+.envelope-song{
+  margin:7px 0 0;
+  max-width:320px;
+  padding:0 20px 22px;
+  font-size:.68rem;
+  line-height:1.5;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.62;
+}
+@media(max-width:480px){
+  .envelope-gate{padding:0}
+  .envelope-gate-inner{
+    width:100%;
+    height:100dvh;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .envelope-image-wrap{padding-left:14px;padding-right:14px}
+  .envelope-image{max-height:46vh}
+}
+
 @media (max-width:380px){
   .date-bubble{left:8px;right:8px;padding-left:9px;padding-right:9px}
   .countdown{gap:5px}
@@ -588,6 +693,29 @@ footer strong{
 </style>
 </head>
 <body>
+
+<!-- Pantalla inicial. El clic en "Abrir invitación" permite iniciar audio
+     respetando las políticas de reproducción automática del navegador. -->
+<div class="envelope-gate" id="envelopeGate">
+  <div class="envelope-gate-inner">
+    <div class="envelope-gate-copy">
+      <p class="envelope-kicker">Estás invitado a</p>
+      <h1 class="envelope-title">Nuestra Boda</h1>
+    </div>
+
+    <div class="envelope-image-wrap">
+      <img
+        class="envelope-image"
+        src="https://i.postimg.cc/tgqD1Qjf/invitacion.jpg"
+        alt="Sobre de invitación de boda">
+    </div>
+
+    <button class="open-invite-btn" id="openInviteBtn" type="button">
+      Abrir invitación
+    </button>
+    <p class="envelope-song">Al abrir comenzará nuestra canción</p>
+  </div>
+</div>
 
 <script>
 /* ==============================================================
@@ -946,9 +1074,11 @@ document.addEventListener("keydown",e=>{
   if(e.key==="Escape") setMenu(false);
 });
 
-/* ---------- Música ---------- */
+/* ---------- Música + pantalla de entrada ---------- */
 const audio=$("audio");
 audio.src=CONFIG.music.file;
+audio.loop=true;
+
 function toast(msg){
   const t=$("toast");
   t.textContent=msg;
@@ -956,14 +1086,49 @@ function toast(msg){
   clearTimeout(window.__toast);
   window.__toast=setTimeout(()=>t.classList.remove("show"),3000);
 }
-$("musicBtn").addEventListener("click",async()=>{
+
+function syncMusicButton(){
+  // Una vez abierta la invitación, este botón sirve únicamente
+  // para pausar o reanudar la música.
+  $("musicBtn").textContent = audio.paused ? "♫" : "❚❚";
+  $("musicBtn").setAttribute(
+    "aria-label",
+    audio.paused ? "Reanudar música" : "Pausar música"
+  );
+}
+
+$("openInviteBtn").addEventListener("click",async()=>{
+  // El clic del usuario desbloquea la reproducción en navegadores móviles.
   try{
-    if(audio.paused){await audio.play();$("musicBtn").textContent="❚❚";}
-    else{audio.pause();$("musicBtn").textContent="♫";}
+    await audio.play();
   }catch(e){
-    toast('Coloca un archivo "musica.mp3" junto al HTML para activar la canción.');
+    // La invitación se abre aunque aún no exista el MP3.
+    toast('Para escuchar la canción, coloca "musica.mp3" junto al archivo HTML.');
   }
+
+  syncMusicButton();
+  $("envelopeGate").classList.add("closing");
+
+  setTimeout(()=>{
+    $("envelopeGate").style.display="none";
+    window.scrollTo({top:0,behavior:"instant"});
+  },680);
 });
+
+$("musicBtn").addEventListener("click",async()=>{
+  // Este control no abre nada: solamente pausa/reanuda.
+  try{
+    if(audio.paused) await audio.play();
+    else audio.pause();
+  }catch(e){
+    toast('No se encontró "musica.mp3". Colócalo junto al HTML.');
+  }
+  syncMusicButton();
+});
+
+audio.addEventListener("play",syncMusicButton);
+audio.addEventListener("pause",syncMusicButton);
+audio.addEventListener("ended",syncMusicButton);
 
 /* ---------- Lugares disponibles ---------- */
 const guestSelect=$("guests");
