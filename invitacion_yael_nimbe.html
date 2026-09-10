@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#c9a2cf">
+<meta name="theme-color" content="#7a7b4f">
 <title>Yael & Nimbe | Invitación de boda</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,22 +12,22 @@
 
 <style>
 :root{
-  --lila:#c9a2cf;
-  --lila2:#d7b8dc;
-  --lila-dark:#9a6da3;
-  --cream:#f5f0df;
-  --gold:#c59a2b;
+  --lila:#7a7b4f;
+  --lila2:#94966a;
+  --lila-dark:#5f603c;
+  --cream:#f3efe4;
+  --gold:#b7a97a;
   --ink:#272226;
   --white:#fff;
   --soft:rgba(255,255,255,.78);
-  --shadow:0 18px 45px rgba(75,47,80,.18);
+  --shadow:0 18px 45px rgba(68,70,44,.18);
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  background:#ddd7cf;
+  background:#d9d6c8;
   color:var(--ink);
   font-family:"Montserrat",sans-serif;
   overflow-x:hidden;
@@ -50,8 +50,8 @@ img{display:block;width:100%}
 .paper{
   position:relative;
   background:
-    radial-gradient(circle at 12% 8%, rgba(201,162,207,.18), transparent 18%),
-    radial-gradient(circle at 88% 18%, rgba(197,154,43,.08), transparent 17%),
+    radial-gradient(circle at 12% 8%, rgba(122,123,79,.18), transparent 18%),
+    radial-gradient(circle at 88% 18%, rgba(183,169,122,.10), transparent 17%),
     linear-gradient(180deg,#f9f5e9 0%,#f3eedf 100%);
 }
 .paper:before,
@@ -64,16 +64,16 @@ img{display:block;width:100%}
 .paper:before{
   width:150px;height:250px;left:-70px;bottom:30px;
   background:
-    radial-gradient(circle at 70% 75%,rgba(158,111,170,.5) 0 7px,transparent 8px),
-    radial-gradient(circle at 54% 81%,rgba(223,190,202,.72) 0 12px,transparent 13px),
-    radial-gradient(circle at 79% 88%,rgba(117,90,145,.55) 0 16px,transparent 17px),
-    radial-gradient(circle at 40% 92%,rgba(231,211,198,.92) 0 15px,transparent 16px);
+    radial-gradient(circle at 70% 75%,rgba(108,109,68,.48) 0 7px,transparent 8px),
+    radial-gradient(circle at 54% 81%,rgba(212,205,180,.72) 0 12px,transparent 13px),
+    radial-gradient(circle at 79% 88%,rgba(88,90,56,.55) 0 16px,transparent 17px),
+    radial-gradient(circle at 40% 92%,rgba(226,218,194,.92) 0 15px,transparent 16px);
   filter:blur(.1px);
   opacity:.75;
 }
 .paper:after{
   width:125px;height:320px;right:-55px;bottom:0;
-  background:linear-gradient(150deg,transparent 42%,rgba(137,111,167,.32) 43% 67%,transparent 68%);
+  background:linear-gradient(150deg,transparent 42%,rgba(109,111,73,.30) 43% 67%,transparent 68%);
   clip-path:polygon(55% 0,70% 40%,100% 25%,88% 100%,15% 100%,28% 56%,42% 72%);
   opacity:.45;
 }
@@ -110,19 +110,27 @@ img{display:block;width:100%}
   min-height:680px;
   position:relative;
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   justify-content:center;
   background:
-    linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.05) 45%,rgba(0,0,0,.28)),
-    url("https://images.pexels.com/photos/18398510/pexels-photo-18398510.jpeg?auto=compress&cs=tinysrgb&w=1000") center/cover;
+    radial-gradient(circle at 50% 24%, rgba(255,255,255,.16), transparent 28%),
+    linear-gradient(155deg,#5f603c 0%,#7a7b4f 52%,#a5a47c 100%);
   color:white;
 }
 .hero-title{
-  margin-top:72px;
   width:100%;
   text-align:center;
   padding:0 25px;
   text-shadow:0 2px 7px rgba(0,0,0,.7);
+  opacity:0;
+  filter:blur(16px);
+  transform:scale(.96);
+  transition:opacity 1.15s ease, filter 1.25s ease, transform 1.15s ease;
+}
+.hero-title.hero-intro-visible{
+  opacity:1;
+  filter:blur(0);
+  transform:scale(1);
 }
 .hero-title h1{
   margin:0;
@@ -163,7 +171,7 @@ img{display:block;width:100%}
   bottom:20px;
   right:max(calc((100vw - 430px)/2 + 18px),18px);
   background:white;
-  color:#654c69;
+  color:#5f603c;
   font-size:1.2rem;
 }
 .burger,.burger:before,.burger:after{
@@ -205,7 +213,7 @@ img{display:block;width:100%}
 .nav a{
   display:block;
   padding:16px 4px;
-  border-bottom:1px solid rgba(154,109,163,.25);
+  border-bottom:1px solid rgba(95,96,60,.25);
   font-family:"Italiana",serif;
   font-size:1.12rem;
   text-align:left;
@@ -219,8 +227,9 @@ img{display:block;width:100%}
   min-height:820px;
   position:relative;
   background:
-    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.12)),
-    url("https://images.pexels.com/photos/18398510/pexels-photo-18398510.jpeg?auto=compress&cs=tinysrgb&w=1000") 62% center/cover;
+    radial-gradient(circle at 20% 18%, rgba(255,255,255,.18), transparent 26%),
+    radial-gradient(circle at 82% 72%, rgba(183,169,122,.20), transparent 28%),
+    linear-gradient(160deg,#e9e4d6 0%,#d7d3bd 48%,#a4a47c 100%);
 }
 .date-bubble{
   position:absolute;
@@ -229,7 +238,7 @@ img{display:block;width:100%}
   bottom:34px;
   width:auto;
   padding:36px 14px 28px;
-  background:rgba(201,162,207,.90);
+  background:rgba(122,123,79,.90);
   border-radius:46% 46% 18px 18px / 24% 24% 18px 18px;
   text-align:center;
   backdrop-filter:blur(3px);
@@ -244,10 +253,14 @@ img{display:block;width:100%}
 .date-bubble h2{
   margin:0 0 2px;
   font:400 2.35rem "Parisienne",cursive;
+  color:#fffaf0;
+  text-shadow:0 2px 8px rgba(45,48,28,.35);
 }
 .date-line{
   margin:0 0 24px;
   font:400 1.45rem "Parisienne",cursive;
+  color:#fffaf0;
+  text-shadow:0 2px 8px rgba(45,48,28,.35);
 }
 .countdown{
   width:100%;
@@ -257,7 +270,7 @@ img{display:block;width:100%}
 }
 .count{
   min-width:0;
-  background:rgba(183,130,194,.40);
+  background:rgba(95,96,60,.36);
   padding:12px 3px 10px;
   border-radius:8px;
   color:white;
@@ -283,7 +296,7 @@ img{display:block;width:100%}
   padding:12px 16px;
   border:1px solid rgba(255,255,255,.60);
   border-radius:30px;
-  background:rgba(184,132,195,.38);
+  background:rgba(95,96,60,.34);
   color:white;
   font-family:"Parisienne",cursive;
   font-size:1.08rem;
@@ -300,14 +313,18 @@ img{display:block;width:100%}
 .curve h2{
   font:400 2.15rem/1.2 "Parisienne",cursive;
   margin:0 0 28px;
+  color:#fffaf0;
+  text-shadow:0 2px 8px rgba(45,48,28,.32);
 }
 .curve h3{
   font:400 1rem "Parisienne",cursive;
   margin:0 0 5px;
+  color:white;
 }
 .parent-name{
   font:400 1.42rem/1.4 "Parisienne",cursive;
   margin:3px 0;
+  color:white;
 }
 
 /* itinerary */
@@ -437,7 +454,7 @@ img{display:block;width:100%}
   width:100%;
   height:100%;
   display:block;
-  fill:#111;
+  fill:#fff;
 }
 .dress-label{
   font-size:1.35rem;
@@ -449,8 +466,8 @@ img{display:block;width:100%}
   border:3px solid white;
   box-shadow:0 0 0 1px #888;
 }
-.color-dot.lilac{background:#a87ab3}
-.color-dot.gold{background:#cf9819}
+.color-dot.white-reserved{background:#ffffff}
+.color-dot.beige-reserved{background:#d8ccb5}
 
 /* Quote */
 .full-photo{
@@ -462,8 +479,8 @@ img{display:block;width:100%}
   text-align:center;
   padding:25px;
   background:
-    linear-gradient(180deg,rgba(20,10,24,.34),rgba(15,10,18,.62)),
-    url("https://images.pexels.com/photos/18398510/pexels-photo-18398510.jpeg?auto=compress&cs=tinysrgb&w=1000") center/cover;
+    radial-gradient(circle at 50% 25%,rgba(255,255,255,.10),transparent 30%),
+    linear-gradient(160deg,#5f603c,#7a7b4f 55%,#4d4e32);
 }
 .full-photo h2{
   font:400 3rem/1 "Parisienne",cursive;
@@ -527,7 +544,7 @@ img{display:block;width:100%}
 .confirm-btn{
   display:block;
   border:0;
-  background:#a98b8e;
+  background:#7a7b4f;
   color:white;
   padding:11px 22px;
   border-radius:5px;
@@ -607,7 +624,7 @@ footer strong{
     radial-gradient(circle at 50% 10%,rgba(201,162,207,.17),transparent 32%),
     linear-gradient(180deg,#fbf7ed,#f1ead7);
   box-shadow:0 22px 60px rgba(60,45,65,.2);
-  border:1px solid rgba(154,109,163,.12);
+  border:1px solid rgba(95,96,60,.12);
 }
 .envelope-gate-copy{
   width:100%;
@@ -650,7 +667,7 @@ footer strong{
   border-radius:30px;
   font:400 1.25rem "Parisienne",cursive;
   cursor:pointer;
-  box-shadow:0 10px 24px rgba(154,109,163,.22);
+  box-shadow:0 10px 24px rgba(95,96,60,.22);
   transition:transform .2s ease, background .2s ease;
 }
 .open-invite-btn:hover{
@@ -703,13 +720,6 @@ footer strong{
       <h1 class="envelope-title">Nuestra Boda</h1>
     </div>
 
-    <div class="envelope-image-wrap">
-      <img
-        class="envelope-image"
-        src="https://i.postimg.cc/tgqD1Qjf/invitacion.jpg"
-        alt="Sobre de invitación de boda">
-    </div>
-
     <button class="open-invite-btn" id="openInviteBtn" type="button">
       Abrir invitación
     </button>
@@ -736,19 +746,24 @@ const CONFIG = {
   },
 
   wedding:{
-    iso:"2026-10-08T16:00:00-06:00",
-    day:"08",
-    month:"Octubre",
+    iso:"2026-12-19T16:00:00-06:00",
+    day:"19",
+    month:"Diciembre",
     year:"2026",
-    weekday:"Jueves",
-    fullDate:"Jueves 8 de Octubre de 2026"
+    weekday:"Sábado",
+    fullDate:"Sábado 19 de Diciembre de 2026"
   },
 
   ceremony:{
     time:"4:00 p.m.",
     place:"Parroquia Nuestra Señora de San Juan de los Lagos",
-    mapUrl:"https://maps.app.goo.gl/t98GpZ2cJ4otKDWg9?g_st=aw",
-    image:"https://images.pexels.com/photos/7229314/pexels-photo-7229314.jpeg?auto=compress&cs=tinysrgb&w=1000"
+    mapUrl:"https://maps.app.goo.gl/t98GpZ2cJ4otKDWg9?g_st=aw"
+  },
+
+  reception:{
+    time:"18:00 hrs",
+    place:"Salón Samsara",
+    mapUrl:"#"
   },
 
   rsvp:{
@@ -771,13 +786,13 @@ const CONFIG = {
     itinerary:true,
     dressCode:true,
     hashtag:false,
-    gifts:false
+    gifts:true
   },
 
   optional:{
-    dressCodeTitle:"Formal",
+    dressCodeTitle:"Semi formal",
     hashtag:"#YaelYNimbe",
-    giftText:"Su presencia es nuestro mejor regalo. Si desean tener un detalle con nosotros, pueden hacerlo de la forma que prefieran."
+    giftText:"Nuestro mayor obsequio es su compañía. Si desean darnos un detalle adicional y contribuir a nuestro nuevo hogar, agradecemos su participación en una lluvia de sobres."
   }
 };
 </script>
@@ -794,11 +809,12 @@ const CONFIG = {
     <a href="#itinerario">Itinerario</a>
     <a href="#ubicacion">Ubicación</a>
     <a href="#dressCodeSection">Código de vestimenta</a>
+    <a href="#giftSection">Regalos</a>
     <a href="#confirmacion">Confirmación</a>
   </nav>
 
   <section class="hero" id="inicio">
-    <div class="hero-title reveal zoom visible">
+    <div class="hero-title" id="heroTitle">
       <h1 class="script"><span id="heroGroom"></span><span class="and">&</span><span id="heroBride"></span></h1>
       <div class="hero-sub">Nuestra boda</div>
     </div>
@@ -853,8 +869,8 @@ const CONFIG = {
       <div class="timeline-item right reveal right delay-1">
         <div class="timeline-dot">♡</div>
         <div class="timeline-text">
-          <h3>Celebración</h3>
-          <p>Compartamos juntos este momento tan especial.</p>
+          <h3>Recepción · 18:00 hrs</h3>
+          <p>Nos vemos en Salón Samsara para celebrar juntos.</p>
         </div>
       </div>
 
@@ -881,10 +897,16 @@ const CONFIG = {
 
     <article class="location-card reveal">
       <h3>Ceremonia</h3>
-      <img class="arch-img" id="ceremonyImage" alt="Ceremonia de boda en iglesia">
-      <a class="location-link" id="mapLink" target="_blank" rel="noopener">Ver ubicación</a>
+      <a class="location-link" id="mapLink" target="_blank" rel="noopener" style="margin:0 auto">Ver ubicación</a>
       <p class="location-time" id="ceremonyTime"></p>
       <p class="location-place" id="ceremonyPlace"></p>
+    </article>
+
+    <article class="location-card reveal delay-1">
+      <h3>Recepción</h3>
+      <a class="location-link" id="receptionMapLink" target="_blank" rel="noopener" style="margin:0 auto">Ver ubicación</a>
+      <p class="location-time" id="receptionTime"></p>
+      <p class="location-place" id="receptionPlace"></p>
     </article>
   </section>
 
@@ -896,7 +918,7 @@ const CONFIG = {
     <div class="white-card reveal zoom">
       <h2 id="dressTitle" class="script" style="font-family:Parisienne,cursive"></h2>
 
-      <div class="dress-icons" aria-label="Vestimenta formal">
+      <div class="dress-icons" aria-label="Vestimenta semi formal">
         <div class="dress-option">
           <div class="dress-icon-wrap" aria-hidden="true">
             <svg class="dress-svg" viewBox="0 0 122.88 115.02" xmlns="http://www.w3.org/2000/svg">
@@ -918,10 +940,10 @@ const CONFIG = {
 
     <div class="white-card reveal zoom delay-1" style="margin-top:28px">
       <p class="script" style="font-size:1.55rem;line-height:1.35;margin:0 0 18px">
-        Color lila y dorado<br>reservado para los novios.
+        Color blanco y beige<br>reservado para los novios.
       </p>
-      <span class="color-dot lilac" title="Lila"></span>
-      <span class="color-dot gold" title="Dorado"></span>
+      <span class="color-dot white-reserved" title="Blanco"></span>
+      <span class="color-dot beige-reserved" title="Beige"></span>
     </div>
   </section>
 
@@ -937,7 +959,7 @@ const CONFIG = {
 
   <section class="paper optional-section" id="giftSection">
     <div class="curve" style="margin:-55px -20px 35px;padding-bottom:58px">
-      <h2 class="reveal" style="color:white">Mesa de Regalos</h2>
+      <h2 class="reveal" style="color:white">Regalos</h2>
     </div>
     <p class="script reveal" id="giftText" style="font-size:1.45rem;line-height:1.5"></p>
     <div class="gift-circle reveal zoom delay-1">✉️</div>
@@ -1010,10 +1032,12 @@ function parentList(id, arr){
 parentList("groomParents",CONFIG.parents.groom);
 parentList("brideParents",CONFIG.parents.bride);
 
-$("ceremonyImage").src=CONFIG.ceremony.image;
 $("ceremonyTime").textContent=CONFIG.ceremony.time;
 $("ceremonyPlace").textContent=CONFIG.ceremony.place;
 $("mapLink").href=CONFIG.ceremony.mapUrl;
+$("receptionTime").textContent=CONFIG.reception.time;
+$("receptionPlace").textContent=CONFIG.reception.place;
+$("receptionMapLink").href=CONFIG.reception.mapUrl;
 $("seatNote").textContent=CONFIG.rsvp.message;
 
 $("dressTitle").textContent=CONFIG.optional.dressCodeTitle;
@@ -1057,8 +1081,8 @@ $("calendarBtn").addEventListener("click",e=>{
   const url="https://calendar.google.com/calendar/render?action=TEMPLATE"
     +"&text="+encodeURIComponent("Boda de "+CONFIG.couple.groomShort+" y "+CONFIG.couple.brideShort)
     +"&dates="+fmt(start)+"/"+fmt(end)
-    +"&details="+encodeURIComponent("Ceremonia: "+CONFIG.ceremony.place)
-    +"&location="+encodeURIComponent(CONFIG.ceremony.place);
+    +"&details="+encodeURIComponent("Ceremonia: "+CONFIG.ceremony.place+". Recepción: "+CONFIG.reception.place+" a las "+CONFIG.reception.time)
+    +"&location="+encodeURIComponent(CONFIG.reception.place);
   window.open(url,"_blank","noopener");
 });
 
@@ -1108,6 +1132,11 @@ $("openInviteBtn").addEventListener("click",async()=>{
 
   syncMusicButton();
   $("envelopeGate").classList.add("closing");
+
+  // Revela los nombres al abrir la invitación con un blur suave.
+  setTimeout(()=>{
+    $("heroTitle").classList.add("hero-intro-visible");
+  },180);
 
   setTimeout(()=>{
     $("envelopeGate").style.display="none";
@@ -1163,5 +1192,12 @@ const observer=new IntersectionObserver(entries=>{
 document.querySelectorAll(".reveal:not(.visible)").forEach(el=>observer.observe(el));
 </script>
 
+
+<script>
+if(CONFIG.reception.mapUrl==="#"){
+  const receptionLink=document.getElementById("receptionMapLink");
+  if(receptionLink) receptionLink.style.display="none";
+}
+</script>
 </body>
 </html>
