@@ -763,7 +763,7 @@ const CONFIG = {
   reception:{
     time:"6:00 pm",
     place:"Salón Samsara",
-    mapUrl:"#"
+    mapUrl:"https://maps.app.goo.gl/7Wvc9PGA3wBQqERX7"
   },
 
   rsvp:{
@@ -1193,11 +1193,5 @@ document.querySelectorAll(".reveal:not(.visible)").forEach(el=>observer.observe(
 </script>
 
 
-<script>
-if(CONFIG.reception.mapUrl==="#"){
-  const receptionLink=document.getElementById("receptionMapLink");
-  if(receptionLink) receptionLink.style.display="none";
-}
-</script>
 </body>
 </html>
