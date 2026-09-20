@@ -303,6 +303,20 @@ img{display:block;width:100%}
   white-space:nowrap;
 }
 
+/* Collage de recuerdos, colocado debajo de "¡Nos casamos!" */
+.memory-collage{
+  margin:0;
+  padding:0;
+  background:var(--cream);
+  overflow:hidden;
+}
+.memory-collage img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:cover;
+}
+
 /* Curved title block */
 .curve{
   background:var(--lila);
@@ -393,9 +407,11 @@ img{display:block;width:100%}
   margin:0 0 14px;
 }
 .arch-img{
-  height:205px;
+  height:235px;
   object-fit:cover;
-  border-radius:48% 48% 0 0 / 36% 36% 0 0;
+  object-position:center;
+  border-radius:50% 50% 0 0 / 38% 38% 0 0;
+  overflow:hidden;
 }
 .location-link{
   display:block;
@@ -757,17 +773,20 @@ const CONFIG = {
   ceremony:{
     time:"4:00 p.m.",
     place:"Parroquia Nuestra Señora de San Juan de los Lagos",
-    mapUrl:"https://maps.app.goo.gl/t98GpZ2cJ4otKDWg9?g_st=aw"
+    mapUrl:"https://maps.app.goo.gl/t98GpZ2cJ4otKDWg9?g_st=aw",
+    image:"https://i.postimg.cc/yxxxmGcB/Whats-App-Image-2026-09-13-at-11-37-31-AM.jpg"
   },
 
   reception:{
     time:"6:00 pm",
     place:"Salón Samsara",
-    mapUrl:"https://maps.app.goo.gl/7Wvc9PGA3wBQqERX7"
+    mapUrl:"https://maps.app.goo.gl/7Wvc9PGA3wBQqERX7",
+    image:"https://i.postimg.cc/6qqqrPnK/Whats-App-Image-2026-09-13-at-11-37-31-AM-salon.jpg"
   },
 
   rsvp:{
     message:'Nos hace muy felices compartir con nuestra familia y amigos este día tan especial, por esa razón pedimos encarecidamente respetar el número de lugares asignados.',
+    whatsapp:"527841261547",
     // Cambia 4 por el máximo de lugares que quieras mostrar en el selector.
     maxGuests:4,
     // Si después quieres mandar la respuesta a un servicio propio,
@@ -836,6 +855,13 @@ const CONFIG = {
     </div>
   </section>
 
+  <section class="memory-collage reveal" aria-label="Collage de recuerdos de Yael y Nimbe">
+    <img
+      src="https://i.postimg.cc/mZPFFcwC/Whats-App-Image-2026-09-13-at-11-37-31-AM-collage.jpg"
+      alt="Collage de recuerdos de Yael y Nimbe"
+      loading="lazy">
+  </section>
+
   <section class="paper" id="familia">
     <div class="curve">
       <h2 class="reveal">¡Celebra con nosotros este<br>día tan maravilloso!</h2>
@@ -897,14 +923,16 @@ const CONFIG = {
 
     <article class="location-card reveal">
       <h3>Ceremonia</h3>
-      <a class="location-link" id="mapLink" target="_blank" rel="noopener" style="margin:0 auto">Ver ubicación</a>
+      <img class="arch-img" id="ceremonyImage" alt="Parroquia de la ceremonia">
+      <a class="location-link" id="mapLink" target="_blank" rel="noopener">Ver ubicación</a>
       <p class="location-time" id="ceremonyTime"></p>
       <p class="location-place" id="ceremonyPlace"></p>
     </article>
 
     <article class="location-card reveal delay-1">
       <h3>Recepción</h3>
-      <a class="location-link" id="receptionMapLink" target="_blank" rel="noopener" style="margin:0 auto">Ver ubicación</a>
+      <img class="arch-img" id="receptionImage" alt="Salón de la recepción">
+      <a class="location-link" id="receptionMapLink" target="_blank" rel="noopener">Ver ubicación</a>
       <p class="location-time" id="receptionTime"></p>
       <p class="location-place" id="receptionPlace"></p>
     </article>
@@ -1032,9 +1060,11 @@ function parentList(id, arr){
 parentList("groomParents",CONFIG.parents.groom);
 parentList("brideParents",CONFIG.parents.bride);
 
+$("ceremonyImage").src=CONFIG.ceremony.image;
 $("ceremonyTime").textContent=CONFIG.ceremony.time;
 $("ceremonyPlace").textContent=CONFIG.ceremony.place;
 $("mapLink").href=CONFIG.ceremony.mapUrl;
+$("receptionImage").src=CONFIG.reception.image;
 $("receptionTime").textContent=CONFIG.reception.time;
 $("receptionPlace").textContent=CONFIG.reception.place;
 $("receptionMapLink").href=CONFIG.reception.mapUrl;
@@ -1169,14 +1199,28 @@ for(let i=1;i<=CONFIG.rsvp.maxGuests;i++){
   guestSelect.appendChild(op);
 }
 
-/* ---------- RSVP demo ----------
-   Aquí puedes conectar Firebase, Supabase, Google Apps Script, etc.
-*/
+/* ---------- Confirmación por WhatsApp ---------- */
 $("rsvpForm").addEventListener("submit",e=>{
   e.preventDefault();
+
   const data=Object.fromEntries(new FormData(e.target).entries());
-  console.log("RSVP:",data);
-  toast("¡Gracias! Tu confirmación quedó capturada en esta demostración.");
+  const guests = data.guests ? data.guests : "No especificado";
+  const comments = data.comments && data.comments.trim()
+    ? data.comments.trim()
+    : "Sin comentarios";
+
+  const message =
+    "Hola, quiero confirmar mi asistencia a la boda de "
+    + CONFIG.couple.groomShort + " & " + CONFIG.couple.brideShort + ".\n\n"
+    + "Nombre: " + data.name + "\n"
+    + "Asistencia: " + data.attending + "\n"
+    + "Número de personas: " + guests + "\n"
+    + "Comentarios y felicitaciones: " + comments;
+
+  const whatsappUrl =
+    "https://wa.me/" + CONFIG.rsvp.whatsapp + "?text=" + encodeURIComponent(message);
+
+  window.open(whatsappUrl,"_blank","noopener");
 });
 
 /* ---------- Animación al hacer scroll ---------- */
