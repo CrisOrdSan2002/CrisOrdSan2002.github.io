@@ -231,6 +231,38 @@ img{display:block;width:100%}
     radial-gradient(circle at 82% 72%, rgba(183,169,122,.20), transparent 28%),
     linear-gradient(160deg,#e9e4d6 0%,#d7d3bd 48%,#a4a47c 100%);
 }
+
+/* ============================================================
+   IMAGEN DE ANILLOS EN LA SECCIÓN "¡NOS CASAMOS!"
+   ============================================================ */
+.rings-wrap{
+  position:absolute;
+  left:0;
+  right:0;
+
+  /* MOVER LA IMAGEN ARRIBA / ABAJO:
+     cambia este valor. Un número MAYOR la baja; uno MENOR la sube. */
+  top:200px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1;
+  pointer-events:none;
+}
+
+.rings-img{
+  display:block;
+
+  /* HACER LOS ANILLOS MÁS GRANDES O PEQUEÑOS:
+     cambia este valor. Ejemplo: 180px = más grande, 120px = más pequeño. */
+  width: 350px;
+
+  max-width:55%;
+  height:auto;
+  margin:0 auto;
+  object-fit:contain;
+}
 .date-bubble{
   position:absolute;
   left:12px;
@@ -786,7 +818,7 @@ const CONFIG = {
 
   rsvp:{
     message:'Nos hace muy felices compartir con nuestra familia y amigos este día tan especial, por esa razón pedimos encarecidamente respetar el número de lugares asignados.',
-    whatsapp:"527841261547",
+    whatsapp:"527822425182",
     // Cambia 4 por el máximo de lugares que quieras mostrar en el selector.
     maxGuests:4,
     // Si después quieres mandar la respuesta a un servicio propio,
@@ -840,6 +872,16 @@ const CONFIG = {
   </section>
 
   <section class="save-date" id="fecha">
+
+    <!-- IMAGEN DE ANILLOS: se mantiene centrada por el CSS .rings-wrap -->
+    <div class="rings-wrap" aria-hidden="true">
+      <img
+        class="rings-img"
+        src="https://i.postimg.cc/jqc3RzY0/ANILLOS.png"
+        alt=""
+        loading="lazy">
+    </div>
+
     <div class="date-bubble reveal">
       <h2>¡Nos casamos!</h2>
       <p class="date-line" id="dateLong"></p>
@@ -1023,7 +1065,7 @@ const CONFIG = {
         <textarea id="comments" name="comments" placeholder="Escribe tus felicitaciones o comentarios aquí..."></textarea>
       </div>
 
-      <button class="confirm-btn" type="submit">Confirmar</button>
+      <button class="confirm-btn" type="submit">Confirmar por WhatsApp</button>
     </form>
   </section>
 
