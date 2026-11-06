@@ -197,7 +197,7 @@
     </div>
 
     <!-- REPRODUCTOR AUDIO -->
-<audio id="bg-music" src="James Blunt - So Long Jimmy.mp3" preload="auto" loop></audio>
+    <audio id="bg-music" src="James Blunt - So Long Jimmy.mp3" preload="auto" loop></audio>
 
     <!-- ========================================== -->
     <!-- BOTÓN REPRODUCTOR DE MÚSICA FLOTANTE -->
@@ -431,46 +431,32 @@
     <!-- JAVASCRIPT LOGIC -->
     <!-- ========================================== -->
     <script>
-        /* Reemplaza todo el bloque 1. MÚSICA DE FONDO por este código limpio */
+        /* ----------------------------------------------------
+           1. CONTROL DE AUDIO MP3
+        ---------------------------------------------------- */
+        const audio = document.getElementById('bg-music');
+        let isPlaying = false;
 
-const audio = document.getElementById('bg-music');
-let isPlaying = false;
+        function toggleMusic() {
+            const icon = document.getElementById('music-icon');
+            const btn = document.getElementById('music-toggle');
 
-function toggleMusic() {
-    const icon = document.getElementById('music-icon');
-    const btn = document.getElementById('music-toggle');
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                icon.className = "fa-solid fa-volume-xmark";
+                btn.classList.remove('pulse-gold');
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    icon.className = "fa-solid fa-volume-high";
+                    btn.classList.add('pulse-gold');
+                }).catch(err => {
+                    console.log("Error reproduciendo audio:", err);
+                });
+            }
+        }
 
-    if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
-        icon.className = "fa-solid fa-volume-xmark";
-        btn.classList.remove('pulse-gold');
-    } else {
-        audio.play().then(() => {
-            isPlaying = true;
-            icon.className = "fa-solid fa-volume-high";
-            btn.classList.add('pulse-gold');
-        }).catch(err => {
-            console.log("Error reproduciendo audio:", err);
-        });
-    }
-}
-
-function openEnvelope() {
-    const overlay = document.getElementById('envelope-overlay');
-    const wrapper = document.getElementById('envelope-wrapper');
-
-    // Iniciar reproducción al presionar el sobre
-    toggleMusic();
-
-    // Animación de salida del sobre
-    wrapper.classList.add('envelope-open');
-    
-    setTimeout(() => {
-        overlay.style.opacity = '0';
-        overlay.style.visibility = 'hidden';
-    }, 500);
-}
         /* ----------------------------------------------------
            2. INTERACCIÓN APERTURA SOBRE
         ---------------------------------------------------- */
@@ -478,8 +464,8 @@ function openEnvelope() {
             const overlay = document.getElementById('envelope-overlay');
             const wrapper = document.getElementById('envelope-wrapper');
 
-            // Iniciar Audio al interactuar
-            initBackgroundMusic();
+            // Iniciar reproducción de la canción local
+            toggleMusic();
 
             // Animación de salida del sobre
             wrapper.classList.add('envelope-open');
