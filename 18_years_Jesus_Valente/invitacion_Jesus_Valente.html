@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 18 Años - Jesús Valente Fajardo Gutiérrez</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navyDark: '#050814',
+                        navyBlue: '#0b1021',
+                        navyAccent: '#161f38',
+                        goldLight: '#f3e3ad',
+                        goldMain: '#dfb76c',
+                        goldDark: '#997327',
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        script: ['Pinyon Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrolling & Animations */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #050814;
+            color: #e2e8f0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Gold Gradient Text */
+        .gold-text {
+            background: linear-gradient(135deg, #fff2c5 0%, #dfb76c 50%, #997327 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Gold Border Gradient */
+        .gold-border {
+            border-image: linear-gradient(135deg, #dfb76c, #997327, #f3e3ad) 1;
+        }
+
+        /* Subtle Glow */
+        .gold-glow {
+            box-shadow: 0 0 25px rgba(223, 183, 108, 0.25);
+        }
+
+        .gold-glow-lg {
+            box-shadow: 0 0 40px rgba(223, 183, 108, 0.4);
+        }
+
+        /* Stars Canvas overlay */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Floating music button pulse */
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(223, 183, 108, 0.6); }
+            50% { box-shadow: 0 0 0 15px rgba(223, 183, 108, 0); }
+        }
+
+        .pulse-gold {
+            animation: pulse-gold 2s infinite;
+        }
+
+        /* Sticky Reveal Image CSS */
+        .sticky-reveal-container {
+            position: relative;
+            height: 220vh; /* Scroll space for transition */
+        }
+
+        .sticky-reveal-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Envelope CSS opening animation */
+        #envelope-overlay {
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+        }
+
+        .envelope-card {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .envelope-open {
+            transform: translateY(-100vh) scale(0.9);
+            opacity: 0;
+        }
+
+        /* Floating Balloon Background Elements */
+        .balloon {
+            position: absolute;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            opacity: 0.15;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        .balloon::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 25px;
+            background: rgba(223, 183, 108, 0.3);
+        }
+    </style>
+</head>
+<body class="relative bg-navyDark text-slate-200">
+
+    <!-- Canvas para Estrellas y Destellos de Fondo -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- Globos Decorativos de Fondo (Aesthetic sutil) -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="balloon w-28 h-36 bg-gradient-to-b from-goldMain to-transparent top-10 -left-6 transform -rotate-12"></div>
+        <div class="balloon w-36 h-48 bg-gradient-to-b from-amber-900 to-black top-1/4 -right-10 transform rotate-12"></div>
+        <div class="balloon w-24 h-32 bg-gradient-to-b from-goldLight to-transparent bottom-20 left-4 transform rotate-6"></div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 1. OVERLAY SOBRE DE BIENVENIDA (Pase Personal) -->
+    <!-- ========================================== -->
+    <div id="envelope-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-navyDark/95 backdrop-blur-md p-4">
+        <div id="envelope-wrapper" class="envelope-card relative w-full max-w-md text-center flex flex-col items-center">
+            
+            <!-- Mensaje de Invitación -->
+            <div class="mb-6 animate-pulse">
+                <p class="font-cinzel text-goldMain tracking-widest text-xs uppercase mb-1">Has recibido una invitación especial</p>
+                <h3 class="font-script text-4xl text-goldLight">Jesús Valente</h3>
+            </div>
+
+            <!-- Imagen del Sobre -->
+            <div class="relative cursor-pointer group" onclick="openEnvelope()">
+                <!-- Brillo del sobre -->
+                <div class="absolute -inset-2 bg-gradient-to-r from-goldDark via-goldMain to-goldDark rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-500"></div>
+                
+                <!-- Contenedor Imagen Sobre -->
+                <div class="relative rounded-xl overflow-hidden shadow-2xl border border-goldMain/30 bg-navyBlue">
+                    <img src="https://i.postimg.cc/Y0N6YpYD/sobre-crema.png" alt="Sobre Elegante" class="w-full max-w-xs md:max-w-sm h-auto object-cover transform group-hover:scale-105 transition duration-500">
+                    
+                    <!-- Insignia / Sello Pase Personal -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-4 bg-black/20">
+                        <div class="bg-navyDark/90 border-2 border-goldMain rounded-full p-4 w-32 h-32 flex flex-col items-center justify-center shadow-2xl gold-glow transform transition group-hover:scale-110">
+                            <i class="fa-solid fa-envelope-open-text text-goldMain text-2xl mb-1"></i>
+                            <span class="font-cinzel font-bold text-xs text-goldLight tracking-widest uppercase">PASE</span>
+                            <span class="font-cinzel text-[10px] text-goldMain tracking-wider">PERSONAL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón Instrucción -->
+            <button onclick="openEnvelope()" class="mt-8 px-8 py-3 rounded-full bg-gradient-to-r from-goldDark via-goldMain to-goldDark text-navyDark font-cinzel font-bold text-xs tracking-widest uppercase shadow-lg gold-glow hover:brightness-110 active:scale-95 transition">
+                <i class="fa-solid fa-key mr-2"></i> Abrir Invitación
+            </button>
+            <p class="text-[11px] text-slate-400 mt-3 font-montserrat font-light">Toca el sobre para abrir e iniciar la música</p>
+        </div>
+    </div>
+
+    <!-- REPRODUCTOR AUDIO -->
+<audio id="bg-music" src="cancion.mp3" preload="auto" loop></audio>
+
+    <!-- ========================================== -->
+    <!-- BOTÓN REPRODUCTOR DE MÚSICA FLOTANTE -->
+    <!-- ========================================== -->
+    <button id="music-toggle" onclick="toggleMusic()" class="fixed top-5 right-5 z-40 w-12 h-12 rounded-full bg-navyBlue/80 border border-goldMain/60 text-goldMain flex items-center justify-center shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-110">
+        <i id="music-icon" class="fa-solid fa-music"></i>
+    </button>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10">
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN HERO / PRESENTACIÓN -->
+        <!-- ========================================== -->
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 pt-12 pb-8 relative border-b border-goldMain/20">
+            <div class="space-y-4 max-w-lg mx-auto">
+                <div class="inline-block px-4 py-1 rounded-full border border-goldMain/40 bg-navyAccent/50 backdrop-blur-sm">
+                    <span class="font-cinzel text-xs text-goldLight tracking-[0.3em] uppercase">Celebración de Gala</span>
+                </div>
+
+                <h2 class="font-cinzel text-sm text-slate-300 tracking-[0.25em] uppercase">Tengo el honor de invitarte a mis</h2>
+
+                <!-- Título Grande 18 Años -->
+                <div class="py-4">
+                    <span class="font-cinzel text-6xl md:text-8xl font-extrabold gold-text tracking-tight block">18</span>
+                    <span class="font-script text-5xl md:text-6xl text-goldLight block -mt-4">Años</span>
+                </div>
+
+                <!-- Nombre del Festejado -->
+                <div class="space-y-1">
+                    <h1 class="font-cinzel text-2xl md:text-4xl font-bold text-white tracking-wider uppercase">Jesús Valente</h1>
+                    <p class="font-cinzel text-sm text-goldMain tracking-[0.2em] uppercase">Fajardo Gutiérrez</p>
+                </div>
+
+                <!-- Cita / Frase -->
+                <p class="font-montserrat text-xs md:text-sm text-slate-300 italic font-light max-w-xs mx-auto pt-4 leading-relaxed">
+                    "Hay momentos en la vida que son inolvidables, pero compartirlos con quienes más quieres los hace inolvidables."
+                </p>
+
+                <!-- Scroll Indicator -->
+                <div class="pt-8 flex flex-col items-center justify-center text-goldMain/60 animate-bounce">
+                    <span class="text-[10px] font-cinzel tracking-widest uppercase mb-1">Desliza hacia abajo</span>
+                    <i class="fa-solid fa-chevron-down text-sm"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN TRANSICIÓN INFANTE A ADULTO (Sticky Reveal) -->
+        <!-- ========================================== -->
+        <section class="sticky-reveal-container" id="reveal-section">
+            <div class="sticky-reveal-sticky">
+                
+                <div class="relative w-full max-w-sm px-6 text-center">
+                    <!-- Marco Elegante de Foto -->
+                    <div class="relative mx-auto w-64 h-80 md:w-72 md:h-96 rounded-2xl overflow-hidden border-2 border-goldMain/60 shadow-2xl gold-glow bg-navyAccent">
+                        
+                        <!-- Foto 1: NIÑO (Abajo) -->
+                        <img id="img-child" src="https://i.postimg.cc/Rhw3yXZs/JESUS-INFANTE.jpg" alt="Jesús de Niño" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-100">
+
+                        <!-- Foto 2: ADULTO (Arriba con Opacidad Controlada por Scroll) -->
+                        <img id="img-adult" src="https://i.postimg.cc/j2yWmZSF/JESUS-ADULTO.jpg" alt="Jesús Adulto" class="absolute inset-0 w-full h-full object-cover object-top opacity-0 transition-opacity duration-100">
+
+                        <!-- Overlay Degradado Interior -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-navyDark/80 via-transparent to-transparent pointer-events-none"></div>
+                    </div>
+
+                    <!-- Etiqueta Descriptiva -->
+                    <div class="mt-6 bg-navyBlue/90 backdrop-blur-md border border-goldMain/30 rounded-xl p-3 shadow-lg">
+                        <p id="photo-caption-year" class="font-cinzel text-xs text-goldMain tracking-widest uppercase">El paso del tiempo</p>
+                        <p id="photo-caption-title" class="font-script text-2xl text-white">Un gran trayecto...</p>
+                    </div>
+
+                    <!-- Indicador de Scroll para la animación -->
+                    <p class="text-[10px] text-slate-400 font-montserrat mt-2 tracking-wider">Continúa haciendo scroll para ver la transformación</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN PADRES -->
+        <!-- ========================================== -->
+        <section class="py-16 px-4 bg-navyBlue/50 border-t border-b border-goldMain/20 relative">
+            <div class="max-w-md mx-auto text-center space-y-6">
+                
+                <div class="inline-block">
+                    <i class="fa-solid fa-heart text-goldMain text-xl mb-2"></i>
+                    <h3 class="font-cinzel text-xs text-goldLight tracking-[0.25em] uppercase">Con la bendición e invitación de mis Padres</h3>
+                </div>
+
+                <div class="bg-navyDark/80 border border-goldMain/30 rounded-2xl p-6 gold-glow space-y-4">
+                    <div>
+                        <p class="font-cinzel text-xs text-goldMain uppercase tracking-widest">Mamá</p>
+                        <p class="font-cinzel text-lg font-bold text-white tracking-wide mt-1">Yení Gutiérrez González</p>
+                    </div>
+
+                    <div class="w-12 h-px bg-goldMain/40 mx-auto"></div>
+
+                    <div>
+                        <p class="font-cinzel text-xs text-goldMain uppercase tracking-widest">Papá</p>
+                        <p class="font-cinzel text-lg font-bold text-white tracking-wide mt-1">Aurelio Jesús Fajardo Vázquez</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN FECHA Y CUENTA REGRESIVA -->
+        <!-- ========================================== -->
+        <section class="py-16 px-4 text-center relative">
+            <div class="max-w-md mx-auto space-y-8">
+                
+                <div>
+                    <span class="font-script text-4xl text-goldLight block">Reserva la fecha</span>
+                    <h2 class="font-cinzel text-2xl text-white tracking-widest uppercase font-bold mt-1">20 DE DICIEMBRE</h2>
+                    <p class="font-cinzel text-sm text-goldMain tracking-widest uppercase mt-1">7:00 PM</p>
+                </div>
+
+                <!-- Contador Regresivo -->
+                <div class="grid grid-cols-4 gap-2 md:gap-4">
+                    <div class="bg-navyAccent/90 border border-goldMain/40 rounded-xl p-3 shadow-lg">
+                        <span id="cd-days" class="font-cinzel text-2xl md:text-3xl font-bold text-white block">00</span>
+                        <span class="text-[9px] font-cinzel text-goldMain tracking-widest uppercase">Días</span>
+                    </div>
+                    <div class="bg-navyAccent/90 border border-goldMain/40 rounded-xl p-3 shadow-lg">
+                        <span id="cd-hours" class="font-cinzel text-2xl md:text-3xl font-bold text-white block">00</span>
+                        <span class="text-[9px] font-cinzel text-goldMain tracking-widest uppercase">Horas</span>
+                    </div>
+                    <div class="bg-navyAccent/90 border border-goldMain/40 rounded-xl p-3 shadow-lg">
+                        <span id="cd-minutes" class="font-cinzel text-2xl md:text-3xl font-bold text-white block">00</span>
+                        <span class="text-[9px] font-cinzel text-goldMain tracking-widest uppercase">Min</span>
+                    </div>
+                    <div class="bg-navyAccent/90 border border-goldMain/40 rounded-xl p-3 shadow-lg">
+                        <span id="cd-seconds" class="font-cinzel text-2xl md:text-3xl font-bold text-white block">00</span>
+                        <span class="text-[9px] font-cinzel text-goldMain tracking-widest uppercase">Seg</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN LUGAR Y MAPA -->
+        <!-- ========================================== -->
+        <section class="py-16 px-4 bg-navyBlue/60 border-t border-goldMain/20 relative">
+            <div class="max-w-md mx-auto text-center space-y-6">
+                
+                <i class="fa-solid fa-location-dot text-goldMain text-3xl"></i>
+                <h3 class="font-cinzel text-xs text-goldLight tracking-[0.3em] uppercase">Recepción & Festejo</h3>
+
+                <div class="bg-navyDark/90 border border-goldMain/30 rounded-2xl p-6 gold-glow space-y-4">
+                    <h4 class="font-cinzel text-xl font-bold text-white tracking-wide">SALÓN REGIO</h4>
+                    <p class="font-montserrat text-xs text-slate-300 leading-relaxed">
+                        C. 12 237 B, Cazones, 93230<br>
+                        Poza Rica de Hidalgo, Ver.
+                    </p>
+
+                    <!-- Botón Google Maps -->
+                    <a href="https://maps.app.goo.gl/pPhkzc9PV8TEVTBH7" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl bg-gradient-to-r from-goldDark via-goldMain to-goldDark text-navyDark font-cinzel font-bold text-xs tracking-wider uppercase shadow-lg transition hover:brightness-110 active:scale-95">
+                        <i class="fa-solid fa-map-location-dot text-base"></i>
+                        Ver Ubicación en Google Maps
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN LLUVIA DE SOBRES -->
+        <!-- ========================================== -->
+        <section class="py-14 px-4 text-center">
+            <div class="max-w-md mx-auto bg-navyDark/80 border border-goldMain/30 rounded-2xl p-6 gold-glow space-y-3 relative overflow-hidden">
+                <!-- Sombra brillante de fondo -->
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-goldMain/10 rounded-full blur-xl pointer-events-none"></div>
+
+                <div class="w-14 h-14 mx-auto rounded-full bg-navyAccent border border-goldMain/50 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-envelope-open-text text-goldMain text-2xl"></i>
+                </div>
+                
+                <h3 class="font-cinzel text-xs text-goldLight tracking-[0.25em] uppercase font-semibold pt-1">Muestra de Afecto</h3>
+                <p class="font-cinzel text-lg font-bold text-white tracking-wider uppercase">Lluvia de Sobres</p>
+                <p class="text-xs text-slate-300 font-light leading-relaxed max-w-xs mx-auto">
+                    El mejor regalo es tu presencia, pero si deseas tener un detalle con el festejado, contaremos con buzón para lluvia de sobres el día del evento.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN CÓDIGO DE VESTIMENTA (DRESS CODE) -->
+        <!-- ========================================== -->
+        <section class="py-10 px-4 text-center">
+            <div class="max-w-md mx-auto bg-navyAccent/40 border border-goldMain/20 rounded-2xl p-6 space-y-3">
+                <i class="fa-solid fa-user-tie text-goldMain text-3xl mb-1"></i>
+                <h3 class="font-cinzel text-sm text-goldLight tracking-[0.25em] uppercase font-semibold">Código de Vestimenta</h3>
+                <p class="font-cinzel text-lg font-bold text-white tracking-wider uppercase">Formal / Traje</p>
+                <p class="text-xs text-slate-300 font-light">
+                    Te invitamos a vestir de etiqueta / traje formal para acompañar la elegancia de la noche.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN CONFIRMACIÓN RSVP (WhatsApp) -->
+        <!-- ========================================== -->
+        <section class="py-16 px-4 bg-navyBlue/80 border-t border-goldMain/20 text-center">
+            <div class="max-w-md mx-auto space-y-6">
+                
+                <h3 class="font-script text-4xl text-goldLight">Confirmación de Asistencia</h3>
+                <p class="text-xs text-slate-300 font-light max-w-xs mx-auto">
+                    Agradecemos confirmar tu asistencia para tener todo preparado para ti.
+                </p>
+
+                <a href="https://api.whatsapp.com/send?5217828175127=&text=Hola,%20confirmo%20mi%20asistencia%20para%20los%2018%20A%C3%B1os%20de%20Jes%C3%Bas%20Valente." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 w-full py-4 px-6 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-cinzel font-bold text-xs tracking-widest uppercase shadow-xl transition active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    Confirmar por WhatsApp
+                </a>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="py-8 text-center text-[10px] text-slate-500 font-cinzel tracking-widest uppercase border-t border-slate-900">
+            Jesús Valente • Mis 18 Años • 2026
+        </footer>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ========================================== -->
+    <script>
+        /* Reemplaza todo el bloque 1. MÚSICA DE FONDO por este código limpio */
+
+const audio = document.getElementById('bg-music');
+let isPlaying = false;
+
+function toggleMusic() {
+    const icon = document.getElementById('music-icon');
+    const btn = document.getElementById('music-toggle');
+
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        icon.className = "fa-solid fa-volume-xmark";
+        btn.classList.remove('pulse-gold');
+    } else {
+        audio.play().then(() => {
+            isPlaying = true;
+            icon.className = "fa-solid fa-volume-high";
+            btn.classList.add('pulse-gold');
+        }).catch(err => {
+            console.log("Error reproduciendo audio:", err);
+        });
+    }
+}
+
+function openEnvelope() {
+    const overlay = document.getElementById('envelope-overlay');
+    const wrapper = document.getElementById('envelope-wrapper');
+
+    // Iniciar reproducción al presionar el sobre
+    toggleMusic();
+
+    // Animación de salida del sobre
+    wrapper.classList.add('envelope-open');
+    
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
+    }, 500);
+}
+        /* ----------------------------------------------------
+           2. INTERACCIÓN APERTURA SOBRE
+        ---------------------------------------------------- */
+        function openEnvelope() {
+            const overlay = document.getElementById('envelope-overlay');
+            const wrapper = document.getElementById('envelope-wrapper');
+
+            // Iniciar Audio al interactuar
+            initBackgroundMusic();
+
+            // Animación de salida del sobre
+            wrapper.classList.add('envelope-open');
+            
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+            }, 500);
+        }
+
+        /* ----------------------------------------------------
+           3. TRANSICIÓN INFANTE -> ADULTO CON SCROLL
+        ---------------------------------------------------- */
+        const revealContainer = document.getElementById('reveal-section');
+        const imgAdult = document.getElementById('img-adult');
+        const photoCaptionYear = document.getElementById('photo-caption-year');
+        const photoCaptionTitle = document.getElementById('photo-caption-title');
+
+        window.addEventListener('scroll', () => {
+            if (!revealContainer) return;
+
+            const rect = revealContainer.getBoundingClientRect();
+            const containerHeight = revealContainer.offsetHeight - window.innerHeight;
+            
+            // Proporción de avance de scroll dentro del contenedor sticky
+            let progress = -rect.top / containerHeight;
+            progress = Math.max(0, Math.min(1, progress)); // Clamp 0 to 1
+
+            // Ajustar opacidad de la foto de adulto
+            imgAdult.style.opacity = progress.toString();
+
+            // Actualizar textos según avance
+            if (progress < 0.4) {
+                photoCaptionYear.textContent = "Infancia";
+                photoCaptionTitle.textContent = "Los primeros pasos...";
+            } else if (progress >= 0.4 && progress < 0.8) {
+                photoCaptionYear.textContent = "Crecimiento";
+                photoCaptionTitle.textContent = "Forjando el camino...";
+            } else {
+                photoCaptionYear.textContent = "18 Años • Adulto";
+                photoCaptionTitle.textContent = "Listo para el futuro";
+            }
+        });
+
+        /* ----------------------------------------------------
+           4. CUENTA REGRESIVA
+        ---------------------------------------------------- */
+        function updateCountdown() {
+            // Fecha objetivo: 20 de Diciembre de 2026 19:00 hrs
+            const targetDate = new Date('December 20, 2026 19:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('cd-days').textContent = days < 10 ? '0' + days : days;
+                document.getElementById('cd-hours').textContent = hours < 10 ? '0' + hours : hours;
+                document.getElementById('cd-minutes').textContent = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('cd-seconds').textContent = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* ----------------------------------------------------
+           5. CANVAS DE ESTRELLAS Y DESTELLOS DE FONDO
+        ---------------------------------------------------- */
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = Math.floor((canvas.width * canvas.height) / 7000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) {
+                    star.speed = -star.speed;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(223, 183, 108, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.onload = function() {
+            resizeCanvas();
+            drawStars();
+        };
+    </script>
+</body>
+</html>
