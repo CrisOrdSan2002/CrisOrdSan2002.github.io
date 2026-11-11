@@ -177,12 +177,12 @@
                 <div class="relative rounded-xl overflow-hidden shadow-2xl border border-goldMain/30 bg-navyBlue">
                     <img src="https://i.postimg.cc/Y0N6YpYD/sobre-crema.png" alt="Sobre Elegante" class="w-full max-w-xs md:max-w-sm h-auto object-cover transform group-hover:scale-105 transition duration-500">
                     
-                    <!-- Insignia / Sello Pase Personal -->
+                    <!-- Insignia / Sello Pase Dinámico -->
                     <div class="absolute inset-0 flex flex-col items-center justify-center p-4 bg-black/20">
-                        <div class="bg-navyDark/90 border-2 border-goldMain rounded-full p-4 w-32 h-32 flex flex-col items-center justify-center shadow-2xl gold-glow transform transition group-hover:scale-110">
-                            <i class="fa-solid fa-envelope-open-text text-goldMain text-2xl mb-1"></i>
+                        <div class="bg-navyDark/90 border-2 border-goldMain rounded-full p-2 w-32 h-32 flex flex-col items-center justify-center shadow-2xl gold-glow transform transition group-hover:scale-110">
+                            <i class="fa-solid fa-envelope-open-text text-goldMain text-xl mb-1"></i>
                             <span class="font-cinzel font-bold text-xs text-goldLight tracking-widest uppercase">PASE</span>
-                            <span class="font-cinzel text-[10px] text-goldMain tracking-wider">PERSONAL</span>
+                            <span id="pase-cantidad" class="font-cinzel font-bold text-[10px] text-goldMain tracking-wider uppercase">PERSONAL</span>
                         </div>
                     </div>
                 </div>
@@ -388,20 +388,6 @@
         </section>
 
         <!-- ========================================== -->
-        <!-- SECCIÓN CÓDIGO DE VESTIMENTA (DRESS CODE) -->
-        <!-- ========================================== -->
-        <!--<section class="py-10 px-4 text-center">
-            <div class="max-w-md mx-auto bg-navyAccent/40 border border-goldMain/20 rounded-2xl p-6 space-y-3">
-                <i class="fa-solid fa-user-tie text-goldMain text-3xl mb-1"></i>
-                <h3 class="font-cinzel text-sm text-goldLight tracking-[0.25em] uppercase font-semibold">Código de Vestimenta</h3>
-                <p class="font-cinzel text-lg font-bold text-white tracking-wider uppercase">Formal / Traje</p>
-                <p class="text-xs text-slate-300 font-light">
-                    Te invitamos a vestir de etiqueta / traje formal para acompañar la elegancia de la noche.
-                </p>
-            </div>
-        </section>-->
-
-        <!-- ========================================== -->
         <!-- SECCIÓN CONFIRMACIÓN RSVP (WhatsApp) -->
         <!-- ========================================== -->
         <section class="py-16 px-4 bg-navyBlue/80 border-t border-goldMain/20 text-center">
@@ -412,7 +398,8 @@
                     Agradecemos confirmar tu asistencia para tener todo preparado para ti.
                 </p>
 
-                <a href="https://wa.me/5217828175127?text=Hola,%20confirmo%20mi%20asistencia%20para%20los%2018%20A%C3%B1os%20de%20Jes%C3%Bas%20Valente." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 w-full py-4 px-6 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-cinzel font-bold text-xs tracking-widest uppercase shadow-xl transition active:scale-95">
+                <!-- Botón WhatsApp Dinámico -->
+                <a id="whatsapp-btn" href="https://wa.me/5217828175127?text=Hola,%20confirmo%20mi%20asistencia%20para%20los%2018%20A%C3%B1os%20de%20Jes%C3%Bas%20Valente." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 w-full py-4 px-6 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-cinzel font-bold text-xs tracking-widest uppercase shadow-xl transition active:scale-95">
                     <i class="fa-brands fa-whatsapp text-lg"></i>
                     Confirmar por WhatsApp
                 </a>
@@ -432,7 +419,33 @@
     <!-- ========================================== -->
     <script>
         /* ----------------------------------------------------
-           1. CONTROL DE AUDIO MP3
+            1. CONTROL DINÁMICO DE PASES (?pases=1, 2, 3, 4)
+        ---------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            let numPases = parseInt(urlParams.get('pases')) || 1;
+            numPases = Math.max(1, Math.min(4, numPases)); // Limitar entre 1 y 4
+
+            const paseCantidad = document.getElementById('pase-cantidad');
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+
+            let textoSello = numPases === 1 ? "PERSONAL" : `${numPases} PERSONAS`;
+            let mensajeWhatsApp = numPases === 1 
+                ? "Hola, confirmo mi asistencia (1 persona) para los 18 Años de Jesús Valente."
+                : `Hola, confirmo nuestra asistencia (${numPases} personas) para los 18 Años de Jesús Valente.`;
+
+            if (paseCantidad) {
+                paseCantidad.textContent = textoSello;
+            }
+
+            if (whatsappBtn) {
+                const telefono = "5217828175127";
+                whatsappBtn.href = `https://wa.me/${telefono}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+            }
+        });
+
+        /* ----------------------------------------------------
+            2. CONTROL DE AUDIO MP3
         ---------------------------------------------------- */
         const audio = document.getElementById('bg-music');
         let isPlaying = false;
@@ -458,7 +471,7 @@
         }
 
         /* ----------------------------------------------------
-           2. INTERACCIÓN APERTURA SOBRE
+            3. INTERACCIÓN APERTURA SOBRE
         ---------------------------------------------------- */
         function openEnvelope() {
             const overlay = document.getElementById('envelope-overlay');
@@ -477,7 +490,7 @@
         }
 
         /* ----------------------------------------------------
-           3. TRANSICIÓN INFANTE -> ADULTO CON SCROLL
+            4. TRANSICIÓN INFANTE -> ADULTO CON SCROLL
         ---------------------------------------------------- */
         const revealContainer = document.getElementById('reveal-section');
         const imgAdult = document.getElementById('img-adult');
@@ -511,7 +524,7 @@
         });
 
         /* ----------------------------------------------------
-           4. CUENTA REGRESIVA
+            5. CUENTA REGRESIVA
         ---------------------------------------------------- */
         function updateCountdown() {
             // Fecha objetivo: 20 de Diciembre de 2026 19:00 hrs
@@ -541,7 +554,7 @@
         updateCountdown();
 
         /* ----------------------------------------------------
-           5. CANVAS DE ESTRELLAS Y DESTELLOS DE FONDO
+            6. CANVAS DE ESTRELLAS Y DESTELLOS DE FONDO
         ---------------------------------------------------- */
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
